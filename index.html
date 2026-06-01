@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Habit Tracker — Richard Rosival</title>
+<meta name="theme-color" content="#080808">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Habits">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --surface: #101010;
+  --card: #161616;
+  --card2: #1c1c1c;
+  --border: #252525;
+  --gold: #e8b84b;
+  --gold2: #c8921a;
+  --text: #f2efe9;
+  --muted: #555;
+  --muted2: #888;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+}
+#splash {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .6s ease, transform .6s ease;
+}
+#splash.hide {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+.splash-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  letter-spacing: 6px;
+  background: linear-gradient(135deg, #e8b84b, #fff8e0, #c8921a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  animation: logoIn .8s cubic-bezier(.16,1,.3,1) both;
+}
+.splash-sub {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  margin-top: 6px;
+  animation: fadeUp .8s .2s cubic-bezier(.16,1,.3,1) both;
+}
+.splash-quote {
+  margin-top: 48px;
+  max-width: 280px;
+  text-align: center;
+  animation: fadeUp .8s .4s cubic-bezier(.16,1,.3,1) both;
+}
+.splash-quote-text {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--text);
+  font-style: italic;
+}
+.splash-quote-author {
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 10px;
+  font-style: normal;
+  font-weight: 600;
+}
+.splash-line {
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 12px auto 0;
+}
+.splash-dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 56px;
+  animation: fadeUp .8s .6s cubic-bezier(.16,1,.3,1) both;
+}
+.splash-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.splash-dot.active { background: var(--gold); }
+.splash-dot:nth-child(1) { animation: dotPulse 1.2s .0s infinite; }
+.splash-dot:nth-child(2) { animation: dotPulse 1.2s .2s infinite; }
+.splash-dot:nth-child(3) { animation: dotPulse 1.2s .4s infinite; }
+@keyframes dotPulse {
+  0%,100% { opacity:.3; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.4); background: var(--gold); }
+}
+@keyframes logoIn {
+  from { opacity:0; transform: translateY(24px) scale(.95); }
+  to { opacity:1; transform: translateY(0) scale(1); }
+}
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(16px); }
+  to { opacity:1; transform: translateY(0); }
+}
+#app { opacity: 0; transition: opacity .4s .1s; }
+#app.visible { opacity: 1; }
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 52px 22px 0;
+  z-index: 1;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 120px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(232,184,75,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-left .greeting {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.header-left .date-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  color: var(--text);
+}
+.streak-badge {
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 7px 14px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 0 20px rgba(232,184,75,0.3);
+}
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+  z-index: 100;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 9px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  transition: color .2s;
+  padding: 4px 0;
+}
+.nav-item.active { color: var(--gold); }
+.nav-icon { font-size: 20px; transition: transform .2s; }
+.nav-item.active .nav-icon { transform: scale(1.15); }
+.view { display: none; padding: 14px 20px 110px; position: relative; z-index: 1; }
+.view.active { display: block; }
+.today-progress {
+  background: linear-gradient(135deg, #1a1a1a, #141414);
+  border-radius: 20px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.today-progress::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.progress-ring-wrap { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
+.progress-ring-wrap svg { width: 72px; height: 72px; transform: rotate(-90deg); }
+.progress-ring-bg { fill: none; stroke: #222; stroke-width: 5; }
+.progress-ring-fill {
+  fill: none;
+  stroke: url(#goldGrad);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1);
+}
+.progress-pct {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--gold);
+}
+.progress-text h3 { font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
+.progress-text p { font-size: 12px; color: var(--muted2); margin-top: 3px; }
+.habits-list { display: flex; flex-direction: column; gap: 9px; }
+.habit-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+  transition: all .2s cubic-bezier(.4,0,.2,1);
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+.habit-row::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  border-radius: 3px 0 0 3px;
+  background: var(--habit-color, var(--border));
+  opacity: 0;
+  transition: opacity .2s;
+}
+.habit-row.done { background: var(--card2); border-color: transparent; }
+.habit-row.done::before { opacity: 1; }
+.habit-icon {
+  width: 42px; height: 42px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.habit-row.done .habit-icon { transform: scale(1.1); }
+.habit-info { flex: 1; min-width: 0; }
+.habit-name { font-size: 14px; font-weight: 600; transition: color .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.habit-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.habit-check {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: all .25s cubic-bezier(.34,1.56,.64,1);
+  flex-shrink: 0;
+}
+.habit-row.done .habit-check {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+  font-weight: 800;
+  box-shadow: 0 0 12px rgba(232,184,75,0.4);
+}
+.wheel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.wheel-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--gold), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.month-nav { display: flex; align-items: center; gap: 10px; }
+.month-nav button {
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--text); width: 34px; height: 34px;
+  border-radius: 10px; cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.month-nav span { font-size: 13px; font-weight: 700; color: var(--gold); min-width: 80px; text-align: center; letter-spacing: 1px; }
+.wheel-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+  background: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 12px;
+}
+#wheelSvg { width: 100%; max-width: 320px; height: auto; }
+.wheel-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+.legend-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 11px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted2);
+}
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: .4;
+}
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  color: var(--gold);
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.stat-label { font-size: 10px; color: var(--muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 1.5px; }
+.habit-stats { display: flex; flex-direction: column; gap: 9px; }
+.habit-stat-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+}
+.habit-stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+.habit-stat-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.habit-stat-pct { font-size: 13px; font-weight: 700; color: var(--gold); }
+.bar-bg { background: #1e1e1e; border-radius: 99px; height: 5px; }
+.bar-fill { height: 5px; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+.settings-section { margin-bottom: 22px; }
+.settings-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  margin-bottom: 10px;
+  padding-left: 2px;
+}
+.setting-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.setting-row:focus-within { border-color: var(--gold); }
+.setting-row input[type="text"] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+}
+.setting-row input[type="text"]::placeholder { color: var(--muted); }
+.setting-icon-pick { font-size: 22px; cursor: pointer; }
+.btn-save {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  padding: 17px;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 4px 24px rgba(232,184,75,0.25);
+}
+.app-footer {
+  text-align: center;
+  padding: 6px 0 10px;
+  pointer-events: none;
+}
+.app-footer span {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.app-footer strong { color: var(--gold); font-weight: 700; }
+.toast {
+  position: fixed;
+  bottom: 90px; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #000;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 11px 24px;
+  border-radius: 99px;
+  opacity: 0;
+  transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 200;
+  box-shadow: 0 8px 32px rgba(232,184,75,0.3);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+.pop { animation: pop .22s ease; }
+@keyframes slideIn {
+  from { opacity:0; transform: translateY(10px); }
+  to { opacity:1; transform: translateY(0); }
+}
+.habit-row { animation: slideIn .3s ease both; }
+</style>
+</head>
+<body>
+<div id="splash">
+  <div class="splash-logo">HABITS</div>
+  <div class="splash-sub">Richard Rosival</div>
+  <div class="splash-quote">
+    <div class="splash-line"></div>
+    <div class="splash-quote-text" id="splashQuoteText"></div>
+    <div class="splash-quote-author" id="splashQuoteAuthor"></div>
+  </div>
+  <div class="splash-dots">
+    <div class="splash-dot active"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+<div id="app">
+  <div class="header">
+    <div class="header-left">
+      <div class="greeting">DOBRÝ DEŇ, RICHARD 👋</div>
+      <div class="date-label" id="headerDate"></div>
+    </div>
+    <div class="streak-badge" id="streakBadge">🔥 0 dní</div>
+  </div>
+  <div id="view-today" class="view active">
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e8b84b"/>
+          <stop offset="100%" stop-color="#c8921a"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="today-progress">
+      <div class="progress-ring-wrap">
+        <svg viewBox="0 0 72 72">
+          <defs>
+            <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#e8b84b"/>
+              <stop offset="100%" stop-color="#c8921a"/>
+            </linearGradient>
+          </defs>
+          <circle class="progress-ring-bg" cx="36" cy="36" r="30"/>
+          <circle class="progress-ring-fill" id="ringFill" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5" stroke="url(#goldGrad2)"/>
+        </svg>
+        <div class="progress-pct" id="ringPct">0%</div>
+      </div>
+      <div class="progress-text">
+        <h3 id="progressTitle">Začni deň!</h3>
+        <p id="progressSub">0 z 8 návykov splnených</p>
+      </div>
+    </div>
+    <div class="habits-list" id="habitsList"></div>
+    <div class="app-footer"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+  </div>
+  <div id="view-wheel" class="view">
+    <div class="wheel-header">
+      <h2>MESAČNÝ WHEEL</h2>
+      <div class="month-nav">
+        <button onclick="changeMonth(-1)">‹</button>
+        <span id="wheelMonthLabel"></span>
+        <button onclick="changeMonth(1)">›</button>
+      </div>
+    </div>
+    <div class="wheel-container"><svg id="wheelSvg" viewBox="0 0 320 320"></svg></div>
+    <div class="wheel-legend" id="wheelLegend"></div>
+    <div class="app-footer" style="margin-top:16px"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+  </div>
+  <div id="view-stats" class="view">
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="habit-stats" id="habitStats"></div>
+    <div class="app-footer" style="margin-top:16px"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+  </div>
+  <div id="view-settings" class="view">
+    <div class="settings-section">
+      <div class="settings-title">TVOJE NÁVYKY</div>
+      <div id="settingsHabits"></div>
+      <button class="btn-save" onclick="saveSettings()">ULOŽIŤ ZMENY</button>
+    </div>
+    <div class="app-footer"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+  </div>
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="switchView('today',this)"><div class="nav-icon">✅</div><span>Dnes</span></div>
+    <div class="nav-item" onclick="switchView('wheel',this)"><div class="nav-icon">⭕</div><span>Wheel</span></div>
+    <div class="nav-item" onclick="switchView('stats',this)"><div class="nav-icon">📊</div><span>Štatistiky</span></div>
+    <div class="nav-item" onclick="switchView('settings',this)"><div class="nav-icon">⚙️</div><span>Nastavenia</span></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const QUOTES = [
+  { text: "Úspech nie je konečný, neúspech nie je osudný. Dôležitá je odvaha pokračovať.", author: "Winston Churchill" },
+  { text: "Nevzdávaj sa. Veľké veci si vyžadujú čas.", author: "Burt Reynolds" },
+  { text: "Disciplína je most medzi cieľmi a úspechom.", author: "Jim Rohn" },
+  { text: "Tvoja jediná konkurencia je človek, ktorým si bol včera.", author: "Anonymný" },
+  { text: "Malé kroky každý deň vedú k veľkým výsledkom.", author: "Anonymný" },
+  { text: "Rastieš vtedy, keď si mimo komfortnej zóny.", author: "Anonymný" },
+  { text: "Myseľ, ktorá sa otvorí novej myšlienke, sa nikdy nevráti na svoju pôvodnú veľkosť.", author: "Albert Einstein" },
+  { text: "Buď tvrdohlavý vo svojich cieľoch a flexibilný vo svojich metódach.", author: "Anonymný" },
+  { text: "Najlepší čas zasadiť strom bol pred 20 rokmi. Druhý najlepší čas je teraz.", author: "Čínske príslovie" },
+  { text: "Investuj do seba. Tvoj mozog je tvojím najväčším aktívom.", author: "Anonymný" },
+  { text: "Každý odborník bol raz začiatočník. Každý víťaz bol raz porazený.", author: "Anonymný" },
+  { text: "Zmena začína v momente, keď sa rozhodneš, že to chceš.", author: "Anonymný" }
+];
+const DEFAULT_HABITS = [
+  { name: "Wake up 6:30", icon: "⏰", color: "#27AE60" },
+  { name: "Drink water", icon: "💧", color: "#2980B9" },
+  { name: "Read 10 pages", icon: "📚", color: "#F39C12" },
+  { name: "2 Fruits", icon: "🍎", color: "#E74C3C" },
+  { name: "No smoke", icon: "🚭", color: "#8E44AD" },
+  { name: "Less phone", icon: "📵", color: "#16A085" },
+  { name: "Training", icon: "💪", color: "#D35400" },
+  { name: "Sleep by 23:00", icon: "🌙", color: "#3498DB" }
+];
+function loadState() {
+  try { return JSON.parse(localStorage.getItem('habitApp_v2') || '{}'); }
+  catch { return {}; }
+}
+function saveState() {
+  try { localStorage.setItem('habitApp_v2', JSON.stringify(state)); }
+  catch (e) { console.warn('Storage unavailable', e); }
+}
+let state = loadState();
+if (!state.habits) state.habits = DEFAULT_HABITS;
+if (!state.checked) state.checked = {};
+const MONTHS = ["Január","Február","Marec","Apríl","Máj","Jún","Júl","August","September","Október","November","December"];
+const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","Máj","Jún","Júl","Aug","Sep","Okt","Nov","Dec"];
+let wheelYear = new Date().getFullYear();
+let wheelMonth = new Date().getMonth();
+(function initSplash() {
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  document.getElementById('splashQuoteText').textContent = `„${q.text}"`;
+  document.getElementById('splashQuoteAuthor').textContent = `— ${q.author}`;
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('app').classList.add('visible');
+    renderToday();
+  }, 2600);
+})();
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+function dayKey(y, m, d) { return `${y}-${m}-${d}`; }
+function getTodayChecked() { return state.checked[todayKey()] || {}; }
+function setTodayChecked(idx, val) {
+  if (!state.checked[todayKey()]) state.checked[todayKey()] = {};
+  state.checked[todayKey()][idx] = val;
+  saveState();
+}
+function getDoneCount(key) {
+  const c = state.checked[key] || {};
+  return Object.values(c).filter(Boolean).length;
+}
+function computeStreak() {
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const k = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    if (getDoneCount(k) === state.habits.length && state.habits.length > 0) streak++;
+    else if (i > 0) break;
+  }
+  return streak;
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+function switchView(name, el) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  el.classList.add('active');
+  if (name === 'wheel') renderWheel();
+  if (name === 'stats') renderStats();
+  if (name === 'settings') renderSettings();
+}
+function renderToday() {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('sk-SK', {weekday:'long', day:'numeric', month:'long'});
+  document.getElementById('headerDate').textContent = dateStr.toUpperCase();
+  const checked = getTodayChecked();
+  const doneCount = Object.values(checked).filter(Boolean).length;
+  const total = state.habits.length;
+  const pct = total ? Math.round(doneCount / total * 100) : 0;
+  const circ = 188.5;
+  document.getElementById('ringFill').style.strokeDashoffset = circ - (pct / 100) * circ;
+  document.getElementById('ringPct').textContent = pct + '%';
+  document.getElementById('progressSub').textContent = `${doneCount} z ${total} návykov splnených`;
+  const titles = ["Začni deň! 💪","Len tak ďalej!","Skvelý progres! 🚀","Takmer tam!","Perfektný deň! 🔥"];
+  document.getElementById('progressTitle').textContent = titles[Math.min(Math.floor(pct / 25), 4)];
+  document.getElementById('streakBadge').textContent = `🔥 ${computeStreak()} dní`;
+  const list = document.getElementById('habitsList');
+  list.innerHTML = '';
+  state.habits.forEach((h, i) => {
+    const done = !!checked[i];
+    const row = document.createElement('div');
+    row.className = 'habit-row' + (done ? ' done' : '');
+    row.style.setProperty('--habit-color', h.color);
+    row.style.animationDelay = (i * 0.04) + 's';
+    row.innerHTML = `
+      <div class="habit-icon" style="background:${h.color}1a">${h.icon}</div>
+      <div class="habit-info">
+        <div class="habit-name" style="color:${done ? h.color : 'var(--text)'}">${h.name}</div>
+        <div class="habit-sub">${done ? 'Splnené ✓' : 'Klepni na označenie'}</div>
+      </div>
+      <div class="habit-check">${done ? '✓' : ''}</div>
+    `;
+    row.addEventListener('click', () => {
+      const newVal = !getTodayChecked()[i];
+      setTodayChecked(i, newVal);
+      row.classList.add('pop');
+      setTimeout(() => row.classList.remove('pop'), 300);
+      if (newVal && Object.values(getTodayChecked()).filter(Boolean).length === state.habits.length) showToast('🔥 Všetky návyky splnené!');
+      renderToday();
+    });
+    list.appendChild(row);
+  });
+}
+function changeMonth(dir) {
+  wheelMonth += dir;
+  if (wheelMonth > 11) { wheelMonth = 0; wheelYear++; }
+  if (wheelMonth < 0) { wheelMonth = 11; wheelYear--; }
+  renderWheel();
+}
+function renderWheel() {
+  document.getElementById('wheelMonthLabel').textContent = `${MONTHS_SHORT[wheelMonth]} ${wheelYear}`;
+  const svg = document.getElementById('wheelSvg');
+  svg.innerHTML = '';
+  const cx = 160, cy = 160, R_IN = 38, RING = 12, GAP = 2;
+  const totalAngle = 270, startAngle = -225;
+  const days = new Date(wheelYear, wheelMonth + 1, 0).getDate();
+  const dayAngle = totalAngle / days;
+  const H = state.habits;
+  const toRad = d => d * Math.PI / 180;
+  const polar = (r, a) => [cx + r * Math.cos(toRad(a)), cy + r * Math.sin(toRad(a))];
+  const arc = (r1, r2, a1, a2) => {
+    const [x1,y1]=polar(r2,a1),[x2,y2]=polar(r2,a2),[x3,y3]=polar(r1,a2),[x4,y4]=polar(r1,a1);
+    const lg=(a2-a1)>180?1:0;
+    return `M${x1} ${y1} A${r2} ${r2} 0 ${lg} 1 ${x2} ${y2} L${x3} ${y3} A${r1} ${r1} 0 ${lg} 0 ${x4} ${y4}Z`;
+  };
+  for (let hi = 0; hi < H.length; hi++) {
+    const r1 = R_IN + hi*(RING+GAP), r2 = r1+RING;
+    for (let di = 0; di < days; di++) {
+      const a1=startAngle+di*dayAngle, a2=a1+dayAngle-1, day=di+1;
+      const k = dayKey(wheelYear, wheelMonth, day);
+      const done = !!(state.checked[k] && state.checked[k][hi]);
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', arc(r1,r2,a1,a2));
+      path.setAttribute('fill', done ? H[hi].color : '#222');
+      path.setAttribute('stroke', '#080808');
+      path.setAttribute('stroke-width', '0.6');
+      if (done) path.setAttribute('filter', `drop-shadow(0 0 3px ${H[hi].color}66)`);
+      svg.appendChild(path);
+    }
+  }
+  const R_LABEL = R_IN + H.length*(RING+GAP)+9;
+  for (let di = 0; di < days; di++) {
+    const a = startAngle+(di+.5)*dayAngle, [lx,ly] = polar(R_LABEL,a);
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',lx); t.setAttribute('y',ly);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('font-size','6.5'); t.setAttribute('font-family','Outfit,sans-serif');
+    t.setAttribute('font-weight','600'); t.setAttribute('fill','#444');
+    t.textContent = di+1;
+    svg.appendChild(t);
+  }
+  const bg = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  bg.setAttribute('cx',cx); bg.setAttribute('cy',cy); bg.setAttribute('r',R_IN-4);
+  bg.setAttribute('fill','#0d0d0d');
+  svg.appendChild(bg);
+  const ct = document.createElementNS('http://www.w3.org/2000/svg','text');
+  ct.setAttribute('x',cx); ct.setAttribute('y',cy-7);
+  ct.setAttribute('text-anchor','middle'); ct.setAttribute('font-size','11');
+  ct.setAttribute('font-family','Bebas Neue,sans-serif'); ct.setAttribute('fill','#e8b84b');
+  ct.setAttribute('letter-spacing','2'); ct.textContent = MONTHS[wheelMonth];
+  svg.appendChild(ct);
+  const cy2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  cy2.setAttribute('x',cx); cy2.setAttribute('y',cy+9);
+  cy2.setAttribute('text-anchor','middle'); cy2.setAttribute('font-size','9');
+  cy2.setAttribute('font-family','Outfit,sans-serif'); cy2.setAttribute('fill','#444');
+  cy2.textContent = wheelYear;
+  svg.appendChild(cy2);
+  const leg = document.getElementById('wheelLegend');
+  leg.innerHTML = '';
+  H.forEach(h => {
+    const d = document.createElement('div');
+    d.className = 'legend-item';
+    d.innerHTML = `<div class="legend-dot" style="background:${h.color}"></div>${h.icon} ${h.name}`;
+    leg.appendChild(d);
+  });
+}
+function renderStats() {
+  const now = new Date();
+  let totalPossible=0, totalDone=0, activeDays=0;
+  const habitDone = new Array(state.habits.length).fill(0);
+  for (let d=1; d<=now.getDate(); d++) {
+    const k = dayKey(now.getFullYear(), now.getMonth(), d);
+    const c = state.checked[k] || {};
+    const dd = Object.values(c).filter(Boolean).length;
+    totalPossible += state.habits.length; totalDone += dd;
+    if (dd > 0) activeDays++;
+    state.habits.forEach((_,i) => { if (c[i]) habitDone[i]++; });
+  }
+  const overallPct = totalPossible ? Math.round(totalDone/totalPossible*100) : 0;
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${overallPct}%</div><div class="stat-label">Úspešnosť mesiaca</div></div>
+    <div class="stat-card"><div class="stat-val">${computeStreak()}</div><div class="stat-label">Séria dní</div></div>
+    <div class="stat-card"><div class="stat-val">${totalDone}</div><div class="stat-label">Splnených návykov</div></div>
+    <div class="stat-card"><div class="stat-val">${activeDays}</div><div class="stat-label">Aktívnych dní</div></div>
+  `;
+  const hs = document.getElementById('habitStats');
+  hs.innerHTML = '';
+  state.habits.forEach((h,i) => {
+    const pct = now.getDate()>0 ? Math.round(habitDone[i]/now.getDate()*100) : 0;
+    const d = document.createElement('div');
+    d.className = 'habit-stat-row';
+    d.innerHTML = `
+      <div class="habit-stat-top">
+        <div class="habit-stat-name"><span>${h.icon}</span>${h.name}</div>
+        <div class="habit-stat-pct">${pct}%</div>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" style="width:0%;background:${h.color}" data-pct="${pct}"></div></div>
+    `;
+    hs.appendChild(d);
+    setTimeout(() => {
+      d.querySelector('.bar-fill').style.width = pct + '%';
+    }, 50 + i * 60);
+  });
+}
+function renderSettings() {
+  const sh = document.getElementById('settingsHabits');
+  sh.innerHTML = '';
+  state.habits.forEach((h,i) => {
+    const row = document.createElement('div');
+    row.className = 'setting-row';
+    row.innerHTML = `
+      <span class="setting-icon-pick" onclick="pickIcon(${i})" title="Klepni pre zmenu">${h.icon}</span>
+      <input type="text" id="habit-input-${i}" value="${h.name}" placeholder="Názov návyku">
+      <input type="color" id="habit-color-${i}" value="${h.color}" style="width:28px;height:28px;border:none;background:none;cursor:pointer;border-radius:6px;">
+    `;
+    sh.appendChild(row);
+  });
+}
+function pickIcon(idx) {
+  const icon = prompt('Zadaj emoji ikonu:', state.habits[idx].icon);
+  if (icon) { state.habits[idx].icon = icon.trim().slice(0,2); renderSettings(); }
+}
+function saveSettings() {
+  state.habits.forEach((h,i) => {
+    const inp = document.getElementById(`habit-input-${i}`);
+    const col = document.getElementById(`habit-color-${i}`);
+    if (inp) h.name = inp.value || h.name;
+    if (col) h.color = col.value;
+  });
+  saveState(); showToast('✅ Uložené!'); renderToday();
+}
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(err => {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+</script>
+</body>
+</html>
