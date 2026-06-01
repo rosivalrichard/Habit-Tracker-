@@ -3,34 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>Habit Tracker — Richard Rosival</title>
-<meta name="theme-color" content="#080808">
+<title>Habit Tracker — Elite Edition</title>
+<meta name="theme-color" content="#09090b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Habits">
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080808;
-  --surface: #101010;
-  --card: #161616;
-  --card2: #1c1c1c;
-  --border: #252525;
+  --bg: #09090b;
+  --bg-2: #101014;
+  --surface: rgba(255,255,255,0.05);
+  --surface-2: rgba(255,255,255,0.08);
+  --surface-3: rgba(255,255,255,0.11);
+  --card: rgba(20,20,24,0.85);
+  --card-2: rgba(24,24,30,0.92);
+  --border: rgba(255,255,255,0.08);
+  --border-2: rgba(232,184,75,0.14);
   --gold: #e8b84b;
-  --gold2: #c8921a;
-  --text: #f2efe9;
-  --muted: #555;
-  --muted2: #888;
-  --radius: 16px;
-  --radius-sm: 10px;
+  --gold-2: #c8921a;
+  --gold-soft: rgba(232,184,75,0.12);
+  --emerald: #22c55e;
+  --text: #f8f7f3;
+  --muted: #9d9aa6;
+  --muted-2: #6c6975;
+  --shadow: 0 20px 70px rgba(0,0,0,0.35);
+  --radius: 18px;
+  --radius-lg: 24px;
+  --radius-sm: 12px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { height: 100%; }
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top center, rgba(232,184,75,0.10), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(79,70,229,0.10), transparent 28%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
   color: var(--text);
   font-family: 'Outfit', sans-serif;
   min-height: 100vh;
@@ -41,31 +54,37 @@ body::before {
   content:'';
   position:fixed;
   inset:0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   pointer-events:none;
   z-index:0;
 }
-#splash {
+button,input { font: inherit; }
+button { border: none; cursor: pointer; }
+#splash, #welcomeOverlay {
   position: fixed;
   inset: 0;
-  background: var(--bg);
-  z-index: 1000;
+  z-index: 1200;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: opacity .6s ease, transform .6s ease;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(9,9,11,0.98), rgba(9,9,11,0.96));
+  transition: opacity .45s ease, visibility .45s ease, transform .45s ease;
 }
-#splash.hide {
+#splash.hide, #welcomeOverlay.hide {
   opacity: 0;
-  transform: scale(1.04);
+  visibility: hidden;
   pointer-events: none;
+}
+.splash-inner {
+  text-align: center;
+  max-width: 320px;
 }
 .splash-logo {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 72px;
+  font-size: 84px;
   letter-spacing: 6px;
-  background: linear-gradient(135deg, #e8b84b, #fff8e0, #c8921a);
+  background: linear-gradient(135deg, #f3d580, #fff8e0, #d89d28);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -74,22 +93,20 @@ body::before {
 }
 .splash-sub {
   font-size: 11px;
-  letter-spacing: 5px;
-  color: var(--muted2);
+  letter-spacing: 6px;
+  color: var(--muted);
   text-transform: uppercase;
   margin-top: 6px;
-  animation: fadeUp .8s .2s cubic-bezier(.16,1,.3,1) both;
+  animation: fadeUp .8s .15s cubic-bezier(.16,1,.3,1) both;
 }
 .splash-quote {
-  margin-top: 48px;
-  max-width: 280px;
-  text-align: center;
-  animation: fadeUp .8s .4s cubic-bezier(.16,1,.3,1) both;
+  margin-top: 42px;
+  animation: fadeUp .8s .35s cubic-bezier(.16,1,.3,1) both;
 }
 .splash-quote-text {
   font-size: 15px;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--text);
   font-style: italic;
 }
@@ -98,536 +115,878 @@ body::before {
   color: var(--gold);
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-top: 10px;
-  font-style: normal;
-  font-weight: 600;
-}
-.splash-line {
-  width: 40px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 12px auto 0;
+  margin-top: 12px;
+  font-weight: 700;
 }
 .splash-dots {
   display: flex;
-  gap: 6px;
-  margin-top: 56px;
-  animation: fadeUp .8s .6s cubic-bezier(.16,1,.3,1) both;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 48px;
+  animation: fadeUp .8s .55s cubic-bezier(.16,1,.3,1) both;
 }
 .splash-dot {
-  width: 6px; height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--border);
+  background: rgba(255,255,255,0.15);
 }
-.splash-dot.active { background: var(--gold); }
 .splash-dot:nth-child(1) { animation: dotPulse 1.2s .0s infinite; }
 .splash-dot:nth-child(2) { animation: dotPulse 1.2s .2s infinite; }
 .splash-dot:nth-child(3) { animation: dotPulse 1.2s .4s infinite; }
+#welcomeOverlay {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.welcome-card {
+  width: min(100%, 390px);
+  background: linear-gradient(180deg, rgba(25,25,32,0.98), rgba(14,14,18,0.96));
+  border: 1px solid var(--border-2);
+  border-radius: 28px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.welcome-card::before {
+  content:'';
+  position:absolute;
+  top:-60px;
+  right:-50px;
+  width:180px;
+  height:180px;
+  background: radial-gradient(circle, rgba(232,184,75,0.15), transparent 65%);
+  pointer-events:none;
+}
+.eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.welcome-card h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  line-height: 0.95;
+  letter-spacing: 1.5px;
+}
+.welcome-copy {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.welcome-points {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+.welcome-point {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  font-size: 13px;
+}
+.welcome-point span:first-child {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--gold-soft);
+}
+.name-label {
+  display:block;
+  margin-top: 18px;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.name-input {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border-radius: 18px;
+  padding: 16px 18px;
+  outline: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+.name-input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(232,184,75,0.08); }
+.welcome-actions {
+  display:flex;
+  gap:12px;
+  margin-top: 18px;
+}
+.btn-secondary, .btn-primary {
+  min-height: 50px;
+  border-radius: 16px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+.btn-secondary {
+  flex: 0 0 auto;
+  padding: 0 18px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.btn-primary {
+  flex: 1;
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: #111;
+  box-shadow: 0 14px 32px rgba(232,184,75,0.2);
+}
+#app { opacity: 0; transition: opacity .45s ease; }
+#app.visible { opacity: 1; }
+.header {
+  position: relative;
+  z-index: 2;
+  padding: 22px 20px 0;
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.brand-shell {
+  display:flex;
+  align-items:center;
+  gap: 14px;
+}
+.brand-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(232,184,75,0.18), rgba(255,255,255,0.04));
+  border: 1px solid rgba(232,184,75,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.brand-ring {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  position: relative;
+}
+.brand-ring::after {
+  content:'';
+  position:absolute;
+  width: 9px;
+  height: 2px;
+  background: var(--gold);
+  top: 12px;
+  left: 11px;
+  transform-origin: left center;
+  transform: rotate(36deg);
+  border-radius: 99px;
+}
+.brand-text .greeting {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.brand-text .date-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-top: 4px;
+}
+.header-chip {
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: var(--text);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width: 76px;
+  justify-content:center;
+}
+.streak-badge {
+  margin-top: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 16px 18px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(232,184,75,0.18), rgba(255,255,255,0.03));
+  border: 1px solid rgba(232,184,75,0.16);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.streak-left strong {
+  display:block;
+  font-size: 16px;
+}
+.streak-left span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.streak-flame {
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(232,184,75,0.18);
+  font-size: 22px;
+}
+.bottom-nav {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 10px;
+  border-radius: 24px;
+  background: rgba(12,12,16,0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
+}
+.nav-item {
+  min-height: 60px;
+  border-radius: 18px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  color: var(--muted);
+  transition: .22s ease;
+}
+.nav-item.active {
+  background: linear-gradient(180deg, rgba(232,184,75,0.17), rgba(232,184,75,0.07));
+  color: var(--gold);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.nav-icon { font-size: 20px; }
+.nav-item span { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.view { display: none; padding: 16px 18px 112px; position: relative; z-index: 1; }
+.view.active { display: block; }
+.hero-card, .glass-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.035));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 26px;
+  box-shadow: var(--shadow);
+}
+.hero-card {
+  position: relative;
+  padding: 18px;
+  overflow: hidden;
+}
+.hero-card::before {
+  content:'';
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(232,184,75,0.16), transparent 70%);
+  pointer-events:none;
+}
+.hero-top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+}
+.hero-top h2 {
+  font-size: 18px;
+  font-weight: 800;
+}
+.hero-top p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.today-score {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.today-score strong {
+  font-size: 17px;
+  color: var(--gold);
+  line-height: 1;
+}
+.today-score span {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.progress-shell {
+  margin-top: 18px;
+  display:flex;
+  align-items:center;
+  gap: 16px;
+}
+.progress-ring-wrap { position: relative; width: 86px; height: 86px; flex-shrink: 0; }
+.progress-ring-wrap svg { width: 86px; height: 86px; transform: rotate(-90deg); }
+.progress-ring-bg { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 6; }
+.progress-ring-fill { fill: none; stroke: url(#goldGrad2); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1); }
+.progress-pct {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  color: var(--gold);
+}
+.progress-copy h3 { font-size: 18px; font-weight: 800; }
+.progress-copy p { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.quick-stats {
+  margin-top: 18px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.quick-stat {
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.quick-stat strong {
+  display:block;
+  font-size: 18px;
+  color: var(--text);
+}
+.quick-stat span {
+  display:block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.section-title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin: 18px 2px 12px;
+}
+.section-title h3 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.section-title span {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.habits-list { display: grid; gap: 12px; }
+.habit-row {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+  position: relative;
+  overflow: hidden;
+}
+.habit-row:active { transform: scale(.985); }
+.habit-row::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent);
+  transform: translateX(-100%);
+  transition: transform .35s ease;
+}
+.habit-row.done::before { transform: translateX(100%); }
+.habit-row.done {
+  border-color: rgba(232,184,75,0.18);
+  background: linear-gradient(180deg, rgba(232,184,75,0.12), rgba(255,255,255,0.03));
+}
+.habit-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 21px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.habit-info { flex: 1; min-width: 0; }
+.habit-name { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.habit-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.habit-meta {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.habit-pill {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.habit-check {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 15px;
+  transition: .22s ease;
+  flex-shrink: 0;
+}
+.habit-row.done .habit-check {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  border-color: transparent;
+  color: #111;
+  box-shadow: 0 10px 24px rgba(232,184,75,0.22);
+}
+.wheel-header, .settings-head {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.wheel-header h2, .settings-head h2, .stats-head h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+.month-nav { display:flex; align-items:center; gap:10px; }
+.month-nav button {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.month-nav span {
+  min-width: 92px;
+  text-align: center;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 13px;
+}
+.wheel-container {
+  padding: 16px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+#wheelSvg { width: 100%; max-width: 330px; margin: 0 auto; }
+.wheel-legend {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+.legend-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 10px 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size: 11px;
+  color: var(--muted);
+  min-width: 0;
+}
+.legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.stats-head { margin-bottom: 14px; }
+.stats-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.stat-card {
+  padding: 18px 16px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 44px;
+  line-height: 1;
+  color: var(--gold);
+}
+.stat-label {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.habit-stats {
+  display:grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.habit-stat-row {
+  padding: 15px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.habit-stat-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom: 10px;
+}
+.habit-stat-name {
+  font-size: 13px;
+  font-weight: 700;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.habit-stat-pct { color: var(--gold); font-weight: 800; font-size: 13px; }
+.bar-bg {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.07);
+  overflow: hidden;
+}
+.bar-fill {
+  height: 8px;
+  border-radius: 999px;
+  transition: width .7s cubic-bezier(.4,0,.2,1);
+}
+.settings-head p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+.settings-section { display:grid; gap: 12px; }
+.setting-row {
+  padding: 14px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  display:flex;
+  align-items:center;
+  gap: 12px;
+}
+.setting-row input[type="text"] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+  outline: none;
+}
+.setting-row input[type="text"]::placeholder { color: var(--muted); }
+.setting-icon-pick {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  font-size: 21px;
+}
+.btn-save {
+  margin-top: 6px;
+  min-height: 56px;
+  width: 100%;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: #111;
+  font-weight: 900;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  box-shadow: 0 18px 32px rgba(232,184,75,0.18);
+}
+.app-footer {
+  text-align:center;
+  margin-top: 18px;
+  color: var(--muted-2);
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.app-footer strong { color: var(--gold); }
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 100px;
+  transform: translateX(-50%) translateY(14px);
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: #111;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2000;
+  transition: .3s cubic-bezier(.34,1.56,.64,1);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.hidden { display:none !important; }
 @keyframes dotPulse {
-  0%,100% { opacity:.3; transform:scale(1); }
-  50% { opacity:1; transform:scale(1.4); background: var(--gold); }
+  0%,100% { opacity:.35; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.35); background: var(--gold); }
 }
 @keyframes logoIn {
   from { opacity:0; transform: translateY(24px) scale(.95); }
   to { opacity:1; transform: translateY(0) scale(1); }
 }
 @keyframes fadeUp {
-  from { opacity:0; transform: translateY(16px); }
+  from { opacity:0; transform: translateY(14px); }
   to { opacity:1; transform: translateY(0); }
 }
-#app { opacity: 0; transition: opacity .4s .1s; }
-#app.visible { opacity: 1; }
-.header {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 52px 22px 0;
-  z-index: 1;
+@media (max-width: 360px) {
+  .quick-stats { grid-template-columns: 1fr; }
+  .wheel-legend { grid-template-columns: 1fr; }
+  .welcome-actions { flex-direction: column; }
 }
-.header::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 120px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(232,184,75,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.header-left .greeting {
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-.header-left .date-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  color: var(--text);
-}
-.streak-badge {
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #000;
-  font-weight: 700;
-  font-size: 11px;
-  padding: 7px 14px;
-  border-radius: 99px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  box-shadow: 0 0 20px rgba(232,184,75,0.3);
-}
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: rgba(10,10,10,0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border);
-  display: flex;
-  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
-  z-index: 100;
-}
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  cursor: pointer;
-  font-size: 9px;
-  color: var(--muted);
-  font-weight: 600;
-  letter-spacing: .8px;
-  text-transform: uppercase;
-  transition: color .2s;
-  padding: 4px 0;
-}
-.nav-item.active { color: var(--gold); }
-.nav-icon { font-size: 20px; transition: transform .2s; }
-.nav-item.active .nav-icon { transform: scale(1.15); }
-.view { display: none; padding: 14px 20px 110px; position: relative; z-index: 1; }
-.view.active { display: block; }
-.today-progress {
-  background: linear-gradient(135deg, #1a1a1a, #141414);
-  border-radius: 20px;
-  padding: 18px 20px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-}
-.today-progress::before {
-  content: '';
-  position: absolute;
-  top: -20px; right: -20px;
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(232,184,75,0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-.progress-ring-wrap { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
-.progress-ring-wrap svg { width: 72px; height: 72px; transform: rotate(-90deg); }
-.progress-ring-bg { fill: none; stroke: #222; stroke-width: 5; }
-.progress-ring-fill {
-  fill: none;
-  stroke: url(#goldGrad);
-  stroke-width: 5;
-  stroke-linecap: round;
-  transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1);
-}
-.progress-pct {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  color: var(--gold);
-}
-.progress-text h3 { font-size: 17px; font-weight: 700; letter-spacing: -.2px; }
-.progress-text p { font-size: 12px; color: var(--muted2); margin-top: 3px; }
-.habits-list { display: flex; flex-direction: column; gap: 9px; }
-.habit-row {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 13px 15px;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  cursor: pointer;
-  transition: all .2s cubic-bezier(.4,0,.2,1);
-  user-select: none;
-  -webkit-user-select: none;
-  position: relative;
-  overflow: hidden;
-}
-.habit-row::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  border-radius: 3px 0 0 3px;
-  background: var(--habit-color, var(--border));
-  opacity: 0;
-  transition: opacity .2s;
-}
-.habit-row.done { background: var(--card2); border-color: transparent; }
-.habit-row.done::before { opacity: 1; }
-.habit-icon {
-  width: 42px; height: 42px;
-  border-radius: 13px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 19px;
-  flex-shrink: 0;
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
-}
-.habit-row.done .habit-icon { transform: scale(1.1); }
-.habit-info { flex: 1; min-width: 0; }
-.habit-name { font-size: 14px; font-weight: 600; transition: color .2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.habit-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.habit-check {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  transition: all .25s cubic-bezier(.34,1.56,.64,1);
-  flex-shrink: 0;
-}
-.habit-row.done .habit-check {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: #000;
-  font-weight: 800;
-  box-shadow: 0 0 12px rgba(232,184,75,0.4);
-}
-.wheel-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.wheel-header h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, var(--gold), #fff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.month-nav { display: flex; align-items: center; gap: 10px; }
-.month-nav button {
-  background: var(--card); border: 1px solid var(--border);
-  color: var(--text); width: 34px; height: 34px;
-  border-radius: 10px; cursor: pointer; font-size: 16px;
-  display: flex; align-items: center; justify-content: center;
-}
-.month-nav span { font-size: 13px; font-weight: 700; color: var(--gold); min-width: 80px; text-align: center; letter-spacing: 1px; }
-.wheel-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-  background: var(--card);
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  padding: 12px;
-}
-#wheelSvg { width: 100%; max-width: 320px; height: auto; }
-.wheel-legend {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-}
-.legend-item {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 11px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted2);
-}
-.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 9px;
-  margin-bottom: 16px;
-}
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 14px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.stat-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: .4;
-}
-.stat-val {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 40px;
-  color: var(--gold);
-  line-height: 1;
-  letter-spacing: 1px;
-}
-.stat-label { font-size: 10px; color: var(--muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 1.5px; }
-.habit-stats { display: flex; flex-direction: column; gap: 9px; }
-.habit-stat-row {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 13px 15px;
-}
-.habit-stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
-.habit-stat-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-.habit-stat-pct { font-size: 13px; font-weight: 700; color: var(--gold); }
-.bar-bg { background: #1e1e1e; border-radius: 99px; height: 5px; }
-.bar-fill { height: 5px; border-radius: 99px; transition: width .6s cubic-bezier(.4,0,.2,1); }
-.settings-section { margin-bottom: 22px; }
-.settings-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 3px;
-  color: var(--muted);
-  margin-bottom: 10px;
-  padding-left: 2px;
-}
-.setting-row {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 13px 15px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.setting-row:focus-within { border-color: var(--gold); }
-.setting-row input[type="text"] {
-  flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--text);
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  outline: none;
-}
-.setting-row input[type="text"]::placeholder { color: var(--muted); }
-.setting-icon-pick { font-size: 22px; cursor: pointer; }
-.btn-save {
-  width: 100%;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #000;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border: none;
-  border-radius: var(--radius);
-  padding: 17px;
-  cursor: pointer;
-  margin-top: 6px;
-  box-shadow: 0 4px 24px rgba(232,184,75,0.25);
-}
-.app-footer {
-  text-align: center;
-  padding: 6px 0 10px;
-  pointer-events: none;
-}
-.app-footer span {
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.app-footer strong { color: var(--gold); font-weight: 700; }
-.toast {
-  position: fixed;
-  bottom: 90px; left: 50%;
-  transform: translateX(-50%) translateY(16px);
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #000;
-  font-weight: 700;
-  font-size: 13px;
-  padding: 11px 24px;
-  border-radius: 99px;
-  opacity: 0;
-  transition: all .3s cubic-bezier(.34,1.56,.64,1);
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 200;
-  box-shadow: 0 8px 32px rgba(232,184,75,0.3);
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-@keyframes pop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.04); }
-  100% { transform: scale(1); }
-}
-.pop { animation: pop .22s ease; }
-@keyframes slideIn {
-  from { opacity:0; transform: translateY(10px); }
-  to { opacity:1; transform: translateY(0); }
-}
-.habit-row { animation: slideIn .3s ease both; }
 </style>
 </head>
 <body>
 <div id="splash">
-  <div class="splash-logo">HABITS</div>
-  <div class="splash-sub">Richard Rosival</div>
-  <div class="splash-quote">
-    <div class="splash-line"></div>
-    <div class="splash-quote-text" id="splashQuoteText"></div>
-    <div class="splash-quote-author" id="splashQuoteAuthor"></div>
+  <div class="splash-inner">
+    <div class="splash-logo">HABITS</div>
+    <div class="splash-sub">Elite Edition</div>
+    <div class="splash-quote">
+      <div class="splash-quote-text" id="splashQuoteText"></div>
+      <div class="splash-quote-author" id="splashQuoteAuthor"></div>
+    </div>
+    <div class="splash-dots">
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+      <div class="splash-dot"></div>
+    </div>
   </div>
-  <div class="splash-dots">
-    <div class="splash-dot active"></div>
-    <div class="splash-dot"></div>
-    <div class="splash-dot"></div>
+</div>
+<div id="welcomeOverlay" class="hide">
+  <div class="welcome-card">
+    <div class="eyebrow">First launch</div>
+    <h1>NASTAV SI SVOJ OSOBNÝ REŽIM</h1>
+    <p class="welcome-copy">Táto verzia appky ťa hneď osloví menom a vytvorí osobnejší pocit. Čím osobnejší systém, tým vyššia šanca, že ho budeš fakt používať. [web:74][web:80]</p>
+    <div class="welcome-points">
+      <div class="welcome-point"><span>👤</span><span>Osobné oslovenie v celej appke.</span></div>
+      <div class="welcome-point"><span>🔥</span><span>Silnejší pocit progresu a identity.</span></div>
+      <div class="welcome-point"><span>🎯</span><span>Rýchly štart bez registrácie a bez účtu.</span></div>
+    </div>
+    <label class="name-label" for="nameInput">Ako sa voláš?</label>
+    <input id="nameInput" class="name-input" type="text" maxlength="24" placeholder="Napr. Richard">
+    <div class="welcome-actions">
+      <button class="btn-secondary" id="skipNameBtn" type="button">Preskočiť</button>
+      <button class="btn-primary" id="saveNameBtn" type="button">Vstúpiť do appky</button>
+    </div>
   </div>
 </div>
 <div id="app">
   <div class="header">
-    <div class="header-left">
-      <div class="greeting">DOBRÝ DEŇ, RICHARD 👋</div>
-      <div class="date-label" id="headerDate"></div>
+    <div class="header-top">
+      <div class="brand-shell">
+        <div class="brand-mark"><div class="brand-ring"></div></div>
+        <div class="brand-text">
+          <div class="greeting" id="headerGreeting">DOBRÝ DEŇ 👋</div>
+          <div class="date-label" id="headerDate"></div>
+        </div>
+      </div>
+      <div class="header-chip"><span>⚡</span><strong id="energyBadge">8/8</strong></div>
     </div>
-    <div class="streak-badge" id="streakBadge">🔥 0 dní</div>
+    <div class="streak-badge">
+      <div class="streak-left">
+        <strong id="streakBadge">🔥 0 dní</strong>
+        <span>Perfektné dni za sebou</span>
+      </div>
+      <div class="streak-flame">🔥</div>
+    </div>
   </div>
   <div id="view-today" class="view active">
     <svg width="0" height="0" style="position:absolute">
       <defs>
-        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#e8b84b"/>
+        <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f0c968"/>
           <stop offset="100%" stop-color="#c8921a"/>
         </linearGradient>
       </defs>
     </svg>
-    <div class="today-progress">
-      <div class="progress-ring-wrap">
-        <svg viewBox="0 0 72 72">
-          <defs>
-            <linearGradient id="goldGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#e8b84b"/>
-              <stop offset="100%" stop-color="#c8921a"/>
-            </linearGradient>
-          </defs>
-          <circle class="progress-ring-bg" cx="36" cy="36" r="30"/>
-          <circle class="progress-ring-fill" id="ringFill" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="188.5" stroke="url(#goldGrad2)"/>
-        </svg>
-        <div class="progress-pct" id="ringPct">0%</div>
+    <div class="hero-card">
+      <div class="hero-top">
+        <div>
+          <h2 id="focusHeading">Dnes buduješ momentum.</h2>
+          <p id="focusSubtitle">Každý splnený návyk posúva deň z priemeru do disciplíny.</p>
+        </div>
+        <div class="today-score">
+          <strong id="todayDoneSmall">0</strong>
+          <span>done</span>
+        </div>
       </div>
-      <div class="progress-text">
-        <h3 id="progressTitle">Začni deň!</h3>
-        <p id="progressSub">0 z 8 návykov splnených</p>
+      <div class="progress-shell">
+        <div class="progress-ring-wrap">
+          <svg viewBox="0 0 86 86">
+            <circle class="progress-ring-bg" cx="43" cy="43" r="36"></circle>
+            <circle class="progress-ring-fill" id="ringFill" cx="43" cy="43" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"></circle>
+          </svg>
+          <div class="progress-pct" id="ringPct">0%</div>
+        </div>
+        <div class="progress-copy">
+          <h3 id="progressTitle">Začni ostro.</h3>
+          <p id="progressSub">0 z 8 návykov splnených</p>
+        </div>
+      </div>
+      <div class="quick-stats">
+        <div class="quick-stat"><strong id="quickRemaining">8</strong><span>Ostáva dnes</span></div>
+        <div class="quick-stat"><strong id="quickPerfect">0</strong><span>Perfektné dni</span></div>
+        <div class="quick-stat"><strong id="quickRate">0%</strong><span>Denný výkon</span></div>
       </div>
     </div>
+    <div class="section-title">
+      <h3>Dnešné návyky</h3>
+      <span id="habitSectionMeta">8 položiek</span>
+    </div>
     <div class="habits-list" id="habitsList"></div>
-    <div class="app-footer"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+    <div class="app-footer">Created by <strong>Richard Rosival</strong> · Elite Edition</div>
   </div>
   <div id="view-wheel" class="view">
     <div class="wheel-header">
-      <h2>MESAČNÝ WHEEL</h2>
+      <h2>MONTH WHEEL</h2>
       <div class="month-nav">
-        <button onclick="changeMonth(-1)">‹</button>
+        <button onclick="changeMonth(-1)" type="button">‹</button>
         <span id="wheelMonthLabel"></span>
-        <button onclick="changeMonth(1)">›</button>
+        <button onclick="changeMonth(1)" type="button">›</button>
       </div>
     </div>
-    <div class="wheel-container"><svg id="wheelSvg" viewBox="0 0 320 320"></svg></div>
+    <div class="wheel-container glass-card">
+      <svg id="wheelSvg" viewBox="0 0 320 320"></svg>
+    </div>
     <div class="wheel-legend" id="wheelLegend"></div>
-    <div class="app-footer" style="margin-top:16px"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+    <div class="app-footer">Created by <strong>Richard Rosival</strong> · Elite Edition</div>
   </div>
   <div id="view-stats" class="view">
+    <div class="stats-head">
+      <h2>PERFORMANCE</h2>
+    </div>
     <div class="stats-grid" id="statsGrid"></div>
     <div class="habit-stats" id="habitStats"></div>
-    <div class="app-footer" style="margin-top:16px"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+    <div class="app-footer">Created by <strong>Richard Rosival</strong> · Elite Edition</div>
   </div>
   <div id="view-settings" class="view">
-    <div class="settings-section">
-      <div class="settings-title">TVOJE NÁVYKY</div>
-      <div id="settingsHabits"></div>
-      <button class="btn-save" onclick="saveSettings()">ULOŽIŤ ZMENY</button>
+    <div class="settings-head">
+      <div>
+        <h2>SETTINGS</h2>
+        <p>Uprav si meno, návyky, ikony a farby.</p>
+      </div>
     </div>
-    <div class="app-footer"><span>Created by <strong>Richard Rosival</strong> · 2026</span></div>
+    <div class="settings-section">
+      <div class="setting-row">
+        <span class="setting-icon-pick">👤</span>
+        <input type="text" id="profileNameInput" placeholder="Tvoje meno">
+      </div>
+      <div id="settingsHabits"></div>
+      <button class="btn-save" onclick="saveSettings()" type="button">Uložiť zmeny</button>
+    </div>
+    <div class="app-footer">Created by <strong>Richard Rosival</strong> · Elite Edition</div>
   </div>
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchView('today',this)"><div class="nav-icon">✅</div><span>Dnes</span></div>
-    <div class="nav-item" onclick="switchView('wheel',this)"><div class="nav-icon">⭕</div><span>Wheel</span></div>
-    <div class="nav-item" onclick="switchView('stats',this)"><div class="nav-icon">📊</div><span>Štatistiky</span></div>
-    <div class="nav-item" onclick="switchView('settings',this)"><div class="nav-icon">⚙️</div><span>Nastavenia</span></div>
+    <button class="nav-item active" onclick="switchView('today',this)" type="button"><div class="nav-icon">✅</div><span>Dnes</span></button>
+    <button class="nav-item" onclick="switchView('wheel',this)" type="button"><div class="nav-icon">⭕</div><span>Wheel</span></button>
+    <button class="nav-item" onclick="switchView('stats',this)" type="button"><div class="nav-icon">📊</div><span>Stats</span></button>
+    <button class="nav-item" onclick="switchView('settings',this)" type="button"><div class="nav-icon">⚙️</div><span>Setup</span></button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
 const QUOTES = [
-  { text: "Úspech nie je konečný, neúspech nie je osudný. Dôležitá je odvaha pokračovať.", author: "Winston Churchill" },
-  { text: "Nevzdávaj sa. Veľké veci si vyžadujú čas.", author: "Burt Reynolds" },
-  { text: "Disciplína je most medzi cieľmi a úspechom.", author: "Jim Rohn" },
-  { text: "Tvoja jediná konkurencia je človek, ktorým si bol včera.", author: "Anonymný" },
-  { text: "Malé kroky každý deň vedú k veľkým výsledkom.", author: "Anonymný" },
-  { text: "Rastieš vtedy, keď si mimo komfortnej zóny.", author: "Anonymný" },
-  { text: "Myseľ, ktorá sa otvorí novej myšlienke, sa nikdy nevráti na svoju pôvodnú veľkosť.", author: "Albert Einstein" },
-  { text: "Buď tvrdohlavý vo svojich cieľoch a flexibilný vo svojich metódach.", author: "Anonymný" },
-  { text: "Najlepší čas zasadiť strom bol pred 20 rokmi. Druhý najlepší čas je teraz.", author: "Čínske príslovie" },
-  { text: "Investuj do seba. Tvoj mozog je tvojím najväčším aktívom.", author: "Anonymný" },
-  { text: "Každý odborník bol raz začiatočník. Každý víťaz bol raz porazený.", author: "Anonymný" },
-  { text: "Zmena začína v momente, keď sa rozhodneš, že to chceš.", author: "Anonymný" }
+  { text: 'Disciplína je forma sebaúcty.', author: 'Anonymný' },
+  { text: 'Malé kroky každý deň vedú k veľkým výsledkom.', author: 'Anonymný' },
+  { text: 'Nevzdávaj sa. Veľké veci si vyžadujú čas.', author: 'Burt Reynolds' },
+  { text: 'Úspech nie je konečný, neúspech nie je osudný. Dôležitá je odvaha pokračovať.', author: 'Winston Churchill' },
+  { text: 'Najlepší čas zasadiť strom bol pred 20 rokmi. Druhý najlepší čas je teraz.', author: 'Čínske príslovie' },
+  { text: 'Tvoja jediná konkurencia je človek, ktorým si bol včera.', author: 'Anonymný' }
 ];
 const DEFAULT_HABITS = [
-  { name: "Wake up 6:30", icon: "⏰", color: "#27AE60" },
-  { name: "Drink water", icon: "💧", color: "#2980B9" },
-  { name: "Read 10 pages", icon: "📚", color: "#F39C12" },
-  { name: "2 Fruits", icon: "🍎", color: "#E74C3C" },
-  { name: "No smoke", icon: "🚭", color: "#8E44AD" },
-  { name: "Less phone", icon: "📵", color: "#16A085" },
-  { name: "Training", icon: "💪", color: "#D35400" },
-  { name: "Sleep by 23:00", icon: "🌙", color: "#3498DB" }
+  { name: 'Wake up 6:30', icon: '⏰', color: '#27AE60' },
+  { name: 'Drink water', icon: '💧', color: '#2980B9' },
+  { name: 'Read 10 pages', icon: '📚', color: '#F39C12' },
+  { name: '2 Fruits', icon: '🍎', color: '#E74C3C' },
+  { name: 'No smoke', icon: '🚭', color: '#8E44AD' },
+  { name: 'Less phone', icon: '📵', color: '#16A085' },
+  { name: 'Training', icon: '💪', color: '#D35400' },
+  { name: 'Sleep by 23:00', icon: '🌙', color: '#3498DB' }
 ];
+const STORAGE_KEY = 'habitEliteApp_v1';
 function loadState() {
-  try { return JSON.parse(localStorage.getItem('habitApp_v2') || '{}'); }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
   catch { return {}; }
 }
 function saveState() {
-  try { localStorage.setItem('habitApp_v2', JSON.stringify(state)); }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
   catch (e) { console.warn('Storage unavailable', e); }
 }
 let state = loadState();
 if (!state.habits) state.habits = DEFAULT_HABITS;
 if (!state.checked) state.checked = {};
-const MONTHS = ["Január","Február","Marec","Apríl","Máj","Jún","Júl","August","September","Október","November","December"];
-const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","Máj","Jún","Júl","Aug","Sep","Okt","Nov","Dec"];
+if (!state.profile) state.profile = { name: '', onboarded: false };
+const MONTHS = ['Január','Február','Marec','Apríl','Máj','Jún','Júl','August','September','Október','November','December'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','Máj','Jún','Júl','Aug','Sep','Okt','Nov','Dec'];
 let wheelYear = new Date().getFullYear();
 let wheelMonth = new Date().getMonth();
-(function initSplash() {
-  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-  document.getElementById('splashQuoteText').textContent = `„${q.text}"`;
-  document.getElementById('splashQuoteAuthor').textContent = `— ${q.author}`;
-  setTimeout(() => {
-    document.getElementById('splash').classList.add('hide');
-    document.getElementById('app').classList.add('visible');
-    renderToday();
-  }, 2600);
-})();
+function capitalizeName(name) {
+  if (!name) return '';
+  return name.trim().charAt(0).toUpperCase() + name.trim().slice(1);
+}
 function todayKey() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
@@ -654,6 +1013,29 @@ function computeStreak() {
   }
   return streak;
 }
+function countPerfectDays() {
+  return Object.keys(state.checked).filter(key => getDoneCount(key) === state.habits.length && state.habits.length > 0).length;
+}
+function completionRateForMonth() {
+  const now = new Date();
+  let totalPossible = 0, totalDone = 0;
+  for (let d=1; d<=now.getDate(); d++) {
+    const k = dayKey(now.getFullYear(), now.getMonth(), d);
+    totalPossible += state.habits.length;
+    totalDone += getDoneCount(k);
+  }
+  return totalPossible ? Math.round(totalDone / totalPossible * 100) : 0;
+}
+function getUserName() {
+  return capitalizeName(state.profile?.name || '');
+}
+function updatePersonalUI() {
+  const name = getUserName();
+  const greetingEl = document.getElementById('headerGreeting');
+  if (name) greetingEl.textContent = `DOBRÝ DEŇ, ${name.toUpperCase()} 👋`;
+  else greetingEl.textContent = 'DOBRÝ DEŇ 👋';
+  document.getElementById('profileNameInput').value = name;
+}
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -671,18 +1053,33 @@ function switchView(name, el) {
 }
 function renderToday() {
   const now = new Date();
-  const dateStr = now.toLocaleDateString('sk-SK', {weekday:'long', day:'numeric', month:'long'});
+  const dateStr = now.toLocaleDateString('sk-SK', { weekday:'long', day:'numeric', month:'long' });
   document.getElementById('headerDate').textContent = dateStr.toUpperCase();
   const checked = getTodayChecked();
   const doneCount = Object.values(checked).filter(Boolean).length;
   const total = state.habits.length;
   const pct = total ? Math.round(doneCount / total * 100) : 0;
-  const circ = 188.5;
+  const circ = 226.2;
   document.getElementById('ringFill').style.strokeDashoffset = circ - (pct / 100) * circ;
   document.getElementById('ringPct').textContent = pct + '%';
+  document.getElementById('todayDoneSmall').textContent = doneCount;
   document.getElementById('progressSub').textContent = `${doneCount} z ${total} návykov splnených`;
-  const titles = ["Začni deň! 💪","Len tak ďalej!","Skvelý progres! 🚀","Takmer tam!","Perfektný deň! 🔥"];
+  document.getElementById('energyBadge').textContent = `${doneCount}/${total}`;
+  document.getElementById('quickRemaining').textContent = Math.max(total - doneCount, 0);
+  document.getElementById('quickPerfect').textContent = countPerfectDays();
+  document.getElementById('quickRate').textContent = pct + '%';
+  document.getElementById('habitSectionMeta').textContent = `${total} položiek`;
+  const titles = ['Začni ostro.', 'Si v pohybe.', 'Výborne, držíš tempo.', 'Takmer čistý deň.', 'Perfektné. Toto je štandard.'];
+  const subtitles = [
+    'Prvý check-in je dôležitejší než perfektný plán.',
+    'Už nie si v nule. Momentum sa začalo.',
+    'Viac ako polovica dňa je pod kontrolou.',
+    'Stačí pár krokov a máš elitný deň.',
+    'Dnes si nesklzol do priemeru.'
+  ];
   document.getElementById('progressTitle').textContent = titles[Math.min(Math.floor(pct / 25), 4)];
+  document.getElementById('focusHeading').textContent = getUserName() ? `${getUserName()}, dnes buduješ momentum.` : 'Dnes buduješ momentum.';
+  document.getElementById('focusSubtitle').textContent = subtitles[Math.min(Math.floor(pct / 25), 4)];
   document.getElementById('streakBadge').textContent = `🔥 ${computeStreak()} dní`;
   const list = document.getElementById('habitsList');
   list.innerHTML = '';
@@ -690,21 +1087,20 @@ function renderToday() {
     const done = !!checked[i];
     const row = document.createElement('div');
     row.className = 'habit-row' + (done ? ' done' : '');
-    row.style.setProperty('--habit-color', h.color);
-    row.style.animationDelay = (i * 0.04) + 's';
     row.innerHTML = `
-      <div class="habit-icon" style="background:${h.color}1a">${h.icon}</div>
+      <div class="habit-icon" style="background:${h.color}22; border:1px solid ${h.color}33">${h.icon}</div>
       <div class="habit-info">
         <div class="habit-name" style="color:${done ? h.color : 'var(--text)'}">${h.name}</div>
-        <div class="habit-sub">${done ? 'Splnené ✓' : 'Klepni na označenie'}</div>
+        <div class="habit-sub">${done ? 'Hotovo. Dnes si to splnil.' : 'Klikni a potvrď splnenie.'}</div>
       </div>
-      <div class="habit-check">${done ? '✓' : ''}</div>
+      <div class="habit-meta">
+        <div class="habit-pill">${done ? 'done' : 'pending'}</div>
+        <div class="habit-check">${done ? '✓' : ''}</div>
+      </div>
     `;
     row.addEventListener('click', () => {
       const newVal = !getTodayChecked()[i];
       setTodayChecked(i, newVal);
-      row.classList.add('pop');
-      setTimeout(() => row.classList.remove('pop'), 300);
       if (newVal && Object.values(getTodayChecked()).filter(Boolean).length === state.habits.length) showToast('🔥 Všetky návyky splnené!');
       renderToday();
     });
@@ -721,7 +1117,7 @@ function renderWheel() {
   document.getElementById('wheelMonthLabel').textContent = `${MONTHS_SHORT[wheelMonth]} ${wheelYear}`;
   const svg = document.getElementById('wheelSvg');
   svg.innerHTML = '';
-  const cx = 160, cy = 160, R_IN = 38, RING = 12, GAP = 2;
+  const cx = 160, cy = 160, R_IN = 40, RING = 12, GAP = 3;
   const totalAngle = 270, startAngle = -225;
   const days = new Date(wheelYear, wheelMonth + 1, 0).getDate();
   const dayAngle = totalAngle / days;
@@ -734,79 +1130,80 @@ function renderWheel() {
     return `M${x1} ${y1} A${r2} ${r2} 0 ${lg} 1 ${x2} ${y2} L${x3} ${y3} A${r1} ${r1} 0 ${lg} 0 ${x4} ${y4}Z`;
   };
   for (let hi = 0; hi < H.length; hi++) {
-    const r1 = R_IN + hi*(RING+GAP), r2 = r1+RING;
+    const r1 = R_IN + hi*(RING+GAP), r2 = r1 + RING;
     for (let di = 0; di < days; di++) {
-      const a1=startAngle+di*dayAngle, a2=a1+dayAngle-1, day=di+1;
+      const a1 = startAngle + di*dayAngle, a2 = a1 + dayAngle - 1, day = di + 1;
       const k = dayKey(wheelYear, wheelMonth, day);
       const done = !!(state.checked[k] && state.checked[k][hi]);
       const path = document.createElementNS('http://www.w3.org/2000/svg','path');
       path.setAttribute('d', arc(r1,r2,a1,a2));
-      path.setAttribute('fill', done ? H[hi].color : '#222');
-      path.setAttribute('stroke', '#080808');
-      path.setAttribute('stroke-width', '0.6');
-      if (done) path.setAttribute('filter', `drop-shadow(0 0 3px ${H[hi].color}66)`);
+      path.setAttribute('fill', done ? H[hi].color : 'rgba(255,255,255,0.08)');
+      path.setAttribute('stroke', 'rgba(9,9,11,0.85)');
+      path.setAttribute('stroke-width', '1');
       svg.appendChild(path);
     }
   }
-  const R_LABEL = R_IN + H.length*(RING+GAP)+9;
+  const R_LABEL = R_IN + H.length*(RING+GAP)+10;
   for (let di = 0; di < days; di++) {
-    const a = startAngle+(di+.5)*dayAngle, [lx,ly] = polar(R_LABEL,a);
+    const a = startAngle + (di+.5)*dayAngle, [lx,ly] = polar(R_LABEL,a);
     const t = document.createElementNS('http://www.w3.org/2000/svg','text');
-    t.setAttribute('x',lx); t.setAttribute('y',ly);
-    t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
-    t.setAttribute('font-size','6.5'); t.setAttribute('font-family','Outfit,sans-serif');
-    t.setAttribute('font-weight','600'); t.setAttribute('fill','#444');
-    t.textContent = di+1;
+    t.setAttribute('x',lx);
+    t.setAttribute('y',ly);
+    t.setAttribute('text-anchor','middle');
+    t.setAttribute('dominant-baseline','middle');
+    t.setAttribute('font-size','7');
+    t.setAttribute('font-family','Outfit,sans-serif');
+    t.setAttribute('font-weight','700');
+    t.setAttribute('fill','rgba(255,255,255,0.35)');
+    t.textContent = di + 1;
     svg.appendChild(t);
   }
   const bg = document.createElementNS('http://www.w3.org/2000/svg','circle');
-  bg.setAttribute('cx',cx); bg.setAttribute('cy',cy); bg.setAttribute('r',R_IN-4);
-  bg.setAttribute('fill','#0d0d0d');
+  bg.setAttribute('cx',cx); bg.setAttribute('cy',cy); bg.setAttribute('r',R_IN-6); bg.setAttribute('fill','rgba(255,255,255,0.04)');
   svg.appendChild(bg);
   const ct = document.createElementNS('http://www.w3.org/2000/svg','text');
-  ct.setAttribute('x',cx); ct.setAttribute('y',cy-7);
-  ct.setAttribute('text-anchor','middle'); ct.setAttribute('font-size','11');
-  ct.setAttribute('font-family','Bebas Neue,sans-serif'); ct.setAttribute('fill','#e8b84b');
-  ct.setAttribute('letter-spacing','2'); ct.textContent = MONTHS[wheelMonth];
+  ct.setAttribute('x',cx); ct.setAttribute('y',cy-8); ct.setAttribute('text-anchor','middle');
+  ct.setAttribute('font-size','12'); ct.setAttribute('font-family','Bebas Neue,sans-serif');
+  ct.setAttribute('fill','#e8b84b'); ct.setAttribute('letter-spacing','2'); ct.textContent = MONTHS[wheelMonth].toUpperCase();
   svg.appendChild(ct);
   const cy2 = document.createElementNS('http://www.w3.org/2000/svg','text');
-  cy2.setAttribute('x',cx); cy2.setAttribute('y',cy+9);
-  cy2.setAttribute('text-anchor','middle'); cy2.setAttribute('font-size','9');
-  cy2.setAttribute('font-family','Outfit,sans-serif'); cy2.setAttribute('fill','#444');
-  cy2.textContent = wheelYear;
+  cy2.setAttribute('x',cx); cy2.setAttribute('y',cy+10); cy2.setAttribute('text-anchor','middle');
+  cy2.setAttribute('font-size','10'); cy2.setAttribute('font-family','Outfit,sans-serif');
+  cy2.setAttribute('fill','rgba(255,255,255,0.42)'); cy2.textContent = wheelYear;
   svg.appendChild(cy2);
   const leg = document.getElementById('wheelLegend');
   leg.innerHTML = '';
   H.forEach(h => {
     const d = document.createElement('div');
     d.className = 'legend-item';
-    d.innerHTML = `<div class="legend-dot" style="background:${h.color}"></div>${h.icon} ${h.name}`;
+    d.innerHTML = `<div class="legend-dot" style="background:${h.color}"></div><span>${h.icon} ${h.name}</span>`;
     leg.appendChild(d);
   });
 }
 function renderStats() {
   const now = new Date();
-  let totalPossible=0, totalDone=0, activeDays=0;
+  let totalPossible = 0, totalDone = 0, activeDays = 0;
   const habitDone = new Array(state.habits.length).fill(0);
   for (let d=1; d<=now.getDate(); d++) {
     const k = dayKey(now.getFullYear(), now.getMonth(), d);
     const c = state.checked[k] || {};
     const dd = Object.values(c).filter(Boolean).length;
-    totalPossible += state.habits.length; totalDone += dd;
+    totalPossible += state.habits.length;
+    totalDone += dd;
     if (dd > 0) activeDays++;
-    state.habits.forEach((_,i) => { if (c[i]) habitDone[i]++; });
+    state.habits.forEach((_, i) => { if (c[i]) habitDone[i]++; });
   }
-  const overallPct = totalPossible ? Math.round(totalDone/totalPossible*100) : 0;
+  const overallPct = totalPossible ? Math.round(totalDone / totalPossible * 100) : 0;
   document.getElementById('statsGrid').innerHTML = `
     <div class="stat-card"><div class="stat-val">${overallPct}%</div><div class="stat-label">Úspešnosť mesiaca</div></div>
     <div class="stat-card"><div class="stat-val">${computeStreak()}</div><div class="stat-label">Séria dní</div></div>
-    <div class="stat-card"><div class="stat-val">${totalDone}</div><div class="stat-label">Splnených návykov</div></div>
-    <div class="stat-card"><div class="stat-val">${activeDays}</div><div class="stat-label">Aktívnych dní</div></div>
+    <div class="stat-card"><div class="stat-val">${totalDone}</div><div class="stat-label">Splnené návyky</div></div>
+    <div class="stat-card"><div class="stat-val">${activeDays}</div><div class="stat-label">Aktívne dni</div></div>
   `;
   const hs = document.getElementById('habitStats');
   hs.innerHTML = '';
-  state.habits.forEach((h,i) => {
-    const pct = now.getDate()>0 ? Math.round(habitDone[i]/now.getDate()*100) : 0;
+  state.habits.forEach((h, i) => {
+    const pct = now.getDate() > 0 ? Math.round(habitDone[i] / now.getDate() * 100) : 0;
     const d = document.createElement('div');
     d.className = 'habit-stat-row';
     d.innerHTML = `
@@ -814,24 +1211,23 @@ function renderStats() {
         <div class="habit-stat-name"><span>${h.icon}</span>${h.name}</div>
         <div class="habit-stat-pct">${pct}%</div>
       </div>
-      <div class="bar-bg"><div class="bar-fill" style="width:0%;background:${h.color}" data-pct="${pct}"></div></div>
+      <div class="bar-bg"><div class="bar-fill" style="width:0%;background:${h.color}"></div></div>
     `;
     hs.appendChild(d);
-    setTimeout(() => {
-      d.querySelector('.bar-fill').style.width = pct + '%';
-    }, 50 + i * 60);
+    setTimeout(() => { d.querySelector('.bar-fill').style.width = pct + '%'; }, 50 + i * 60);
   });
 }
 function renderSettings() {
+  document.getElementById('profileNameInput').value = getUserName();
   const sh = document.getElementById('settingsHabits');
   sh.innerHTML = '';
-  state.habits.forEach((h,i) => {
+  state.habits.forEach((h, i) => {
     const row = document.createElement('div');
     row.className = 'setting-row';
     row.innerHTML = `
       <span class="setting-icon-pick" onclick="pickIcon(${i})" title="Klepni pre zmenu">${h.icon}</span>
       <input type="text" id="habit-input-${i}" value="${h.name}" placeholder="Názov návyku">
-      <input type="color" id="habit-color-${i}" value="${h.color}" style="width:28px;height:28px;border:none;background:none;cursor:pointer;border-radius:6px;">
+      <input type="color" id="habit-color-${i}" value="${h.color}" style="width:32px;height:32px;border:none;background:none;cursor:pointer;border-radius:10px;">
     `;
     sh.appendChild(row);
   });
@@ -841,19 +1237,64 @@ function pickIcon(idx) {
   if (icon) { state.habits[idx].icon = icon.trim().slice(0,2); renderSettings(); }
 }
 function saveSettings() {
-  state.habits.forEach((h,i) => {
+  const profileName = document.getElementById('profileNameInput').value.trim();
+  state.profile.name = capitalizeName(profileName);
+  if (profileName) state.profile.onboarded = true;
+  state.habits.forEach((h, i) => {
     const inp = document.getElementById(`habit-input-${i}`);
     const col = document.getElementById(`habit-color-${i}`);
     if (inp) h.name = inp.value || h.name;
     if (col) h.color = col.value;
   });
-  saveState(); showToast('✅ Uložené!'); renderToday();
+  saveState();
+  updatePersonalUI();
+  renderToday();
+  showToast('✅ Uložené!');
 }
+function showWelcomeIfNeeded() {
+  const overlay = document.getElementById('welcomeOverlay');
+  const nameInput = document.getElementById('nameInput');
+  if (!state.profile.onboarded) {
+    overlay.classList.remove('hide');
+    setTimeout(() => nameInput.focus(), 220);
+  } else {
+    overlay.classList.add('hide');
+  }
+}
+function completeOnboarding(skip = false) {
+  const raw = document.getElementById('nameInput').value.trim();
+  if (!skip && !raw) {
+    showToast('Zadaj meno alebo klikni Preskočiť.');
+    return;
+  }
+  state.profile.name = skip ? '' : capitalizeName(raw);
+  state.profile.onboarded = true;
+  saveState();
+  updatePersonalUI();
+  document.getElementById('welcomeOverlay').classList.add('hide');
+  renderToday();
+  showToast(skip ? 'Appka pripravená.' : `Vitaj, ${state.profile.name}!`);
+}
+(function initApp() {
+  const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  document.getElementById('splashQuoteText').textContent = `„${q.text}"`;
+  document.getElementById('splashQuoteAuthor').textContent = `— ${q.author}`;
+  document.getElementById('saveNameBtn').addEventListener('click', () => completeOnboarding(false));
+  document.getElementById('skipNameBtn').addEventListener('click', () => completeOnboarding(true));
+  document.getElementById('nameInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') completeOnboarding(false);
+  });
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hide');
+    document.getElementById('app').classList.add('visible');
+    updatePersonalUI();
+    renderToday();
+    showWelcomeIfNeeded();
+  }, 2000);
+})();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch(err => {
-      console.warn('Service worker registration failed:', err);
-    });
+    navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn('Service worker registration failed:', err));
   });
 }
 </script>
