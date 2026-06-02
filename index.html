@@ -74,104 +74,6 @@ body.light-mode .wellness-card{background:linear-gradient(135deg,rgba(180,130,0,
 body.light-mode .sleep-adj{background:rgba(0,0,0,.06)!important;border-color:rgba(0,0,0,.1)!important;color:#111!important}
 body.light-mode .energy-btn{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.1)!important;color:#555!important}
 body.light-mode .energy-btn.active{background:rgba(180,130,0,.12)!important;border-color:rgba(180,130,0,.3)!important;color:#7a5500!important}
-
-/* ── XP BAR ───────────────────────────────────────────────────── */
-.xp-bar-wrap{
-  margin-top:12px;padding:12px 16px;border-radius:18px;
-  background:linear-gradient(135deg,rgba(247,214,122,.1),rgba(255,255,255,.03));
-  border:1px solid rgba(247,214,122,.15);
-  cursor:pointer;
-}
-.xp-bar-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.xp-level-badge{
-  display:flex;align-items:center;gap:7px;
-}
-.xp-level-icon{
-  width:30px;height:30px;border-radius:10px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:900;color:#111;
-  font-family:'Bebas Neue',sans-serif;
-  box-shadow:0 4px 12px rgba(247,214,122,.3);
-}
-.xp-level-info strong{display:block;font-size:13px;font-weight:800;color:var(--text)}
-.xp-level-info span{font-size:10px;color:var(--muted);letter-spacing:.5px}
-.xp-total{font-size:11px;color:var(--gold);font-weight:700}
-.xp-track{height:6px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden}
-.xp-fill{
-  height:6px;border-radius:99px;
-  background:linear-gradient(90deg,var(--gold2),var(--gold));
-  transition:width .6s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 0 8px rgba(247,214,122,.4);
-}
-.xp-sub{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:var(--muted)}
-
-/* ── XP FLOAT ANIMATION ──────────────────────────────────────────*/
-.xp-float{
-  position:fixed;z-index:3000;
-  font-family:'Bebas Neue',sans-serif;font-size:22px;
-  color:var(--gold);pointer-events:none;
-  text-shadow:0 2px 12px rgba(247,214,122,.5);
-  animation:xpFloat 1.2s cubic-bezier(.4,0,.2,1) forwards;
-}
-@keyframes xpFloat{
-  0%{opacity:1;transform:translateY(0) scale(1)}
-  60%{opacity:1;transform:translateY(-60px) scale(1.15)}
-  100%{opacity:0;transform:translateY(-100px) scale(.9)}
-}
-
-/* ── MILESTONE OVERLAY ────────────────────────────────────────── */
-#milestoneOverlay{position:fixed;inset:0;z-index:1300;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:opacity .3s,visibility .3s}
-.milestone-card{
-  width:min(100%,360px);
-  background:linear-gradient(180deg,rgba(20,20,24,.99),rgba(11,11,14,.99));
-  border:1px solid rgba(247,214,122,.25);border-radius:var(--r-xl);
-  padding:32px 24px;text-align:center;
-  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 60px rgba(247,214,122,.08);
-  animation:slideUp .4s cubic-bezier(.16,1,.3,1);
-  position:relative;overflow:hidden;
-}
-.milestone-card::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:200px;height:200px;background:radial-gradient(circle,rgba(247,214,122,.15),transparent 65%);pointer-events:none}
-.milestone-emoji{font-size:64px;display:block;margin-bottom:12px;animation:bounceIn .6s cubic-bezier(.34,1.56,.64,1)}
-.milestone-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:4px;color:var(--gold);font-weight:700;margin-bottom:8px}
-.milestone-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;line-height:.95;margin-bottom:10px}
-.milestone-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:6px}
-.milestone-xp-bonus{
-  display:inline-block;margin:12px 0 20px;
-  padding:6px 18px;border-radius:99px;
-  background:rgba(247,214,122,.12);border:1px solid rgba(247,214,122,.2);
-  font-size:13px;font-weight:800;color:var(--gold);
-}
-.milestone-btn{
-  width:100%;min-height:48px;border-radius:var(--r);
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  color:#111;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;
-  box-shadow:0 8px 24px rgba(247,214,122,.2);transition:.2s ease;
-}
-
-/* ── ACHIEVEMENTS IN STATS ────────────────────────────────────── */
-.achievements-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:4px}
-.achievement-card{
-  padding:14px 12px;border-radius:var(--r);text-align:center;
-  border:1.5px solid rgba(255,255,255,.07);
-  background:rgba(255,255,255,.04);
-  transition:.2s ease;position:relative;overflow:hidden;
-}
-.achievement-card.unlocked{
-  background:linear-gradient(135deg,rgba(247,214,122,.12),rgba(255,255,255,.03));
-  border-color:rgba(247,214,122,.25);
-}
-.achievement-card.unlocked::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
-.achievement-emoji{font-size:28px;display:block;margin-bottom:6px}
-.achievement-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:2px}
-.achievement-desc{font-size:10px;color:var(--muted);line-height:1.4}
-.achievement-locked{filter:grayscale(1);opacity:.35}
-
-@keyframes bounceIn{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
-body.light-mode .xp-bar-wrap{background:rgba(180,130,0,.07)!important;border-color:rgba(180,130,0,.18)!important}
-body.light-mode .xp-track{background:rgba(0,0,0,.08)!important}
-body.light-mode .achievement-card{background:#fff!important;border-color:rgba(0,0,0,.1)!important}
-body.light-mode .achievement-card.unlocked{background:linear-gradient(135deg,rgba(180,130,0,.1),#fff)!important;border-color:rgba(180,130,0,.2)!important}
 .toast{position:fixed;left:50%;bottom:102px;transform:translateX(-50%) translateY(12px);background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;z-index:2000;transition:.3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;box-shadow:0 10px 30px rgba(247,214,122,.25)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@keyframes logoIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:none;opacity:1}}@keyframes dotPulse{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.4);background:var(--gold)}}@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}@media(max-width:380px){.overlay-card{padding:22px 18px}.overlay-card h1{font-size:36px}.count-btn{font-size:18px;padding:13px 0}.view{padding:12px 13px 115px}.quick-stats,.stats-grid{grid-template-columns:1fr 1fr}.settings-actions{grid-template-columns:1fr}}
 
 .emoji-picker-overlay{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center}
@@ -399,12 +301,12 @@ body.light-mode .daily-quote{background:rgba(138,98,0,.06)!important;border-colo
   color:var(--gold);font-weight:700;margin-bottom:12px;
 }
 .ocard-title{
-  font-family:-apple-system,'SF Pro Display','Outfit',sans-serif;font-size:40px;line-height:.95;
+  font-family:'Outfit',sans-serif;font-size:44px;line-height:.95;
   font-weight:900;letter-spacing:-1px;margin-bottom:12px;text-align:center;
   background:linear-gradient(135deg,var(--text),rgba(255,255,255,.7));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.ocard-copy{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px;margin-top:16px;text-align:center;max-width:420px}
+.ocard-copy{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px;text-align:center;max-width:420px}
 .ocard-input-wrap{position:relative}
 .ocard-input-line{
   position:absolute;bottom:0;left:18px;right:18px;height:2px;
@@ -595,18 +497,7 @@ body.light-mode .daily-quote{background:rgba(138,98,0,.06)!important;border-colo
 </div>
 <div id="buildOverlay" class="hide"><div class="overlay-card" style="text-align:center"><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="buildGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f7d67a"/><stop offset="100%" stop-color="#c08a18"/></linearGradient></defs></svg><div class="eyebrow">Vytváram tracker</div><h2>ZOSTAVUJEM TVOJ<br>HABIT TRACKER</h2><div class="build-ring-wrap"><svg viewBox="0 0 100 100"><circle class="build-ring-bg" cx="50" cy="50" r="40"/><circle id="buildRing" class="build-ring-fill" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2"/></svg><div class="build-pct" id="buildPct">0%</div></div><div class="build-tip"><strong>💡 Vedel si?</strong>Návyky môžeš kedykoľvek zmeniť v záložke Nastavenia — názov, ikonu aj farbu.</div><div class="build-quote" style="text-align:center;margin-top:18px;">„Sme tým, čo opakovane robíme.<br>Preto je dokonalosť návyk, nie náhoda.“</div><div class="footer" style="margin-top:16px;padding-bottom:0"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div></div>
 <div id="celebrationOverlay" class="hide"><div class="overlay-card" style="text-align:center"><div class="confetti-wrap" id="confettiWrap"></div><div class="eyebrow">Perfect day</div><h2>VŠETKO<br>SPLNENÉ</h2><p class="overlay-copy" id="celebrationText" style="margin-top:12px">Dnes si nepodal priemer. Presne takto sa buduje disciplína.</p><button class="btn-primary" id="closeCelebrationBtn" type="button" style="margin-top:20px">Pokračovať →</button></div></div>
-<div id="app"><div class="header"><div class="header-top"><div class="brand-shell"><div class="brand-mark"><div class="brand-ring"></div></div><div class="brand-text"><div class="greeting" id="headerGreeting">DOBRÝ DEŇ</div><div class="date-label" id="headerDate"></div></div></div><div class="header-chip"><span>⚡</span><strong id="energyBadge">0/0</strong></div></div><div class="streak-bar"><div class="streak-bar-left"><strong id="streakBadge">0 dní</strong><span>Séria perfektných dní</span></div><div class="streak-flame">🔥</div></div>
-<div class="xp-bar-wrap" onclick="switchView('stats',document.querySelector('.nav-item:nth-child(3)'))">
-  <div class="xp-bar-top">
-    <div class="xp-level-badge">
-      <div class="xp-level-icon" id="xpLevelIcon">1</div>
-      <div class="xp-level-info"><strong id="xpLevelName">Začiatočník</strong><span id="xpLevelSub">Level 1</span></div>
-    </div>
-    <div class="xp-total" id="xpTotal">0 XP</div>
-  </div>
-  <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
-  <div class="xp-sub"><span id="xpCurrent">0 XP</span><span id="xpNext">500 XP do levelu 2</span></div>
-</div></div>
+<div id="app"><div class="header"><div class="header-top"><div class="brand-shell"><div class="brand-mark"><div class="brand-ring"></div></div><div class="brand-text"><div class="greeting" id="headerGreeting">DOBRÝ DEŇ</div><div class="date-label" id="headerDate"></div></div></div><div class="header-chip"><span>⚡</span><strong id="energyBadge">0/0</strong></div></div><div class="streak-bar"><div class="streak-bar-left"><strong id="streakBadge">0 dní</strong><span>Séria perfektných dní</span></div><div class="streak-flame">🔥</div></div></div>
 <div id="view-today" class="view active"><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f7d67a"/><stop offset="100%" stop-color="#c08a18"/></linearGradient></defs></svg><div class="hero-card"><div class="hero-top"><div><h2 id="focusHeading">Dnes buduješ momentum.</h2><p id="focusSubtitle">Prehľad návykov je čistý a rýchly.</p></div><div class="score-badge"><strong id="todayDoneSmall">0</strong><span>done</span></div></div><div class="progress-shell"><div class="progress-ring-wrap"><svg viewBox="0 0 86 86"><circle class="progress-ring-bg" cx="43" cy="43" r="36"/><circle id="ringFill" class="progress-ring-fill" cx="43" cy="43" r="36" stroke-dasharray="226.2" stroke-dashoffset="226.2"/></svg><div id="ringPct" class="progress-pct">0%</div></div><div class="progress-copy"><h3 id="progressTitle">Začni ostro.</h3><p id="progressSub">Každý návyk, každý deň.</p></div></div><div class="quick-stats"><div class="quick-stat"><strong id="quickRemaining">0</strong><span>zostáva</span></div><div class="quick-stat"><strong id="quickPerfect">0</strong><span>perfect</span></div><div class="quick-stat"><strong id="quickRate">0%</strong><span>rate</span></div></div></div><div class="daily-quote-block" id="dailyQuoteBlock"></div>
 <div class="wellness-card" id="wellnessCard">
   <div class="wellness-header">
@@ -635,23 +526,10 @@ body.light-mode .daily-quote{background:rgba(138,98,0,.06)!important;border-colo
   </div>
 </div><div class="section-title"><h3>Dnešné návyky</h3><span id="habitSectionMeta">0 položiek</span></div><div class="habits-list" id="habitsList"></div><div class="section-title" style="margin-top:18px"><h3>7-dňový trend</h3><span>vývoj</span></div><div class="trend-row" id="trendRow"></div><div class="section-title" style="margin-top:18px"><h3>História</h3><span>posledné dni</span></div><div class="history-list" id="historyList"></div><div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div>
 <div id="view-trend" class="view"><div class="page-head"><h2>TREND</h2><p>Konzistencia a vývoj tempa za posledné týždne.</p></div><div id="trendViewContent"></div><div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div>
-<div id="view-stats" class="view"><div class="page-head"><h2>PERFORMANCE</h2><p>Výkon, konzistencia a prehľad návykov.</p></div><div class="stats-grid" id="statsGrid"></div><div class="section-title" style="margin-top:16px"><h3>Spánok &amp; Energia</h3><span>wellness</span></div><div id="wellnessStats"></div><div class="section-title" style="margin-top:16px"><h3>Rozpad podľa návyku</h3><span>% splnenia</span></div><div class="habit-stats" id="habitStats"></div><div class="section-title" style="margin-top:16px"><h3>Detaily</h3><span>počty dní</span></div><div class="history-list" id="statsInsights"></div><div class="section-title" style="margin-top:16px"><h3>Míľniky</h3><span>achievements</span></div><div class="achievements-grid" id="achievementsGrid"></div><div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div>
+<div id="view-stats" class="view"><div class="page-head"><h2>PERFORMANCE</h2><p>Výkon, konzistencia a prehľad návykov.</p></div><div class="stats-grid" id="statsGrid"></div><div class="section-title" style="margin-top:16px"><h3>Spánok &amp; Energia</h3><span>wellness</span></div><div id="wellnessStats"></div><div class="section-title" style="margin-top:16px"><h3>Rozpad podľa návyku</h3><span>% splnenia</span></div><div class="habit-stats" id="habitStats"></div><div class="section-title" style="margin-top:16px"><h3>Detaily</h3><span>počty dní</span></div><div class="history-list" id="statsInsights"></div><div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div>
 <div id="view-settings" class="view"><div class="page-head"><h2>NASTAVENIA</h2><p>Uprav meno, návyky, ikony a farby.</p></div><div class="settings-sections"><div class="settings-group"><div class="settings-group-title">Profil</div><div class="setting-row"><div class="setting-icon">👤</div><input type="text" id="profileNameInput" placeholder="Tvoje meno"/></div></div><div class="settings-group"><div class="settings-group-title" style="display:flex;justify-content:space-between;align-items:center"><span>Návyky</span><span id="settingsMeta" style="color:var(--gold)">0 položiek</span></div><div id="settingsHabits"></div></div></div><div class="settings-actions"><button class="btn-secondary" onclick="addHabitRow()" type="button">+ Pridať návyk</button><button class="btn-secondary" onclick="resetToDefaults()" type="button">Obnoviť preset</button></div><button class="btn-save" onclick="saveSettings()" type="button">Uložiť zmeny</button><div class="theme-toggle" onclick="toggleTheme()"><span id="themeIcon">🌙</span><span id="themeLabel">Tmavý režim</span></div><button class="btn-export" onclick="exportXLSX()">⬇ Exportovať do Excelu (.xlsx)</button><div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div></div>
 <div class="bottom-nav"><button class="nav-item active" onclick="switchView('today',this)" type="button"><div class="nav-icon">🔥</div><span>Dnes</span></button><button class="nav-item" onclick="switchView('trend',this)" type="button"><div class="nav-icon">📈</div><span>Trend</span></button><button class="nav-item" onclick="switchView('stats',this)" type="button"><div class="nav-icon">📊</div><span>Stats</span></button><button class="nav-item" onclick="switchView('settings',this)" type="button"><div class="nav-icon">⚙️</div><span>Setup</span></button></div>
 <div class="wheel-popup hidden" id="wheelPopup"><div class="wheel-popup-card"><div class="wheel-popup-title" id="wheelPopupTitle">Deň</div><div class="wheel-popup-meta" id="wheelPopupMeta"></div><div class="wheel-popup-list" id="wheelPopupList"></div><button class="wheel-popup-close" type="button" id="wheelPopupClose">Zavrieť</button></div></div></div>
-
-<!-- MILESTONE OVERLAY -->
-<div id="milestoneOverlay" class="hide">
-  <div class="milestone-card">
-    <div class="confetti-wrap" id="milestoneConfetti"></div>
-    <span class="milestone-emoji" id="milestoneEmoji">🏆</span>
-    <div class="milestone-eyebrow">Míľnik odomknutý</div>
-    <div class="milestone-title" id="milestoneTitle">ŠAMPIÓN</div>
-    <div class="milestone-desc" id="milestoneDesc">Toto si zaslúžil.</div>
-    <div class="milestone-xp-bonus" id="milestoneXpBonus">+100 XP bonus</div>
-    <button class="milestone-btn" type="button" onclick="closeMilestone()">Pokračovať 🔥</button>
-  </div>
-</div>
 <div class="toast" id="toast"></div>
 <script>
 const STORAGEKEY='habitElitePro';
@@ -661,19 +539,10 @@ const FOCUS_SUBTITLES={morning:'Ráno. Jednoduchý plán, menej chaosu.',evening
 const DEFAULT_PROFILE={name:'',onboarded:false,focus:'discipline',question:'performance',habitCount:4};
 function loadState(){try{return JSON.parse(localStorage.getItem(STORAGEKEY))}catch{return null}}
 function saveState(){try{localStorage.setItem(STORAGEKEY,JSON.stringify(state))}catch(e){}}
-let state=loadState()||{profile:{...DEFAULT_PROFILE},habits:[],checked:{},celebrationShown:{},wellness:{},xp:0,xpLog:{},milestones:{}};state.profile={...DEFAULT_PROFILE,...(state.profile||{})};state.checked=state.checked||{};state.celebrationShown=state.celebrationShown||{};state.wellness=state.wellness||{};state.xp=state.xp||0;state.xpLog=state.xpLog||{};state.milestones=state.milestones||{};
+let state=loadState()||{profile:{...DEFAULT_PROFILE},habits:[],checked:{},celebrationShown:{},wellness:{}};state.profile={...DEFAULT_PROFILE,...(state.profile||{})};state.checked=state.checked||{};state.celebrationShown=state.celebrationShown||{};state.wellness=state.wellness||{};
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];const rid=()=>(crypto?.randomUUID?.()||Math.random().toString(16).slice(2));const cap=s=>{s=String(s||'').trim();return s?s[0].toUpperCase()+s.slice(1):''};const dayKey=(d=new Date())=>`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;const getTodayChecked=()=>state.checked[dayKey()]||{};
 const getTodayWellness=()=>state.wellness[dayKey()]||{sleep:null,energy:null};
-const setTodayWellness=(field,val)=>{
-  const k=dayKey();
-  if(!state.wellness[k])state.wellness[k]={sleep:null,energy:null};
-  const prev=state.wellness[k][field];
-  state.wellness[k][field]=val;
-  saveState();
-  // Award XP only first time per day
-  if(field==='sleep'&&prev===null&&val>=7&&val<=9)awardXP(XP_GOOD_SLEEP);
-  if(field==='energy'&&prev===null&&val===3)awardXP(XP_HIGH_ENERGY);
-};const setTodayChecked=(i,v)=>{const k=dayKey();(state.checked[k]||(state.checked[k]={}));state.checked[k][i]=v;saveState()};const getDoneCount=k=>Object.values(state.checked[k]||{}).filter(Boolean).length;const getUserName=()=>cap(state.profile.name);const getPreset=()=>PRESETTRACKS[state.profile.focus]||PRESETTRACKS.discipline;const countChosen=()=>Math.max(4,Math.min(6,Number(state.profile.habitCount||4)));const pickPresetHabits=()=>getPreset().habits.slice(0,countChosen()).map(h=>({...h,id:rid()}));const escHtml=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));function showToast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}function computeStreak(){let s=0;for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);if(getDoneCount(dayKey(d))===state.habits.length&&state.habits.length>0)s++;else break}return s}function countPerfectDays(){return Object.keys(state.checked).filter(k=>getDoneCount(k)===state.habits.length&&state.habits.length>0).length}
+const setTodayWellness=(field,val)=>{const k=dayKey();if(!state.wellness[k])state.wellness[k]={sleep:null,energy:null};state.wellness[k][field]=val;saveState();};const setTodayChecked=(i,v)=>{const k=dayKey();(state.checked[k]||(state.checked[k]={}));state.checked[k][i]=v;saveState()};const getDoneCount=k=>Object.values(state.checked[k]||{}).filter(Boolean).length;const getUserName=()=>cap(state.profile.name);const getPreset=()=>PRESETTRACKS[state.profile.focus]||PRESETTRACKS.discipline;const countChosen=()=>Math.max(4,Math.min(6,Number(state.profile.habitCount||4)));const pickPresetHabits=()=>getPreset().habits.slice(0,countChosen()).map(h=>({...h,id:rid()}));const escHtml=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));function showToast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}function computeStreak(){let s=0;for(let i=0;i<365;i++){const d=new Date();d.setDate(d.getDate()-i);if(getDoneCount(dayKey(d))===state.habits.length&&state.habits.length>0)s++;else break}return s}function countPerfectDays(){return Object.keys(state.checked).filter(k=>getDoneCount(k)===state.habits.length&&state.habits.length>0).length}
 let onboardStep=1;
 function updateStepProgress(){updateStepProgressNew&&updateStepProgressNew()}
 function renderFocusChoices(){const w=$('#focusChoices');w.innerHTML='';Object.entries(PRESETTRACKS).forEach(([k,p])=>{const btn=document.createElement('button');btn.type='button';btn.className='choice'+(state.profile.focus===k?' active':'');btn.innerHTML=`<span class="ico">${p.icon}</span><span class="choice-text"><strong>${p.label}</strong><small>${p.desc}</small></span>`;btn.onclick=()=>{state.profile.focus=k;saveState();renderFocusChoices()};w.appendChild(btn)})}
@@ -687,13 +556,12 @@ function createConfetti(){const w=$('#confettiWrap');w.innerHTML='';const colors
 $('#closeCelebrationBtn').onclick=()=>$('#celebrationOverlay').classList.add('hide');
 function updatePersonalUI(){const n=getUserName();$('#headerGreeting').textContent=n?`DOBRÝ DEŇ, ${n.toUpperCase()}`:'DOBRÝ DEŇ';if($('#profileNameInput'))$('#profileNameInput').value=n}
 function switchView(name,el){$$('.view').forEach(v=>v.classList.remove('active'));$$('.nav-item').forEach(n=>n.classList.remove('active'));const t=document.getElementById(`view-${name}`);if(t)t.classList.add('active');el.classList.add('active');if(name==='today')renderToday();if(name==='trend')renderTrendView();if(name==='stats')renderStats();if(name==='settings')renderSettings()}
-function renderToday(){const now=new Date();$('#headerDate').textContent=now.toLocaleDateString('sk-SK',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();const checked=getTodayChecked();const done=Object.values(checked).filter(Boolean).length;const total=state.habits.length;const pct=total?Math.round(done/total*100):0;const C=226.2;$('#ringFill').style.strokeDasharray=C;$('#ringFill').style.strokeDashoffset=C-(pct/100)*C;$('#ringPct').textContent=`${pct}%`;$('#todayDoneSmall').textContent=done;$('#progressSub').textContent=`${done} z ${total} návykov splnených`;$('#energyBadge').textContent=`${done}/${total}`;$('#quickRemaining').textContent=Math.max(total-done,0);$('#quickPerfect').textContent=countPerfectDays();$('#quickRate').textContent=`${pct}%`;$('#habitSectionMeta').textContent=`${total} položiek`;$('#streakBadge').textContent=`${computeStreak()} dní`;$('#progressTitle').textContent=['Začni ostro.','Si v pohybe.','Výborne, drž tempo.','Takmer istý deň.','Perfektné. Toto je štandard.'][Math.min(Math.floor(pct/25),4)];const n=getUserName();$('#focusHeading').textContent=n?`${n}, dnes buduješ momentum.`:'Dnes buduješ momentum.';$('#focusSubtitle').textContent=FOCUS_SUBTITLES[state.profile.question]||FOCUS_SUBTITLES.performance;const list=$('#habitsList');list.innerHTML='';const qb=$('#dailyQuoteBlock');if(qb)qb.innerHTML=`<div class="daily-quote">${getDailyQuote()}</div>`;if(!state.habits.length){list.innerHTML='<div style="text-align:center;padding:32px 16px;color:var(--muted);font-size:14px">Žiadne návyky. Pridaj ich v záložke Setup.</div>';return;}state.habits.forEach((h,i)=>{const isDone=!!checked[i];const row=document.createElement('div');row.className=`habit-row${isDone?' done':''}`;row.style.setProperty('--habit-color',h.color);row.innerHTML=`<div class="habit-icon" style="background:${h.color}22;border:1px solid ${h.color}30">${escHtml(h.icon)}</div><div class="habit-info"><div class="habit-name" style="color:${isDone?h.color:'var(--text)'}">${escHtml(h.name)}</div><div class="habit-sub">${isDone?'Hotovo. Skvele. ✓':'Klikni a potvrď splnenie.'}</div></div><div class="habit-check">${isDone?'✓':''}</div>`;row.onclick=(e)=>{const nv=!getTodayChecked()[i];setTodayChecked(i,nv);if(navigator.vibrate)navigator.vibrate(nv?[12]:6);if(nv)awardXP(XP_PER_HABIT,e.clientX,e.clientY);renderToday();if(nv){const s=computeStreak();if(s===7||s===14||s===30)showToast(`🔥 ${s}-dňová séria! Výnimočné.`);}if(nv&&Object.values(getTodayChecked()).filter(Boolean).length===state.habits.length){showToast('Všetky návyky splnené! +50 XP 🔥');awardXP(XP_PERFECT_BONUS);setTimeout(showCelebration,300)}};list.appendChild(row)});renderTrendRowFn();renderHistory();renderWellnessCard();renderXPBar();}
+function renderToday(){const now=new Date();$('#headerDate').textContent=now.toLocaleDateString('sk-SK',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();const checked=getTodayChecked();const done=Object.values(checked).filter(Boolean).length;const total=state.habits.length;const pct=total?Math.round(done/total*100):0;const C=226.2;$('#ringFill').style.strokeDasharray=C;$('#ringFill').style.strokeDashoffset=C-(pct/100)*C;$('#ringPct').textContent=`${pct}%`;$('#todayDoneSmall').textContent=done;$('#progressSub').textContent=`${done} z ${total} návykov splnených`;$('#energyBadge').textContent=`${done}/${total}`;$('#quickRemaining').textContent=Math.max(total-done,0);$('#quickPerfect').textContent=countPerfectDays();$('#quickRate').textContent=`${pct}%`;$('#habitSectionMeta').textContent=`${total} položiek`;$('#streakBadge').textContent=`${computeStreak()} dní`;$('#progressTitle').textContent=['Začni ostro.','Si v pohybe.','Výborne, drž tempo.','Takmer istý deň.','Perfektné. Toto je štandard.'][Math.min(Math.floor(pct/25),4)];const n=getUserName();$('#focusHeading').textContent=n?`${n}, dnes buduješ momentum.`:'Dnes buduješ momentum.';$('#focusSubtitle').textContent=FOCUS_SUBTITLES[state.profile.question]||FOCUS_SUBTITLES.performance;const list=$('#habitsList');list.innerHTML='';const qb=$('#dailyQuoteBlock');if(qb)qb.innerHTML=`<div class="daily-quote">${getDailyQuote()}</div>`;if(!state.habits.length){list.innerHTML='<div style="text-align:center;padding:32px 16px;color:var(--muted);font-size:14px">Žiadne návyky. Pridaj ich v záložke Setup.</div>';return;}state.habits.forEach((h,i)=>{const isDone=!!checked[i];const row=document.createElement('div');row.className=`habit-row${isDone?' done':''}`;row.style.setProperty('--habit-color',h.color);row.innerHTML=`<div class="habit-icon" style="background:${h.color}22;border:1px solid ${h.color}30">${escHtml(h.icon)}</div><div class="habit-info"><div class="habit-name" style="color:${isDone?h.color:'var(--text)'}">${escHtml(h.name)}</div><div class="habit-sub">${isDone?'Hotovo. Skvele. ✓':'Klikni a potvrď splnenie.'}</div></div><div class="habit-check">${isDone?'✓':''}</div>`;row.onclick=()=>{const nv=!getTodayChecked()[i];setTodayChecked(i,nv);if(navigator.vibrate)navigator.vibrate(nv?[12]:6);renderToday();if(nv){const s=computeStreak();if(s===7||s===14||s===30)showToast(`🔥 ${s}-dňová séria! Výnimočné.`);}if(nv&&Object.values(getTodayChecked()).filter(Boolean).length===state.habits.length){showToast('Všetky návyky splnené!');setTimeout(showCelebration,300)}};list.appendChild(row)});renderTrendRowFn();renderHistory();renderWellnessCard();}
 function renderTrendRowFn(){const row=$('#trendRow');row.innerHTML='';for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const k=dayKey(d);const done=getDoneCount(k);const pct=state.habits.length?Math.round(done/state.habits.length*100):0;const el=document.createElement('div');el.className=`trend-day${pct===100?' active':''}`;el.innerHTML=`${d.getDate()}<strong>${pct}%</strong>`;el.onclick=()=>showWheelDetail(d,k);row.appendChild(el)}}
 function formatDayKey(k){try{const[y,m,d]=k.split('-').map(Number);const date=new Date(y,m,d);return date.toLocaleDateString('sk-SK',{weekday:'short',day:'numeric',month:'long'});}catch{return k;}}
 function renderHistory(){const list=$('#historyList');list.innerHTML='';if(!state.habits.length){list.innerHTML='<div style="text-align:center;padding:32px 16px;color:var(--muted);font-size:14px">Žiadne návyky. Pridaj ich v záložke Setup.</div>';return;}const days=Object.keys(state.checked).sort().slice(-7).reverse();if(!days.length){list.innerHTML=`<div class="history-item"><div class="history-item-main"><strong>Zatiaľ bez histórie</strong><span>Začni dnes — tu sa zobrazí prehľad.</span></div><div class="history-pct">—</div></div>`;return}days.forEach(k=>{const done=getDoneCount(k),total=state.habits.length,pct=total?Math.round(done/total*100):0;const isPerfect=done===total&&total>0;const el=document.createElement('div');el.className='history-item';el.innerHTML=`<div class="history-item-main"><strong>${formatDayKey(k)}</strong><span>${done}/${total} splnené${isPerfect?' 🔥':''}</span></div><div class="history-pct" style="color:${pct>=80?'var(--gold)':pct>=50?'#22c55e':'var(--muted)'}">${pct}%</div>`;list.appendChild(el)})}
 function renderTrendView(){const w=$('#trendViewContent');if(!w)return;const total=state.habits.length;const periods=[7,14,21,28];const labels=['7 dní','14 dní','21 dní','28 dní'];const cards=periods.map((days,idx)=>{let sum=0;for(let i=0;i<days;i++){const d=new Date();d.setDate(d.getDate()-i);sum+=getDoneCount(dayKey(d))}const pct=total?Math.round(sum/(days*total)*100):0;const color=pct>=80?'#27AE60':pct>=50?'#F39C12':'#E74C3C';return `<div class="stat-card"><div class="stat-val" style="color:${color}">${pct}%</div><div class="bar-bg" style="margin:8px 0 6px"><div class="bar-fill" style="width:${pct}%;background:${color};transition:width .8s ease"></div></div><div class="stat-label">${labels[idx]}</div></div>`}).join('');const insights=[{title:'Konzistencia > Perfektnosť',desc:'Lepší je 70 % každý deň ako 100 % raz za týždeň.'},{title:'Trend neklamie',desc:'Čísla ukazujú realitu bez emócií — počúvaj ich.'},{title:'Systém, nie vôľa',desc:'Ak klesá tempo, problém je v systéme, nie v tebe.'},{title:'Momentum sa buduje',desc:'Každý splnený deň posilňuje identitu disciplinovaného človeka.'}];w.innerHTML=`<div class="stats-grid">${cards}</div><div class="section-title" style="margin-top:16px"><h3>Myšlienky na cestu</h3><span>mindset</span></div><div style="display:grid;gap:9px">${insights.map(t=>`<div class="trend-insight"><strong>${t.title}</strong><span>${t.desc}</span></div>`).join('')}</div>`}
-function renderStats(){const total=state.habits.length,perfect=countPerfectDays(),streak=computeStreak();const done=Object.values(getTodayChecked()).filter(Boolean).length;const pct=total?Math.round(done/total*100):0;const totalXP=computeTotalXP();const lv=getLevel(totalXP);
-$('#statsGrid').innerHTML=[`<div class="stat-card"><div class="stat-val">${pct}%</div><div class="stat-label">Dnes</div></div>`,`<div class="stat-card"><div class="stat-val">${streak}</div><div class="stat-label">Streak</div></div>`,`<div class="stat-card"><div class="stat-val">${perfect}</div><div class="stat-label">Perfect</div></div>`,`<div class="stat-card"><div class="stat-val" style="font-size:28px">${lv.name}</div><div class="stat-label">Level ${lv.idx+1} · ${totalXP} XP</div></div>`].join('');const wrap=$('#habitStats');wrap.innerHTML='';state.habits.forEach((h,i)=>{const days=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;const totalDays=Math.max(Object.keys(state.checked).length,1);const p=Math.round(days/totalDays*100);const row=document.createElement('div');row.className='habit-stat-row';row.innerHTML=`<div class="habit-stat-top"><div class="habit-stat-name"><span>${escHtml(h.icon)}</span><span>${escHtml(h.name)}</span></div><div class="habit-stat-pct">${p}%</div></div><div class="bar-bg"><div class="bar-fill" style="width:0%;background:${h.color}"></div></div>`;wrap.appendChild(row);setTimeout(()=>{row.querySelector('.bar-fill').style.width=p+'%'},50+i*50)});// Wellness stats
+function renderStats(){const total=state.habits.length,perfect=countPerfectDays(),streak=computeStreak();const done=Object.values(getTodayChecked()).filter(Boolean).length;const pct=total?Math.round(done/total*100):0;$('#statsGrid').innerHTML=[`<div class="stat-card"><div class="stat-val">${pct}%</div><div class="stat-label">Dnes</div></div>`,`<div class="stat-card"><div class="stat-val">${streak}</div><div class="stat-label">Streak</div></div>`,`<div class="stat-card"><div class="stat-val">${perfect}</div><div class="stat-label">Perfect</div></div>`,`<div class="stat-card"><div class="stat-val">${total}</div><div class="stat-label">Návyky</div></div>`].join('');const wrap=$('#habitStats');wrap.innerHTML='';state.habits.forEach((h,i)=>{const days=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;const totalDays=Math.max(Object.keys(state.checked).length,1);const p=Math.round(days/totalDays*100);const row=document.createElement('div');row.className='habit-stat-row';row.innerHTML=`<div class="habit-stat-top"><div class="habit-stat-name"><span>${escHtml(h.icon)}</span><span>${escHtml(h.name)}</span></div><div class="habit-stat-pct">${p}%</div></div><div class="bar-bg"><div class="bar-fill" style="width:0%;background:${h.color}"></div></div>`;wrap.appendChild(row);setTimeout(()=>{row.querySelector('.bar-fill').style.width=p+'%'},50+i*50)});// Wellness stats
 const ws2=document.getElementById('wellnessStats');
 if(ws2){
   const wkeys=Object.keys(state.wellness||{});
@@ -725,7 +593,7 @@ if(ws2){
     '<div class="history-item"><div class="history-item-main"><strong>Korelačná analýza</strong><span>Zaznamenaj aspoň 2 dni pre zobrazenie.</span></div><div class="history-pct">—</div></div>'}
   `;
 }
-renderAchievements();const ins=$('#statsInsights');if(ins)ins.innerHTML=state.habits.map((h,i)=>{const days=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;const rate=Object.keys(state.checked).length?Math.round(days/Object.keys(state.checked).length*100):0;return `<div class="history-item"><div class="history-item-main"><strong>${escHtml(h.name)}</strong><span>${days} dní označené</span></div><div class="history-pct">${rate}%</div></div>`}).join('')}
+const ins=$('#statsInsights');if(ins)ins.innerHTML=state.habits.map((h,i)=>{const days=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;const rate=Object.keys(state.checked).length?Math.round(days/Object.keys(state.checked).length*100):0;return `<div class="history-item"><div class="history-item-main"><strong>${escHtml(h.name)}</strong><span>${days} dní označené</span></div><div class="history-pct">${rate}%</div></div>`}).join('')}
 function renderSettings(){if($('#profileNameInput'))$('#profileNameInput').value=getUserName();if($('#settingsMeta'))$('#settingsMeta').textContent=`${state.habits.length} položiek`;const wrap=$('#settingsHabits');wrap.innerHTML='';state.habits.forEach((h,i)=>{const row=document.createElement('div');row.className='setting-row';row.innerHTML=`<div class="setting-icon" onclick="promptIcon(${i})" title="Zmeň ikonu" style="cursor:pointer;user-select:none">${escHtml(h.icon)}</div><input type="text" value="${escHtml(h.name)}" data-idx="${i}" data-field="name" placeholder="Názov návyku"/><div class="color-swatch-btn" onclick="promptColor(${i})" title="Zmeň farbu" style="width:26px;height:26px;border-radius:50%;background:${escHtml(h.color)};flex-shrink:0;cursor:pointer;border:2px solid rgba(255,255,255,.2)"></div><button class="setting-delete" type="button" onclick="event.stopPropagation(); removeHabitRow(${i})">×</button>`;wrap.appendChild(row)})}
 function addHabitRow(){state.habits.push({id:rid(),name:'Nový návyk',icon:'✨',color:'#f7d67a'});saveState();renderSettings();showToast('Návyk pridaný')}
 function removeHabitRow(i){if(state.habits.length<=1){showToast('Aspoň jeden návyk musí zostať');return}state.habits.splice(i,1);saveState();renderSettings();renderToday();showToast('Návyk odstránený')}
@@ -786,181 +654,6 @@ function renderWellnessCard(){
     const done=w.sleep>0&&w.energy!==null;
     badge.classList.toggle('hidden',!done);
   }
-}
-
-
-// ══════════════════════════════════════════════════════════════════
-// XP & MILESTONE SYSTEM
-// ══════════════════════════════════════════════════════════════════
-const XP_PER_HABIT = 10;
-const XP_PERFECT_BONUS = 50;
-const XP_GOOD_SLEEP = 15;
-const XP_HIGH_ENERGY = 10;
-const XP_PER_LEVEL = 500;
-
-const LEVELS = [
-  {min:0,    name:'Začiatočník',  icon:'1'},
-  {min:500,  name:'Stúpenec',     icon:'2'},
-  {min:1000, name:'Disciplinovaný', icon:'3'},
-  {min:2000, name:'Záväzok',      icon:'4'},
-  {min:3500, name:'Konzistentný', icon:'5'},
-  {min:5500, name:'Vytrvalec',    icon:'6'},
-  {min:8000, name:'Bojovník',     icon:'7'},
-  {min:11000, name:'Majster',     icon:'8'},
-  {min:15000, name:'Elita',       icon:'9'},
-  {min:20000, name:'Legenda',     icon:'👑'},
-];
-
-const MILESTONES = [
-  {id:'streak7',   emoji:'🔥', title:'PRVÝ TÝŽDEŇ',    desc:'7 dní za sebou. Nie každý to dokáže.',     streak:7,   xpBonus:100},
-  {id:'streak14',  emoji:'⚡', title:'ROZBIEHAČ',       desc:'2 týždne bez prestávky. Toto je rytmus.',  streak:14,  xpBonus:200},
-  {id:'streak30',  emoji:'💪', title:'MESIAC DISCIPLÍNY', desc:'30 dní. Návyk sa stal súčasťou teba.',  streak:30,  xpBonus:500},
-  {id:'streak100', emoji:'🏆', title:'ELITE',           desc:'100 dní. Si v top 1% ľudí na svete.',     streak:100, xpBonus:2000},
-  {id:'xp500',     emoji:'⭐', title:'PRVÝCH 500 XP',   desc:'Začiatok je najdôležitejší krok.',         xpThresh:500,  xpBonus:50},
-  {id:'xp2000',    emoji:'🌟', title:'2000 XP',         desc:'Rast je viditeľný. Pokračuj.',             xpThresh:2000, xpBonus:100},
-  {id:'xp5000',    emoji:'💫', title:'5000 XP',         desc:'Polovica cesty k legende.',                xpThresh:5000, xpBonus:250},
-  {id:'perfect7',  emoji:'✨', title:'7 PERFECT DNÍ',   desc:'7 perfektných dní. Čistý rekord.',         perfectThresh:7,  xpBonus:150},
-  {id:'perfect30', emoji:'🎯', title:'30 PERFECT DNÍ',  desc:'30 perfektných dní. Neúprosný.',           perfectThresh:30, xpBonus:500},
-];
-
-function getLevel(xp){
-  for(let i=LEVELS.length-1;i>=0;i--){if(xp>=LEVELS[i].min)return{...LEVELS[i],idx:i}}
-  return{...LEVELS[0],idx:0};
-}
-
-function computeTotalXP(){
-  let total=0;
-  const allDays=Object.keys(state.checked);
-  allDays.forEach(k=>{
-    const done=getDoneCount(k);
-    total+=done*XP_PER_HABIT;
-    if(done===state.habits.length&&state.habits.length>0)total+=XP_PERFECT_BONUS;
-    const w=state.wellness[k]||{};
-    if(w.sleep>=7&&w.sleep<=9)total+=XP_GOOD_SLEEP;
-    if(w.energy===3)total+=XP_HIGH_ENERGY;
-  });
-  return total;
-}
-
-function awardXP(amount,sourceX,sourceY){
-  state.xp=computeTotalXP();
-  saveState();
-  renderXPBar();
-  // Floating XP label
-  if(amount>0){
-    const el=document.createElement('div');
-    el.className='xp-float';
-    el.textContent='+'+amount+' XP';
-    el.style.left=(sourceX||window.innerWidth/2-30)+'px';
-    el.style.top=(sourceY||200)+'px';
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),1300);
-  }
-  checkMilestones();
-}
-
-function renderXPBar(){
-  const xp=computeTotalXP();
-  const lv=getLevel(xp);
-  const nextLv=LEVELS[Math.min(lv.idx+1,LEVELS.length-1)];
-  const lvXP=xp-lv.min;
-  const needed=nextLv.min-lv.min;
-  const pct=lv.idx===LEVELS.length-1?100:Math.min(100,Math.round(lvXP/needed*100));
-  const el=document.getElementById('xpLevelIcon');
-  if(el)el.textContent=lv.icon;
-  const ln=document.getElementById('xpLevelName');
-  if(ln)ln.textContent=lv.name;
-  const ls=document.getElementById('xpLevelSub');
-  if(ls)ls.textContent='Level '+(lv.idx+1);
-  const xt=document.getElementById('xpTotal');
-  if(xt)xt.textContent=xp+' XP';
-  const xf=document.getElementById('xpFill');
-  if(xf)xf.style.width=pct+'%';
-  const xc=document.getElementById('xpCurrent');
-  if(xc)xc.textContent=lvXP+' XP';
-  const xn=document.getElementById('xpNext');
-  if(xn)xn.textContent=lv.idx===LEVELS.length-1?'MAX LEVEL 👑':(needed-lvXP)+' XP do levelu '+(lv.idx+2);
-}
-
-// ── MILESTONE CHECK ───────────────────────────────────────────────
-let _milestoneQueue=[];
-let _milestoneShowing=false;
-
-function checkMilestones(){
-  const streak=computeStreak();
-  const perfect=countPerfectDays();
-  const xp=computeTotalXP();
-  MILESTONES.forEach(m=>{
-    if(state.milestones[m.id])return;
-    let triggered=false;
-    if(m.streak&&streak>=m.streak)triggered=true;
-    if(m.xpThresh&&xp>=m.xpThresh)triggered=true;
-    if(m.perfectThresh&&perfect>=m.perfectThresh)triggered=true;
-    if(triggered){
-      state.milestones[m.id]=true;
-      state.xp=(state.xp||0)+m.xpBonus;
-      saveState();
-      _milestoneQueue.push(m);
-    }
-  });
-  if(!_milestoneShowing&&_milestoneQueue.length)showNextMilestone();
-}
-
-function showNextMilestone(){
-  if(!_milestoneQueue.length){_milestoneShowing=false;return}
-  _milestoneShowing=true;
-  const m=_milestoneQueue.shift();
-  document.getElementById('milestoneEmoji').textContent=m.emoji;
-  document.getElementById('milestoneTitle').textContent=m.title;
-  document.getElementById('milestoneDesc').textContent=m.desc;
-  document.getElementById('milestoneXpBonus').textContent='+'+m.xpBonus+' XP bonus';
-  createMilestoneConfetti();
-  const ov=document.getElementById('milestoneOverlay');
-  if(ov)ov.classList.remove('hide');
-  if(navigator.vibrate)navigator.vibrate([50,30,80,30,120]);
-}
-
-function closeMilestone(){
-  const ov=document.getElementById('milestoneOverlay');
-  if(ov)ov.classList.add('hide');
-  _milestoneShowing=false;
-  renderXPBar();
-  renderStats();
-  setTimeout(()=>{if(_milestoneQueue.length)showNextMilestone()},400);
-}
-window.closeMilestone=closeMilestone;
-
-function createMilestoneConfetti(){
-  const w=document.getElementById('milestoneConfetti');
-  if(!w)return;w.innerHTML='';
-  const colors=['#f7d67a','#ffd700','#fff','#f97316','#22c55e','#3b82f6','#ec4899'];
-  for(let i=0;i<50;i++){
-    const b=document.createElement('div');
-    const sz=4+Math.random()*8;
-    Object.assign(b.style,{position:'absolute',left:Math.random()*100+'%',top:(-10-Math.random()*20)+'px',width:Math.random()>.5?sz*1.8+'px':sz+'px',height:sz+'px',borderRadius:Math.random()>.5?'50%':'2px',animation:`confettiFall ${1.2+Math.random()*.8}s ease forwards`,animationDelay:(Math.random()*.5)+'s',transform:`rotate(${Math.random()*360}deg)`,background:colors[Math.floor(Math.random()*colors.length)]});
-    w.appendChild(b);
-  }
-}
-
-// ── ACHIEVEMENTS RENDER ───────────────────────────────────────────
-function renderAchievements(){
-  const wrap=document.getElementById('achievementsGrid');
-  if(!wrap)return;
-  const streak=computeStreak();
-  const perfect=countPerfectDays();
-  const xp=computeTotalXP();
-  wrap.innerHTML=MILESTONES.map(m=>{
-    const done=!!state.milestones[m.id];
-    let progress='';
-    if(m.streak)progress=`${Math.min(streak,m.streak)}/${m.streak} dní`;
-    else if(m.xpThresh)progress=`${Math.min(xp,m.xpThresh)}/${m.xpThresh} XP`;
-    else if(m.perfectThresh)progress=`${Math.min(perfect,m.perfectThresh)}/${m.perfectThresh} dní`;
-    return `<div class="achievement-card ${done?'unlocked':'achievement-locked'}">
-      <span class="achievement-emoji">${m.emoji}</span>
-      <div class="achievement-name">${m.title}</div>
-      <div class="achievement-desc">${done?m.desc:progress}</div>
-    </div>`;
-  }).join('');
 }
 
 function showWheelDetail(d,k){const c=state.checked[k]||{},done=Object.values(c).filter(Boolean).length,total=state.habits.length,pct=total?Math.round(done/total*100):0;$('#wheelPopupTitle').textContent=d.toLocaleDateString('sk-SK',{weekday:'long',day:'numeric',month:'long'});$('#wheelPopupMeta').textContent=`${done}/${total} splnených · ${pct}%`;$('#wheelPopupList').innerHTML=state.habits.map((h,i)=>`<div class="wheel-popup-row">${c[i]?'✅':'○'} ${escHtml(h.name)}</div>`).join('');$('#wheelPopup').classList.remove('hidden')}
@@ -1150,7 +843,7 @@ function init(){
     setTimeout(()=>{
       $('#splash').classList.add('hide');
       $('#app').classList.add('visible');
-      updatePersonalUI();renderToday();renderStats();renderTrendView();renderSettings();renderXPBar();checkMilestones();
+      updatePersonalUI();renderToday();renderStats();renderTrendView();renderSettings();
     },2200);
   }else{
     state={profile:{...DEFAULT_PROFILE},habits:[],checked:{},celebrationShown:{}};
