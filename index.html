@@ -8,8 +8,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Habits"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%2309090b'/%3E%3Ccircle cx='90' cy='90' r='48' fill='none' stroke='%23f7d67a' stroke-width='7'/%3E%3Cline x1='90' y1='90' x2='112' y2='75' stroke='%23f7d67a' stroke-width='5.5' stroke-linecap='round'/%3E%3Ccircle cx='90' cy='90' r='5' fill='%23f7d67a'/%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -655,7 +653,7 @@ body::after{
   background:linear-gradient(135deg,rgba(168,85,247,.14),rgba(59,130,246,.08));
   border:1px solid rgba(168,85,247,.25);
   border-radius:var(--r-lg);padding:14px 16px;
-  margin-bottom:14px;animation:fadeUp .4s ease both;
+  margin-top:14px;margin-bottom:14px;animation:fadeUp .4s ease both;
   position:relative;overflow:hidden;cursor:pointer;
   transition:transform .18s ease,box-shadow .18s ease;
 }
@@ -951,211 +949,59 @@ body.light-mode .achievement-card.unlocked{background:linear-gradient(135deg,rgb
 body.light-mode .level-progress-bg{background:rgba(0,0,0,.08)!important}
 body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!important}
 
-/* ══ INSIGHT ENGINE ══ */
-.insight-engine-wrap{margin-top:2px}
+/* ══ PREČO POPUP (Why behind habit) ══ */
+.why-popup{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-end;justify-content:center;padding:0 12px 12px;background:rgba(0,0,0,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:fadeIn .2s ease}
+.why-popup-card{width:min(100%,420px);background:linear-gradient(180deg,rgba(22,22,26,.99),rgba(11,11,14,.99));border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:22px 20px;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:slideUp .3s cubic-bezier(.16,1,.3,1)}
+.why-popup-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+.why-popup-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:14px}
+.why-textarea{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:13px 15px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;resize:none;height:90px;line-height:1.5;outline:none;transition:.2s ease}
+.why-textarea:focus{border-color:rgba(247,214,122,.4)}
+.why-textarea::placeholder{color:var(--muted2)}
+.why-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.why-save-btn{min-height:46px;border-radius:16px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer}
+.why-skip-btn{min-height:46px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:13px;font-weight:700;cursor:pointer}
 
-.insight-card{
-  border-radius:22px;
-  padding:16px 18px;
-  margin-bottom:10px;
-  position:relative;overflow:hidden;
-  animation:fadeUp .4s ease both;
-  border:1px solid transparent;
-}
-.insight-card::before{
-  content:'';position:absolute;inset:0;border-radius:inherit;
-  pointer-events:none;
-}
+/* Why reminder na habit row */
+.habit-why-text{font-size:10px;color:var(--muted2);font-style:italic;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Insight types — colour themes */
-.insight-card.type-positive{
-  background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(16,185,129,.04));
-  border-color:rgba(34,197,94,.2);
-}
-.insight-card.type-warning{
-  background:linear-gradient(135deg,rgba(249,115,22,.09),rgba(234,179,8,.04));
-  border-color:rgba(249,115,22,.22);
-}
-.insight-card.type-neutral{
-  background:linear-gradient(135deg,rgba(96,165,250,.08),rgba(139,92,246,.04));
-  border-color:rgba(96,165,250,.2);
-}
-.insight-card.type-gold{
-  background:linear-gradient(135deg,rgba(247,214,122,.1),rgba(192,138,24,.05));
-  border-color:rgba(247,214,122,.22);
-}
-.insight-card.type-critical{
-  background:linear-gradient(135deg,rgba(239,68,68,.09),rgba(220,38,38,.04));
-  border-color:rgba(239,68,68,.2);
-}
+/* ══ FRICTION LOG ══ */
+.friction-overlay{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-end;justify-content:center;padding:0 12px 12px;background:rgba(0,0,0,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:fadeIn .2s ease}
+.friction-card{width:min(100%,420px);background:linear-gradient(180deg,rgba(22,22,26,.99),rgba(11,11,14,.99));border:1px solid rgba(239,68,68,.2);border-radius:28px;padding:22px 20px;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:slideUp .3s cubic-bezier(.16,1,.3,1)}
+.friction-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#ef4444;font-weight:700;margin-bottom:6px}
+.friction-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:5px}
+.friction-sub{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.friction-reasons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.friction-reason-btn{padding:11px 10px;border-radius:14px;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.08);color:var(--text);font-size:12px;font-weight:700;cursor:pointer;transition:.2s ease;text-align:center}
+.friction-reason-btn.selected{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#ef4444}
+.friction-reason-btn:active{transform:scale(.97)}
+.friction-save-btn{width:100%;min-height:46px;border-radius:16px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.25);color:#ef4444;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s ease}
+.friction-dismiss-btn{width:100%;min-height:40px;border-radius:14px;background:transparent;border:none;color:var(--muted2);font-size:12px;font-weight:600;cursor:pointer;margin-top:6px}
 
-.insight-card-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:6px}
-.insight-icon{
-  width:36px;height:36px;border-radius:12px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:17px;
-}
-.type-positive .insight-icon{background:rgba(34,197,94,.15)}
-.type-warning .insight-icon{background:rgba(249,115,22,.15)}
-.type-neutral .insight-icon{background:rgba(96,165,250,.15)}
-.type-gold .insight-icon{background:rgba(247,214,122,.15)}
-.type-critical .insight-icon{background:rgba(239,68,68,.15)}
+/* Friction log entry v Stats */
+.friction-log-item{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:14px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);margin-bottom:6px}
+.friction-log-reason{font-size:12px;font-weight:700;color:#ef4444;flex-shrink:0}
+.friction-log-name{font-size:12px;color:var(--muted);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.friction-log-count{font-size:11px;font-weight:800;color:var(--muted2)}
 
-.insight-label{font-size:9px;text-transform:uppercase;letter-spacing:2.5px;font-weight:800;margin-bottom:3px}
-.type-positive .insight-label{color:#22c55e}
-.type-warning .insight-label{color:#f97316}
-.type-neutral .insight-label{color:#60a5fa}
-.type-gold .insight-label{color:var(--gold)}
-.type-critical .insight-label{color:#ef4444}
+/* ══ REFLEXNÝ PROMPT (Piatok + Pondelok) ══ */
+.reflex-overlay{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.75);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);animation:fadeIn .3s ease}
+.reflex-card{width:min(100%,400px);background:linear-gradient(180deg,rgba(22,22,26,.99),rgba(11,11,14,.99));border:1px solid rgba(247,214,122,.2);border-radius:32px;padding:28px 24px;box-shadow:0 40px 100px rgba(0,0,0,.7);animation:slideUp .4s cubic-bezier(.16,1,.3,1);text-align:center}
+.reflex-emoji{font-size:44px;margin-bottom:14px}
+.reflex-eyebrow{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+.reflex-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1.5px;line-height:1;margin-bottom:8px}
+.reflex-question{font-size:15px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:16px}
+.reflex-textarea{width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:13px 15px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;resize:none;height:100px;line-height:1.5;outline:none;transition:.2s ease;text-align:left}
+.reflex-textarea:focus{border-color:rgba(247,214,122,.4)}
+.reflex-textarea::placeholder{color:var(--muted2)}
+.reflex-save-btn{width:100%;min-height:50px;border-radius:18px;margin-top:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;box-shadow:0 12px 30px rgba(247,214,122,.2)}
+.reflex-skip{display:block;margin-top:10px;font-size:12px;color:var(--muted2);cursor:pointer;background:none;border:none;width:100%}
 
-.insight-title{font-size:14px;font-weight:800;color:var(--text);line-height:1.3}
-.insight-body{font-size:12px;color:var(--muted);line-height:1.6;margin-top:4px}
+/* Reflexia badge v Settings habit row */
+.why-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;background:rgba(247,214,122,.1);border:1px solid rgba(247,214,122,.15);font-size:9px;color:var(--gold);font-weight:700;margin-left:6px;vertical-align:middle}
 
-/* Mini metric pill inside insight */
-.insight-metric{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 10px;border-radius:99px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
-  font-size:11px;font-weight:800;color:var(--text);
-  margin-top:8px;
-}
-
-/* Correlation bar (sleep vs performance) */
-.corr-bar-wrap{margin-top:10px;display:grid;gap:6px}
-.corr-row{display:flex;align-items:center;gap:10px}
-.corr-label{font-size:10px;color:var(--muted);width:70px;flex-shrink:0;font-weight:600}
-.corr-bar-bg{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
-.corr-bar-fill{height:6px;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1)}
-.corr-val{font-size:10px;font-weight:800;width:30px;text-align:right;flex-shrink:0}
-
-/* Day-of-week heatrow */
-.dow-row{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:10px}
-.dow-cell{
-  padding:8px 4px;border-radius:12px;text-align:center;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
-  transition:.2s ease;
-}
-.dow-cell.best{background:rgba(247,214,122,.15);border-color:rgba(247,214,122,.3)}
-.dow-cell.worst{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.15)}
-.dow-cell-name{font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted2);font-weight:700}
-.dow-cell-pct{font-size:12px;font-weight:800;margin-top:4px;color:var(--text)}
-.dow-cell.best .dow-cell-pct{color:var(--gold)}
-.dow-cell.worst .dow-cell-pct{color:#ef4444}
-
-/* Insight engine section header */
-.ie-section-header{
-  display:flex;align-items:center;gap:10px;
-  margin:16px 0 12px;
-}
-.ie-section-title{font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);font-weight:700;flex:1}
-.ie-badge{
-  padding:4px 10px;border-radius:99px;
-  background:rgba(247,214,122,.1);border:1px solid rgba(247,214,122,.18);
-  font-size:10px;color:var(--gold);font-weight:800;letter-spacing:.5px;
-}
-
-/* Skeleton loader */
-.insight-skeleton{
-  border-radius:22px;padding:16px 18px;margin-bottom:10px;
-  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-  animation:shimmer 1.4s ease infinite;
-}
-@keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.8}}
-.skeleton-line{height:10px;border-radius:5px;background:rgba(255,255,255,.08);margin-bottom:8px}
-.skeleton-line.short{width:40%}
-.skeleton-line.medium{width:65%}
-.skeleton-line.long{width:90%}
-
-/* "Not enough data" empty state */
-.ie-empty{
-  padding:28px 20px;text-align:center;
-  border-radius:22px;
-  background:rgba(255,255,255,.025);
-  border:1px dashed rgba(255,255,255,.1);
-}
-.ie-empty-icon{font-size:32px;margin-bottom:10px}
-.ie-empty-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:5px}
-.ie-empty-sub{font-size:12px;color:var(--muted);line-height:1.5}
-
-/* Weekly Review styles (lightweight version) */
-#weeklyReviewOverlay{position:fixed;inset:0;z-index:1300;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s ease,visibility .35s ease}
-#weeklyReviewOverlay.show{opacity:1;visibility:visible;pointer-events:all}
-.wr-sheet{width:100%;max-width:520px;max-height:92dvh;overflow-y:auto;overflow-x:hidden;background:linear-gradient(180deg,#141418,#0b0b0e);border:1px solid rgba(247,214,122,.18);border-bottom:none;border-radius:32px 32px 0 0;padding:0 0 40px 0;box-shadow:0 -30px 80px rgba(0,0,0,.6);scrollbar-width:none;transform:translateY(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
-#weeklyReviewOverlay.show .wr-sheet{transform:translateY(0)}
-.wr-sheet::-webkit-scrollbar{display:none}
-.wr-handle{width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:12px auto 0}
-.wr-header{padding:20px 22px 0;position:relative}
-.wr-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
-.wr-title{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;line-height:1;background:linear-gradient(135deg,var(--gold),#fff8e0,var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.wr-subtitle{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
-.wr-close{position:absolute;top:20px;right:20px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.wr-score-hero{margin:20px 22px 0;padding:20px;border-radius:24px;background:linear-gradient(135deg,rgba(247,214,122,.12),rgba(192,138,24,.05));border:1px solid rgba(247,214,122,.18);display:flex;align-items:center;gap:18px;position:relative;overflow:hidden}
-.wr-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
-.wr-ring-wrap svg{width:80px;height:80px;transform:rotate(-90deg)}
-.wr-ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:7}
-.wr-ring-fill{fill:none;stroke:url(#wrGoldGrad);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)}
-.wr-ring-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold)}
-.wr-score-grade{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;line-height:1;margin-top:2px}
-.wr-score-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4}
-.wr-days-section{padding:18px 22px 0}
-.wr-section-label{font-size:10px;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);font-weight:700;margin-bottom:12px}
-.wr-day-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;align-items:flex-end;height:80px}
-.wr-day-col{display:flex;flex-direction:column;align-items:center;gap:5px;height:100%}
-.wr-bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
-.wr-bar{width:100%;max-width:30px;border-radius:6px 6px 3px 3px;min-height:4px;background:rgba(255,255,255,.08)}
-.wr-bar.has-data{background:linear-gradient(180deg,var(--gold),var(--gold2))}
-.wr-bar.perfect{background:linear-gradient(180deg,#22c55e,#16a34a)}
-.wr-day-name{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted2);font-weight:700}
-.wr-day-pct{font-size:9px;color:var(--muted);font-weight:700;min-height:11px}
-.wr-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:14px 22px 0}
-.wr-stat-card{padding:13px 10px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);text-align:center}
-.wr-stat-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);line-height:1}
-.wr-stat-lbl{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:3px;font-weight:700}
-.wr-habits-section{padding:16px 22px 0}
-.wr-habit-row{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);margin-bottom:7px}
-.wr-habit-icon{font-size:18px;flex-shrink:0}
-.wr-habit-name{font-size:13px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wr-habit-bar-wrap{width:70px;flex-shrink:0}
-.wr-habit-bar-bg{height:5px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
-.wr-habit-bar-fill{height:5px;border-radius:99px}
-.wr-habit-pct{font-size:11px;font-weight:800;color:var(--gold);margin-top:3px;text-align:right}
-.wr-insight{margin:14px 22px 0;padding:14px 16px;border-radius:18px;background:linear-gradient(135deg,rgba(96,165,250,.08),rgba(139,92,246,.05));border:1px solid rgba(96,165,250,.18)}
-.wr-insight-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#60a5fa;font-weight:700;margin-bottom:5px}
-.wr-insight-text{font-size:13px;color:var(--text);line-height:1.55}
-.wr-intent-section{padding:16px 22px 0}
-.wr-intent-input{width:100%;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:13px 15px;color:var(--text);font-size:14px;font-family:'Outfit',sans-serif;resize:none;height:80px;line-height:1.5;outline:none;transition:.2s ease}
-.wr-intent-input:focus{border-color:rgba(247,214,122,.35)}
-.wr-intent-input::placeholder{color:var(--muted2)}
-.wr-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
-.wr-chip{padding:7px 13px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:11px;font-weight:700;cursor:pointer;transition:.2s ease}
-.wr-chip.selected{background:rgba(247,214,122,.12);border-color:rgba(247,214,122,.3);color:var(--gold)}
-.wr-cta{margin:18px 22px 0;width:calc(100% - 44px);min-height:52px;border-radius:20px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;box-shadow:0 16px 40px rgba(247,214,122,.2);transition:.2s ease}
-.wr-grade-S{color:#22c55e}.wr-grade-A{color:var(--gold)}.wr-grade-B{color:#f97316}.wr-grade-C{color:#9794a0}.wr-grade-D{color:#ef4444}
-.nav-review-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);position:absolute;top:8px;right:10px;animation:reviewDotPulse 2s ease infinite}
-@keyframes reviewDotPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
-
-/* PWA banners */
-#pwaInstallBanner{position:fixed;bottom:88px;left:12px;right:12px;z-index:1100;background:linear-gradient(135deg,rgba(20,20,24,.98),rgba(11,11,14,.98));border:1px solid rgba(247,214,122,.25);border-radius:24px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(120px);opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .4s ease;pointer-events:none}
-#pwaInstallBanner.show{transform:translateY(0);opacity:1;pointer-events:all}
-.pwa-banner-icon{width:44px;height:44px;border-radius:14px;flex-shrink:0;background:linear-gradient(135deg,rgba(247,214,122,.2),rgba(192,138,24,.1));border:1px solid rgba(247,214,122,.25);display:flex;align-items:center;justify-content:center;font-size:22px}
-.pwa-banner-text{flex:1;min-width:0}
-.pwa-banner-text strong{display:block;font-size:13px;font-weight:800;color:var(--text)}
-.pwa-banner-text span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
-.pwa-banner-actions{display:flex;gap:7px;flex-shrink:0}
-.pwa-install-btn{padding:8px 14px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#111;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;white-space:nowrap}
-.pwa-dismiss-btn{padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:16px;cursor:pointer}
-#notifBanner{position:fixed;bottom:88px;left:12px;right:12px;z-index:1099;background:linear-gradient(135deg,rgba(20,20,24,.98),rgba(11,11,14,.98));border:1px solid rgba(96,165,250,.25);border-radius:24px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 20px 60px rgba(0,0,0,.5);transform:translateY(120px);opacity:0;transition:transform .5s cubic-bezier(.16,1,.3,1),opacity .4s ease;pointer-events:none}
-#notifBanner.show{transform:translateY(0);opacity:1;pointer-events:all}
-.notif-banner-icon{width:44px;height:44px;border-radius:14px;flex-shrink:0;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.2);display:flex;align-items:center;justify-content:center;font-size:22px}
-.notif-enable-btn{padding:8px 14px;border-radius:12px;background:linear-gradient(135deg,#60a5fa,#3b82f6);color:#fff;font-weight:900;font-size:11px;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;white-space:nowrap}
-
-body.light-mode .insight-card.type-positive{background:rgba(34,197,94,.05)!important;border-color:rgba(34,197,94,.2)!important}
-body.light-mode .insight-card.type-warning{background:rgba(249,115,22,.05)!important;border-color:rgba(249,115,22,.18)!important}
-body.light-mode .insight-card.type-neutral{background:rgba(96,165,250,.05)!important;border-color:rgba(96,165,250,.18)!important}
-body.light-mode .insight-card.type-gold{background:rgba(138,98,0,.06)!important;border-color:rgba(138,98,0,.2)!important}
-body.light-mode .insight-card.type-critical{background:rgba(239,68,68,.05)!important;border-color:rgba(239,68,68,.18)!important}
-body.light-mode .dow-cell{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.08)!important}
-body.light-mode .wr-sheet{background:linear-gradient(180deg,#fff,#f5f0e8)!important}
-body.light-mode #pwaInstallBanner,body.light-mode #notifBanner{background:linear-gradient(135deg,rgba(255,252,245,.98),rgba(245,240,232,.98))!important}
+body.light-mode .why-popup-card,body.light-mode .friction-card,body.light-mode .reflex-card{background:linear-gradient(180deg,#fff,#f5f0e8)!important;border-color:rgba(0,0,0,.12)!important}
+body.light-mode .why-textarea,body.light-mode .reflex-textarea{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.12)!important;color:#111!important}
+body.light-mode .friction-reason-btn{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.1)!important;color:var(--text)!important}
 </style>
 </head>
 <body>
@@ -1318,7 +1164,6 @@ body.light-mode #pwaInstallBanner,body.light-mode #notifBanner{background:linear
       </div>
     </div>
 
-    <div class="daily-quote-block" id="dailyQuoteBlock"></div>
     <div id="monthlySummaryBanner"></div>
     <div id="dailyChallengeBlock"></div>
     <div id="prBanner"></div>
@@ -1380,22 +1225,6 @@ body.light-mode #pwaInstallBanner,body.light-mode #notifBanner{background:linear
     <div class="achievements-grid" id="achievementsGrid"></div>
     <div class="section-title" style="margin-top:16px"><h3>Detaily</h3><span>počty dní</span></div>
     <div class="history-list" id="statsInsights"></div>
-
-    <!-- ══ INSIGHT ENGINE ══ -->
-    <div class="ie-section-header" style="margin-top:20px">
-      <h3 class="ie-section-title">Insight Engine</h3>
-      <div class="ie-badge" id="insightBadge">0 insightov</div>
-    </div>
-    <div class="insight-engine-wrap" id="insightEngineWrap">
-      <div class="ie-empty">
-        <div class="ie-empty-icon">🧠</div>
-        <div class="ie-empty-title">Ešte málo dát</div>
-        <div class="ie-empty-sub">Zaznamenávaj návyky a wellness aspoň 5 dní — potom ti ukážem reálne korelácie a vzory.</div>
-      </div>
-    </div>
-
-    <button id="wrOpenBtn" type="button" style="width:100%;min-height:50px;border-radius:20px;margin-top:16px;background:linear-gradient(135deg,rgba(247,214,122,.12),rgba(192,138,24,.06));border:1px solid rgba(247,214,122,.22);color:var(--gold);font-weight:900;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.2s ease" onclick="openWeeklyReview()">📋 &nbsp;Weekly Review</button>
-
     <div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div>
   </div>
 
@@ -1805,7 +1634,7 @@ function renderToday(){
         <div class="habit-icon" style="background:${h.color}18;border:1px solid ${h.color}28">${escHtml(h.icon)}</div>
         <div class="habit-info">
           <div class="habit-name" style="color:${isDone?h.color:'var(--text)'}">${escHtml(h.name)}</div>
-          <div class="habit-sub">${note?'📝 '+escHtml(note.slice(0,40))+(note.length>40?'…':''):(isDone?'Splnené ✓':'Potvrď splnenie →')}</div>
+          <div class="habit-sub">${note?'📝 '+escHtml(note.slice(0,40))+(note.length>40?'…':''):(isDone&&h.why?'💡 '+escHtml(h.why.slice(0,42))+(h.why.length>42?'…':''):(isDone?'Splnené ✓':'Potvrď splnenie →'))}</div>
         </div>
         <div class="habit-check">${isDone?'✓':''}</div>
       </div>`;
@@ -2084,7 +1913,7 @@ function renderStats(){
 // ═══════════════════════════════════════════════════════
 // SETTINGS
 // ═══════════════════════════════════════════════════════
-function renderSettings(){if($('#profileNameInput'))$('#profileNameInput').value=getUserName();if($('#settingsMeta'))$('#settingsMeta').textContent=`${state.habits.length} položiek`;const wrap=$('#settingsHabits');wrap.innerHTML='';state.habits.forEach((h,i)=>{const row=document.createElement('div');row.className='setting-row';row.innerHTML=`<div class="setting-icon" onclick="promptIcon(${i})" title="Zmeň ikonu" style="cursor:pointer;user-select:none">${escHtml(h.icon)}</div><input type="text" value="${escHtml(h.name)}" data-idx="${i}" data-field="name" placeholder="Názov návyku"/><div class="color-swatch-btn" onclick="promptColor(${i})" title="Zmeň farbu" style="width:26px;height:26px;border-radius:50%;background:${escHtml(h.color)};flex-shrink:0;cursor:pointer;border:2px solid rgba(255,255,255,.2)"></div><button class="setting-delete" type="button" onclick="event.stopPropagation(); removeHabitRow(${i})">×</button>`;wrap.appendChild(row)})}
+function renderSettings(){if($('#profileNameInput'))$('#profileNameInput').value=getUserName();if($('#settingsMeta'))$('#settingsMeta').textContent=`${state.habits.length} položiek`;const wrap=$('#settingsHabits');wrap.innerHTML='';state.habits.forEach((h,i)=>{const row=document.createElement('div');row.className='setting-row';const why=h.why||'';row.innerHTML=`<div class="setting-icon" onclick="promptIcon(${i})" title="Zmeň ikonu" style="cursor:pointer;user-select:none">${escHtml(h.icon)}</div><div style="flex:1;min-width:0"><input type="text" value="${escHtml(h.name)}" data-idx="${i}" data-field="name" placeholder="Názov návyku" style="width:100%"/><input type="text" value="${escHtml(why)}" data-idx="${i}" data-field="why" placeholder="Prečo ti na tom záleží? (voliteľné)" style="width:100%;font-size:11px;color:var(--muted);margin-top:3px"/></div><div class="color-swatch-btn" onclick="promptColor(${i})" title="Zmeň farbu" style="width:26px;height:26px;border-radius:50%;background:${escHtml(h.color)};flex-shrink:0;cursor:pointer;border:2px solid rgba(255,255,255,.2)"></div><button class="setting-delete" type="button" onclick="event.stopPropagation(); removeHabitRow(${i})">×</button>`;wrap.appendChild(row)})}
 function addHabitRow(){state.habits.push({id:rid(),name:'Nový návyk',icon:'✨',color:'#f7d67a'});saveState();renderSettings();showToast('Návyk pridaný')}
 function removeHabitRow(i){if(state.habits.length<=1){showToast('Aspoň jeden návyk musí zostať');return}state.habits.splice(i,1);saveState();renderSettings();renderToday();showToast('Návyk odstránený')}
 function resetToDefaults(){
@@ -2110,7 +1939,7 @@ function resetToDefaults(){
     }
   );
 }
-window.saveSettings=()=>{state.profile.name=$('#profileNameInput').value.trim();const next=[];for(let i=0;i<state.habits.length;i++){const nameEl=document.querySelector(`#settingsHabits input[data-idx='${i}'][data-field='name']`);const name=nameEl?nameEl.value.trim():'';next.push({...state.habits[i],name:name||state.habits[i].name})}state.habits=next.filter(h=>h.name&&h.name.trim());saveState();updatePersonalUI();renderToday();renderStats();renderSettings();showToast('Zmeny uložené')};
+window.saveSettings=()=>{state.profile.name=$('#profileNameInput').value.trim();const next=[];for(let i=0;i<state.habits.length;i++){const nameEl=document.querySelector(`#settingsHabits input[data-idx='${i}'][data-field='name']`);const whyEl=document.querySelector(`#settingsHabits input[data-idx='${i}'][data-field='why']`);const name=nameEl?nameEl.value.trim():'';const why=whyEl?whyEl.value.trim():'';next.push({...state.habits[i],name:name||state.habits[i].name,why})}state.habits=next.filter(h=>h.name&&h.name.trim());saveState();updatePersonalUI();renderToday();renderStats();renderSettings();showToast('Zmeny uložené')};
 function showConfirm(title,desc,confirmLabel,onConfirm){
   const old=document.getElementById('confirmDialog');if(old)old.remove();
   const el=document.createElement('div');el.id='confirmDialog';
@@ -2563,508 +2392,314 @@ function exportCSV(){const keys=Object.keys(state.checked||{}).sort();const rows
 </body>
 <script>
 /* ═══════════════════════════════════════════════════════
-   INSIGHT ENGINE
-   Analyzuje reálne vzory z dát — bez AI API, čisto lokálne.
+   1. FRICTION LOG — Prečo som nesplnil?
    ═══════════════════════════════════════════════════════ */
 
-// ── Pomocné funkcie ──────────────────────────────────
-function ieGetDayData(daysBack) {
-  // Vráti pole {key, date, done, pct, perfect, wellness} za posledných N dní
-  const total = state.habits.length || 1;
-  const result = [];
-  for (let i = daysBack - 1; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const key = dayKey(d);
-    const done = getDoneCount(key);
-    const pct = Math.round(done / total * 100);
-    const w = (state.wellness || {})[key] || {};
-    result.push({
-      key, date: d, done, pct,
-      perfect: done === state.habits.length && state.habits.length > 0,
-      sleep: w.sleep || null,
-      energy: w.energy || null,
-      dow: d.getDay() // 0=Ne, 1=Po...
+const FRICTION_REASONS = [
+  'Nemal čas', 'Zabudol som', 'Bol som unavený',
+  'Nemal motiváciu', 'Niečo sa prihodilo', 'Vedome som vynechal'
+];
+const FRICTION_KEY = 'habitsFriction';
+
+function getFrictionLog() {
+  try { return JSON.parse(localStorage.getItem(FRICTION_KEY)) || []; } catch { return []; }
+}
+function saveFrictionLog(log) {
+  localStorage.setItem(FRICTION_KEY, JSON.stringify(log));
+}
+
+function openFrictionLog() {
+  // Nájdi nesplnené návyky z dnešného dňa
+  const today = dayKey();
+  const checked = state.checked[today] || {};
+  const unsplnene = state.habits.map((h, i) => ({ h, i })).filter(({ i }) => !checked[i]);
+
+  if (!unsplnene.length) return;
+
+  // Ukáž len raz za deň
+  const shownKey = 'frictionShown_' + today;
+  if (localStorage.getItem(shownKey)) return;
+  localStorage.setItem(shownKey, '1');
+
+  const existing = document.getElementById('frictionOverlay');
+  if (existing) existing.remove();
+
+  let selectedReasons = [];
+  let selectedHabitIdx = unsplnene[0].i;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'frictionOverlay';
+  overlay.className = 'friction-overlay';
+  overlay.innerHTML = `
+    <div class="friction-card">
+      <div class="friction-eyebrow">Koniec dňa</div>
+      <div class="friction-title">Čo ťa zastavilo?</div>
+      <div class="friction-sub">${unsplnene.length} návyk${unsplnene.length > 1 ? 'y zostali' : ' zostal'} nesplnený. Žiadny súd — len dáta pre teba.</div>
+      <div class="friction-reasons" id="frictionReasons">
+        ${FRICTION_REASONS.map(r => `<button class="friction-reason-btn" onclick="toggleFrictionReason(this,'${r}')">${r}</button>`).join('')}
+      </div>
+      <button class="friction-save-btn" onclick="saveFriction(${JSON.stringify(unsplnene.map(u=>u.i))})">Uložiť</button>
+      <button class="friction-dismiss-btn" onclick="document.getElementById('frictionOverlay').remove()">Preskočiť</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+}
+
+function toggleFrictionReason(btn, reason) {
+  btn.classList.toggle('selected');
+}
+
+function saveFriction(habitIdxs) {
+  const selected = [...document.querySelectorAll('.friction-reason-btn.selected')].map(b => b.textContent);
+  if (!selected.length) { if(typeof showToast !== 'undefined') showToast('Vyber aspoň jeden dôvod'); return; }
+
+  const log = getFrictionLog();
+  const today = dayKey();
+  habitIdxs.forEach(i => {
+    const h = state.habits[i];
+    if (!h) return;
+    log.push({
+      date: today,
+      habitName: h.name,
+      habitIcon: h.icon,
+      reasons: selected
     });
-  }
-  return result;
-}
-
-function ieAvg(arr) {
-  if (!arr.length) return null;
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-function ieCorrelation(xArr, yArr) {
-  // Pearsonova korelácia
-  if (xArr.length < 3) return null;
-  const mx = ieAvg(xArr), my = ieAvg(yArr);
-  let num = 0, dx2 = 0, dy2 = 0;
-  for (let i = 0; i < xArr.length; i++) {
-    const dx = xArr[i] - mx, dy = yArr[i] - my;
-    num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
-  }
-  const denom = Math.sqrt(dx2 * dy2);
-  return denom === 0 ? 0 : num / denom;
-}
-
-// ── Insight generátory ───────────────────────────────
-
-function ieSleepCorrelation(data) {
-  // Korelacia spánok → výkon
-  const pairs = data.filter(d => d.sleep !== null);
-  if (pairs.length < 4) return null;
-
-  const sleepBuckets = {};
-  pairs.forEach(d => {
-    const bucket = Math.round(d.sleep);
-    if (!sleepBuckets[bucket]) sleepBuckets[bucket] = [];
-    sleepBuckets[bucket].push(d.pct);
   });
+  // Drž max 90 záznamov
+  if (log.length > 90) log.splice(0, log.length - 90);
+  saveFrictionLog(log);
 
-  const bucketAvgs = Object.entries(sleepBuckets)
-    .map(([h, pcts]) => ({ hours: +h, avgPct: Math.round(ieAvg(pcts)) }))
-    .sort((a, b) => a.hours - b.hours);
-
-  const r = ieCorrelation(pairs.map(d => d.sleep), pairs.map(d => d.pct));
-  const strong = Math.abs(r) > 0.4;
-
-  const best = [...bucketAvgs].sort((a, b) => b.avgPct - a.avgPct)[0];
-  const worst = [...bucketAvgs].sort((a, b) => a.avgPct - b.avgPct)[0];
-
-  if (!strong && pairs.length < 7) return null;
-
-  // Korelačné bary pre vizualizáciu
-  const maxPct = Math.max(...bucketAvgs.map(b => b.avgPct), 1);
-  const corrBars = bucketAvgs.map(b => ({
-    label: b.hours + 'h',
-    pct: b.avgPct,
-    fill: Math.round(b.avgPct / maxPct * 100),
-    color: b.hours >= 7 ? '#22c55e' : b.hours >= 6 ? '#f7d67a' : '#ef4444'
-  }));
-
-  const rDir = r > 0.3 ? 'pozitívna' : r < -0.3 ? 'negatívna' : 'slabá';
-  const body = r > 0.3
-    ? `Pri ${best.hours}h spánku dosahujú tvoje návyky priemerne ${best.avgPct}%. Pri ${worst.hours}h iba ${worst.avgPct}%. Korelácia je jasná — spánok nie je lenivosť.`
-    : r < -0.2
-    ? `Zaujímavé — zdá sa, že pri dlhšom spánku máš nižší výkon. Možno spíš dlho pri prepadoch motivácie.`
-    : `Spánok a výkon ukazujú ${rDir} koreláciu. Zaznamenávaj viac dní pre presnejší obraz.`;
-
-  return {
-    type: r > 0.3 ? 'positive' : r < -0.1 ? 'warning' : 'neutral',
-    icon: '😴', label: 'Spánok & výkon',
-    title: `Korelacia spánok → návyky: ${rDir}`,
-    body,
-    corrBars,
-    metric: `r = ${r.toFixed(2)}`
-  };
+  document.getElementById('frictionOverlay')?.remove();
+  if(typeof showToast !== 'undefined') showToast('📊 Zaznamenaný dôvod');
+  renderFrictionStats();
 }
 
-function ieEnergyPerformance(data) {
-  const pairs = data.filter(d => d.energy !== null);
-  if (pairs.length < 4) return null;
+function renderFrictionStats() {
+  const container = document.getElementById('frictionStatsWrap');
+  if (!container) return;
 
-  const energyMap = {};
-  const ENERGY_LABELS = ['', '😓 Vyčerpaný', '😐 Unavený', '😊 V pohode', '⚡ Energický', '🔥 Nabytý'];
-  pairs.forEach(d => {
-    if (!energyMap[d.energy]) energyMap[d.energy] = [];
-    energyMap[d.energy].push(d.pct);
-  });
-
-  const byEnergy = [1,2,3,4,5]
-    .filter(e => energyMap[e])
-    .map(e => ({ energy: e, label: ENERGY_LABELS[e], avg: Math.round(ieAvg(energyMap[e])), n: energyMap[e].length }));
-
-  if (byEnergy.length < 2) return null;
-
-  const high = byEnergy.filter(e => e.energy >= 4);
-  const low = byEnergy.filter(e => e.energy <= 2);
-  const highAvg = high.length ? Math.round(ieAvg(high.map(e => e.avg))) : null;
-  const lowAvg = low.length ? Math.round(ieAvg(low.map(e => e.avg))) : null;
-  const diff = highAvg !== null && lowAvg !== null ? highAvg - lowAvg : null;
-
-  const maxAvg = Math.max(...byEnergy.map(e => e.avg), 1);
-  const corrBars = byEnergy.map(e => ({
-    label: ['', '1★', '2★', '3★', '4★', '5★'][e.energy],
-    pct: e.avg,
-    fill: Math.round(e.avg / maxAvg * 100),
-    color: e.energy >= 4 ? '#22c55e' : e.energy >= 3 ? '#f7d67a' : '#ef4444'
-  }));
-
-  const type = diff !== null && diff > 15 ? 'positive' : 'neutral';
-  const body = diff !== null
-    ? `Pri vysokej energii (4–5★) plníš návyky na ${highAvg}%, pri nízkej (1–2★) iba ${lowAvg}%. Rozdiel ${diff} bodov. ${diff > 20 ? 'Výkon silno závisí od stavu — pracuj na regenerácii.' : 'Stredná závislosť od energie.'}`
-    : `Energia ovplyvňuje výkon — sleduj vzor v čase.`;
-
-  return { type, icon: '⚡', label: 'Energia & výkon', title: `Energia → plnenie: +${diff ?? '?'}% rozdiel`, body, corrBars };
-}
-
-function ieDayOfWeek(data) {
-  if (data.length < 10) return null;
-  const DOW = ['Ne', 'Po', 'Ut', 'St', 'Št', 'Pi', 'So'];
-  const dowMap = {};
-  data.forEach(d => {
-    if (!dowMap[d.dow]) dowMap[d.dow] = [];
-    dowMap[d.dow].push(d.pct);
-  });
-
-  const dowStats = Object.entries(dowMap)
-    .map(([dow, pcts]) => ({ dow: +dow, name: DOW[+dow], avg: Math.round(ieAvg(pcts)), n: pcts.length }))
-    .filter(d => d.n >= 2)
-    .sort((a, b) => a.dow - b.dow);
-
-  if (dowStats.length < 3) return null;
-
-  const best = [...dowStats].sort((a, b) => b.avg - a.avg)[0];
-  const worst = [...dowStats].sort((a, b) => a.avg - b.avg)[0];
-  const diff = best.avg - worst.avg;
-  if (diff < 10) return null;
-
-  const type = diff > 25 ? 'warning' : 'neutral';
-  const body = `Najsilnejší deň: ${best.name} (${best.avg}%). Najslabší: ${worst.name} (${worst.avg}%). ${diff > 25 ? `Rozdiel ${diff}% je výrazný — v ${worst.name} niečo ruší tvoj rytmus. Preskúmaj prečo.` : `Týždenný rytmus je relatívne stabilný.`}`;
-
-  return { type, icon: '📅', label: 'Deň v týždni', title: `${best.name} = tvoj najlepší deň`, body, dowStats };
-}
-
-function ieMomentumTrend(data) {
-  if (data.length < 14) return null;
-  const first7 = data.slice(0, 7).map(d => d.pct);
-  const last7 = data.slice(-7).map(d => d.pct);
-  const avg1 = Math.round(ieAvg(first7));
-  const avg2 = Math.round(ieAvg(last7));
-  const delta = avg2 - avg1;
-
-  if (Math.abs(delta) < 8) return null;
-
-  const type = delta > 0 ? 'positive' : 'critical';
-  const icon = delta > 0 ? '📈' : '📉';
-  const title = delta > 0
-    ? `Momentum rastie: +${delta}% za posledný týždeň`
-    : `Momentum klesá: ${delta}% za posledný týždeň`;
-  const body = delta > 0
-    ? `Prvý týždeň v sledovanom období: ${avg1}%. Posledný týždeň: ${avg2}%. Toto je reálny pokrok — nedovoľ mu skĺznuť.`
-    : `Výkon klesol z ${avg1}% na ${avg2}%. Toto nie je náhoda. Čo sa zmenilo? Stres? Rozvrh? Skús identifikovať spúšťač.`;
-
-  return { type, icon, label: 'Momentum', title, body, metric: `${delta > 0 ? '+' : ''}${delta}%` };
-}
-
-function ieConsistencyGaps(data) {
-  // Nájde návyky s najväčšími výpadkami
-  if (state.habits.length === 0 || data.length < 7) return null;
-
-  const habitScores = state.habits.map((h, i) => {
-    const done = data.filter(d => (state.checked[d.key] || {})[i]).length;
-    const pct = Math.round(done / data.length * 100);
-    return { name: h.name, icon: h.icon, color: h.color, pct, idx: i };
-  });
-
-  const weakest = habitScores.filter(h => h.pct <= 40).sort((a, b) => a.pct - b.pct);
-  const strongest = habitScores.filter(h => h.pct >= 80).sort((a, b) => b.pct - a.pct);
-
-  if (!weakest.length && !strongest.length) return null;
-
-  let title, body, type, corrBars;
-
-  if (weakest.length >= 2) {
-    type = 'warning';
-    const names = weakest.slice(0, 2).map(h => `"${h.name}" (${h.pct}%)`).join(' a ');
-    title = `${weakest.length} návyk${weakest.length > 1 ? 'y' : ''} pod 40%`;
-    body = `${names} — toto sú tvoje slabé miesta. Sú tieto návyky reálne zvládnuteľné? Ak nie, zvažuj úpravu (čas, miesto, trigger).`;
-  } else if (weakest.length === 1) {
-    type = 'warning';
-    title = `"${weakest[0].name}" výrazne zaostáva`;
-    body = `Iba ${weakest[0].pct}% konzistencia za sledované obdobie. Ostatné návyky fungujú lepšie — tento konkrétny niečo blokuje.`;
-  } else {
-    type = 'positive';
-    title = `${strongest.length} návyk${strongest.length > 1 ? 'y' : ''} nad 80%`;
-    body = `${strongest.slice(0, 2).map(h => `"${h.name}"`).join(' a ')} sú takmer automatické. Toto je základ — pridaj ďalší návyk, ktorý chceš zautomatizovať.`;
-  }
-
-  corrBars = habitScores.sort((a, b) => b.pct - a.pct).map(h => ({
-    label: h.icon,
-    pct: h.pct,
-    fill: h.pct,
-    color: h.color
-  }));
-
-  return { type, icon: weakest.length ? '⚠️' : '✅', label: 'Konzistencia návykov', title, body, corrBars };
-}
-
-function iePerfectDayPattern(data) {
-  if (data.length < 14) return null;
-  const perfectDays = data.filter(d => d.perfect);
-  const totalDays = data.filter(d => d.done > 0).length;
-  if (perfectDays.length < 2) return null;
-
-  const pRate = Math.round(perfectDays.length / totalDays * 100);
-  const avgSleepOnPerfect = perfectDays.filter(d => d.sleep).length >= 2
-    ? +(ieAvg(perfectDays.filter(d => d.sleep).map(d => d.sleep))).toFixed(1)
-    : null;
-  const avgEnergyOnPerfect = perfectDays.filter(d => d.energy).length >= 2
-    ? +(ieAvg(perfectDays.filter(d => d.energy).map(d => d.energy))).toFixed(1)
-    : null;
-
-  const type = pRate >= 30 ? 'gold' : 'neutral';
-  let body = `${perfectDays.length} perfect dní z ${totalDays} aktívnych (${pRate}%).`;
-  if (avgSleepOnPerfect) body += ` V perfect dni spíš priemerne ${avgSleepOnPerfect}h.`;
-  if (avgEnergyOnPerfect) body += ` Energia: ${avgEnergyOnPerfect.toFixed(1)}/5.`;
-  body += pRate >= 40 ? ' Toto je elitná konzistencia.' : ' Hľadaj čo majú perfect dni spoločné.';
-
-  return { type, icon: '🌟', label: 'Perfect day vzor', title: `${pRate}% aktívnych dní je perfect`, body,
-    metric: `${perfectDays.length}× perfect` };
-}
-
-function ieStreakRisk(data) {
-  // Upozornenie ak posledné 2+ dni slabé
-  if (data.length < 3) return null;
-  const last3 = data.slice(-3);
-  const allWeak = last3.every(d => d.pct < 50);
-  const streak = computeStreak();
-
-  if (!allWeak) return null;
-  const avg = Math.round(ieAvg(last3.map(d => d.pct)));
-
-  return {
-    type: 'critical', icon: '🚨', label: 'Riziko série',
-    title: streak > 0 ? `Série ${streak} dní hrozí prerušenie` : 'Výpadok posledné dni',
-    body: `Posledné ${last3.length} dni: priemer ${avg}%. ${streak > 3 ? `Séria ${streak} dní je na hrane — dnes je kľúčový deň.` : 'Načasuj silný návrat dnes.'}`,
-    metric: avg + '% avg'
-  };
-}
-
-// ── Render Insight Engine ────────────────────────────
-function renderInsightEngine() {
-  const wrap = document.getElementById('insightEngineWrap');
-  const badge = document.getElementById('insightBadge');
-  if (!wrap) return;
-
-  const daysWithData = Object.keys(state.checked || {}).length;
-  if (daysWithData < 5 || state.habits.length === 0) {
-    wrap.innerHTML = `<div class="ie-empty"><div class="ie-empty-icon">🧠</div><div class="ie-empty-title">Ešte málo dát</div><div class="ie-empty-sub">Zaznamenávaj návyky a wellness aspoň 5 dní — potom ti ukážem reálne korelácie a vzory z tvojich dát.</div></div>`;
-    if (badge) badge.textContent = '0 insightov';
+  const log = getFrictionLog();
+  if (!log.length) {
+    container.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:8px 0">Zatiaľ žiadne záznamy. Zobrazí sa keď vynecháš návyk.</div>`;
     return;
   }
 
-  // Skeleton na chvíľu
-  wrap.innerHTML = Array(3).fill(`<div class="insight-skeleton"><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line long"></div></div>`).join('');
+  // Zrátaj dôvody
+  const reasonCounts = {};
+  log.forEach(entry => {
+    entry.reasons.forEach(r => { reasonCounts[r] = (reasonCounts[r] || 0) + 1; });
+  });
+  const sorted = Object.entries(reasonCounts).sort((a, b) => b[1] - a[1]);
+  const total = log.length;
 
-  setTimeout(() => {
-    const data28 = ieGetDayData(28);
-    const data14 = ieGetDayData(14);
-
-    // Zbieraj insighty
-    const insights = [
-      ieMomentumTrend(data28),
-      ieStreakRisk(data28),
-      ieSleepCorrelation(data28),
-      ieEnergyPerformance(data28),
-      ieDayOfWeek(data28),
-      ieConsistencyGaps(data14),
-      iePerfectDayPattern(data28),
-    ].filter(Boolean);
-
-    if (badge) badge.textContent = insights.length + (insights.length === 1 ? ' insight' : ' insightov');
-
-    if (!insights.length) {
-      wrap.innerHTML = `<div class="ie-empty"><div class="ie-empty-icon">📊</div><div class="ie-empty-title">Dáta sú čisté</div><div class="ie-empty-sub">Žiadne výrazné vzory ani varovania. Pokračuj — viac dát = presnejší obraz.</div></div>`;
-      return;
-    }
-
-    wrap.innerHTML = insights.map((ins, idx) => buildInsightCard(ins, idx)).join('');
-
-    // Animuj bary po renderi
-    setTimeout(() => {
-      wrap.querySelectorAll('.corr-bar-fill[data-fill]').forEach(el => {
-        el.style.width = el.dataset.fill + '%';
-      });
-    }, 60);
-  }, 300);
-}
-
-function buildInsightCard(ins, idx) {
-  const delay = idx * 80;
-  let extra = '';
-
-  // Correlation bars
-  if (ins.corrBars && ins.corrBars.length) {
-    extra += `<div class="corr-bar-wrap">` +
-      ins.corrBars.map(b =>
-        `<div class="corr-row">
-          <div class="corr-label">${b.label}</div>
-          <div class="corr-bar-bg"><div class="corr-bar-fill" data-fill="${b.fill}" style="width:0%;background:${b.color}"></div></div>
-          <div class="corr-val" style="color:${b.color}">${b.pct}%</div>
-        </div>`
-      ).join('') + `</div>`;
-  }
-
-  // Day of week grid
-  if (ins.dowStats) {
-    const DOW_ORDER = [1,2,3,4,5,6,0]; // Po–Ne
-    const DOW_NAMES = ['', 'Po', 'Ut', 'St', 'Št', 'Pi', 'So', 'Ne'];
-    const best = [...ins.dowStats].sort((a, b) => b.avg - a.avg)[0];
-    const worst = [...ins.dowStats].sort((a, b) => a.avg - b.avg)[0];
-    const allDows = DOW_ORDER.map(dow => ins.dowStats.find(d => d.dow === dow)).filter(Boolean);
-    extra += `<div class="dow-row">` +
-      allDows.map(d => {
-        const isBest = d.dow === best.dow;
-        const isWorst = d.dow === worst.dow;
-        return `<div class="dow-cell${isBest ? ' best' : isWorst ? ' worst' : ''}">
-          <div class="dow-cell-name">${d.name}</div>
-          <div class="dow-cell-pct">${d.avg}%</div>
-        </div>`;
-      }).join('') + `</div>`;
-  }
-
-  // Metric pill
-  if (ins.metric) {
-    extra += `<div class="insight-metric">${ins.metric}</div>`;
-  }
-
-  return `<div class="insight-card type-${ins.type}" style="animation-delay:${delay}ms">
-    <div class="insight-card-top">
-      <div class="insight-icon">${ins.icon}</div>
-      <div style="flex:1;min-width:0">
-        <div class="insight-label">${ins.label}</div>
-        <div class="insight-title">${ins.title}</div>
+  container.innerHTML = sorted.slice(0, 4).map(([reason, count]) => {
+    const pct = Math.round(count / total * 100);
+    return `<div class="friction-log-item">
+      <div class="friction-log-reason">${reason}</div>
+      <div style="flex:1;height:4px;border-radius:99px;background:rgba(239,68,68,.1);overflow:hidden;margin:0 8px">
+        <div style="height:4px;border-radius:99px;background:#ef4444;width:${pct}%;transition:width .6s ease"></div>
       </div>
+      <div class="friction-log-count">${count}×</div>
+    </div>`;
+  }).join('');
+}
+
+// Spusti friction log večer (po 20:00) ak sú nesplnené návyky
+function maybeShowFrictionLog() {
+  const h = new Date().getHours();
+  if (h < 20) return;
+  const today = dayKey();
+  const checked = state.checked[today] || {};
+  const unsplnene = state.habits.filter((_, i) => !checked[i]);
+  if (unsplnene.length > 0) {
+    setTimeout(openFrictionLog, 1500);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   2. REFLEXNÝ PROMPT — Piatok & Pondelok
+   ═══════════════════════════════════════════════════════ */
+
+const REFLEX_KEY = 'habitsReflexLog';
+
+function getReflexLog() {
+  try { return JSON.parse(localStorage.getItem(REFLEX_KEY)) || []; } catch { return []; }
+}
+
+function maybeShowReflexPrompt() {
+  const now = new Date();
+  const dow = now.getDay(); // 5=piatok, 1=pondelok
+  const today = dayKey();
+  const shownKey = 'reflexShown_' + today;
+  if (localStorage.getItem(shownKey)) return;
+
+  // Piatok po splnení aspoň 1 návyku
+  const done = Object.values(state.checked[today] || {}).filter(Boolean).length;
+  if (dow === 5 && done >= 1) {
+    localStorage.setItem(shownKey, '1');
+    setTimeout(() => showReflexPrompt('friday'), 800);
+    return;
+  }
+
+  // Pondelok pred prvým splnením (prompt na zámer)
+  if (dow === 1 && done === 0) {
+    // Ukáž len raz v pondelok ráno
+    const h = now.getHours();
+    if (h >= 6 && h <= 12) {
+      localStorage.setItem(shownKey, '1');
+      setTimeout(() => showReflexPrompt('monday'), 1200);
+    }
+  }
+}
+
+function showReflexPrompt(type) {
+  const existing = document.getElementById('reflexOverlay');
+  if (existing) existing.remove();
+
+  const config = {
+    friday: {
+      emoji: '📝',
+      eyebrow: 'Piatkový check-in',
+      title: 'Týždenná reflexia',
+      question: 'Čo ti tento týždeň nešlo? Kde bol výpadok?',
+      placeholder: 'Napr. stres v práci mi rozbil ranný rituál...',
+      btnText: 'Uložiť reflexiu'
+    },
+    monday: {
+      emoji: '🎯',
+      eyebrow: 'Pondelkový zámer',
+      title: 'Tento týždeň',
+      question: 'Čo urobíš tento týždeň inak? Jedna konkrétna vec.',
+      placeholder: 'Napr. vstávam o 6:30 bez výnimky, telefón preč z postele...',
+      btnText: 'Nastaviť zámer'
+    }
+  }[type];
+
+  if (!config) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'reflexOverlay';
+  overlay.className = 'reflex-overlay';
+  overlay.innerHTML = `
+    <div class="reflex-card">
+      <div class="reflex-emoji">${config.emoji}</div>
+      <div class="reflex-eyebrow">${config.eyebrow}</div>
+      <div class="reflex-title">${config.title}</div>
+      <div class="reflex-question">${config.question}</div>
+      <textarea class="reflex-textarea" id="reflexText" placeholder="${config.placeholder}"></textarea>
+      <button class="reflex-save-btn" onclick="saveReflex('${type}')">${config.btnText}</button>
+      <button class="reflex-skip" onclick="document.getElementById('reflexOverlay').remove()">Preskočiť →</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  setTimeout(() => document.getElementById('reflexText')?.focus(), 400);
+}
+
+function saveReflex(type) {
+  const text = document.getElementById('reflexText')?.value.trim();
+  if (!text) { if(typeof showToast !== 'undefined') showToast('Napíš aspoň pár slov'); return; }
+
+  const log = getReflexLog();
+  log.push({ type, date: dayKey(), text, savedAt: Date.now() });
+  if (log.length > 52) log.splice(0, log.length - 52);
+  localStorage.setItem(REFLEX_KEY, JSON.stringify(log));
+
+  document.getElementById('reflexOverlay')?.remove();
+  if(typeof showToast !== 'undefined') showToast(type === 'friday' ? '📝 Reflexia uložená' : '🎯 Zámer nastavený');
+  if (typeof addXP !== 'undefined') addXP(30, 'Reflexia');
+  renderReflexLog();
+}
+
+function renderReflexLog() {
+  const container = document.getElementById('reflexLogWrap');
+  if (!container) return;
+  const log = getReflexLog().slice(-6).reverse();
+  if (!log.length) {
+    container.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:8px 0">Prvý záznam sa objaví v piatok alebo pondelok.</div>`;
+    return;
+  }
+  const icons = { friday: '📝', monday: '🎯' };
+  const labels = { friday: 'Reflexia', monday: 'Zámer' };
+  container.innerHTML = log.map(e => `
+    <div style="padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:14px">${icons[e.type]||'📌'}</span>
+        <span style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);font-weight:700">${labels[e.type]||e.type}</span>
+        <span style="font-size:10px;color:var(--muted2);margin-left:auto">${formatDayKey(e.date)}</span>
+      </div>
+      <div style="font-size:13px;color:var(--text);line-height:1.5">${escHtml(e.text)}</div>
+    </div>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════
+   3. Inject do Stats view — Friction + Reflex sekcie
+   ═══════════════════════════════════════════════════════ */
+
+function injectDepthSections() {
+  const statsView = document.getElementById('view-stats');
+  if (!statsView || document.getElementById('depthSectionsInjected')) return;
+  statsView.setAttribute('id', statsView.id); // touch
+
+  // Nájdi footer a vlož pred neho
+  const footer = statsView.querySelector('.footer');
+  if (!footer) return;
+
+  const wrapper = document.createElement('div');
+  wrapper.id = 'depthSectionsInjected';
+  wrapper.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px">
+      <h3 style="font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);font-weight:700">Prečo vynechávam</h3>
+      <span style="font-size:11px;color:#ef4444;font-weight:700">friction log</span>
     </div>
-    <div class="insight-body">${ins.body}</div>
-    ${extra}
-  </div>`;
-}
+    <div id="frictionStatsWrap"></div>
 
-// Hook do renderStats — pridaj insight engine
-const _origRenderStats = typeof renderStats !== 'undefined' ? renderStats : null;
-function renderStatsWithInsights() {
-  if (_origRenderStats) _origRenderStats();
-  renderInsightEngine();
-}
-
-// Prepíš switchView aby volal renderStatsWithInsights
-const _origSwitchView = typeof switchView !== 'undefined' ? switchView : null;
-window._switchViewPatched = false;
-function patchSwitchView() {
-  if (window._switchViewPatched) return;
-  window._switchViewPatched = true;
-  const orig = window.switchView;
-  window.switchView = function(name, el) {
-    orig(name, el);
-    if (name === 'stats') setTimeout(renderInsightEngine, 50);
-  };
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px">
+      <h3 style="font-size:11px;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);font-weight:700">Reflexie & zámery</h3>
+      <span style="font-size:11px;color:var(--gold);font-weight:700">piatok + pondelok</span>
+    </div>
+    <div id="reflexLogWrap"></div>
+  `;
+  statsView.insertBefore(wrapper, footer);
 }
 
 /* ═══════════════════════════════════════════════════════
-   WEEKLY REVIEW
+   4. Hook do existujúcich funkcií
    ═══════════════════════════════════════════════════════ */
-const WR_STORAGE_KEY = 'habitsWeeklyReview';
-const WR_CHIPS = ['Vstávať skôr','Viac spánku','Menej odkladania','Konzistencia ráno','Menej telefónu','Viac vody','Tréning 5×','Deep work bloky','Zdravšie jedlo'];
 
-function getWrGrade(pct){if(pct>=90)return{grade:'S',label:'Výnimočný týždeň.',cls:'wr-grade-S'};if(pct>=75)return{grade:'A',label:'Silný týždeň. Drž tempo.',cls:'wr-grade-A'};if(pct>=55)return{grade:'B',label:'Solidné. Kde bol výpadok?',cls:'wr-grade-B'};if(pct>=35)return{grade:'C',label:'Slabší týždeň. Prečo?',cls:'wr-grade-C'};return{grade:'D',label:'Potrebuješ reset. Bez výhovoriek.',cls:'wr-grade-D'}}
+// Po každom toggle — skontroluj reflexný prompt
+const _origCheckAchievements = typeof checkAchievements !== 'undefined' ? checkAchievements : () => {};
+window._reflexChecked = false;
 
-function getWeekData(){const DAY=['Ne','Po','Ut','St','Št','Pi','So'];const total=state.habits.length||1;const days=[];for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const key=dayKey(d);const done=getDoneCount(key);const pct=Math.round(done/total*100);days.push({key,done,pct,isPerfect:done===state.habits.length&&state.habits.length>0,isToday:i===0,dayName:DAY[d.getDay()],date:d.getDate()});}return days;}
+// Hook do renderStats
+const _origRenderStats2 = window.renderStats;
+window.renderStats = function() {
+  if (_origRenderStats2) _origRenderStats2();
+  setTimeout(() => {
+    injectDepthSections();
+    renderFrictionStats();
+    renderReflexLog();
+  }, 50);
+};
 
-function openWeeklyReview(){
-  const overlay=document.getElementById('weeklyReviewOverlay');
-  if(!overlay)return;
-  overlay.classList.add('show');
-  const days=getWeekData();
-  const total=state.habits.length||1;
-  const perfectDays=days.filter(d=>d.isPerfect).length;
-  const activeDays=days.filter(d=>d.done>0).length;
-  const totalChecked=days.reduce((s,d)=>s+d.done,0);
-  const avgPct=Math.round(days.reduce((s,d)=>s+d.pct,0)/7);
-  const g=getWrGrade(avgPct);
-  const d7=new Date();d7.setDate(d7.getDate()-6);
-  const fmt=d=>d.toLocaleDateString('sk-SK',{day:'numeric',month:'short'});
-  document.getElementById('wrSubtitle').textContent=`${fmt(d7)} — ${fmt(new Date())}`;
-  const C=207.3;
-  document.getElementById('wrRingFill').style.strokeDashoffset=C-(avgPct/100)*C;
-  document.getElementById('wrRingPct').textContent=avgPct+'%';
-  const ge=document.getElementById('wrGrade');ge.textContent=g.grade;ge.className='wr-score-grade '+g.cls;
-  document.getElementById('wrGradeSub').textContent=g.label;
-  document.getElementById('wrDayBars').innerHTML=days.map(d=>{const h=Math.max(4,Math.round(d.pct*.72));let cls='wr-bar'+(d.pct>0?' has-data':'')+(d.isPerfect?' perfect':'')+(d.isToday?' today':'');return`<div class="wr-day-col"><div class="wr-bar-wrap"><div class="${cls}" style="height:${h}px"></div></div><div class="wr-day-name">${d.dayName}</div><div class="wr-day-pct">${d.pct>0?d.pct+'%':''}</div></div>`}).join('');
-  document.getElementById('wrStatsRow').innerHTML=`<div class="wr-stat-card"><div class="wr-stat-val">${perfectDays}</div><div class="wr-stat-lbl">Perfect</div></div><div class="wr-stat-card"><div class="wr-stat-val">${activeDays}</div><div class="wr-stat-lbl">Aktívne</div></div><div class="wr-stat-card"><div class="wr-stat-val">${totalChecked}</div><div class="wr-stat-lbl">Splnené</div></div>`;
-  const habitStats=state.habits.map((h,i)=>{let done=0;for(let d=0;d<7;d++){const dt=new Date();dt.setDate(dt.getDate()-d);if((state.checked[dayKey(dt)]||{})[i])done++;}return{habit:h,done,pct:Math.round(done/7*100)}}).sort((a,b)=>b.pct-a.pct);
-  document.getElementById('wrHabitRows').innerHTML=habitStats.map(({habit,pct})=>`<div class="wr-habit-row"><div class="wr-habit-icon">${habit.icon||'✅'}</div><div class="wr-habit-name">${habit.name}</div><div class="wr-habit-bar-wrap"><div class="wr-habit-bar-bg"><div class="wr-habit-bar-fill" style="width:${pct}%;background:${habit.color}"></div></div><div class="wr-habit-pct" style="color:${habit.color}">${pct}%</div></div></div>`).join('');
-  const weak=habitStats.filter(h=>h.pct<=30)[0];
-  const insightTxt=avgPct>=85?`Solid týždeň. ${perfectDays} perfect dní. Nastav ťažší cieľ.`:weak?`"${weak.habit.name}" mal len ${weak.pct}% — tu ti padá systém. Zisti prečo práve tento.`:activeDays<=3?`Aktívnych iba ${activeDays} dní. Nastav pevný čas na denný check.`:`Priemer ${avgPct}% — každý gap má príčinu. Nájdi ju.`;
-  document.getElementById('wrInsightText').textContent=insightTxt;
-  const saved=JSON.parse(localStorage.getItem(WR_STORAGE_KEY)||'{}');
-  document.getElementById('wrIntentInput').value=saved.intent||'';
-  document.getElementById('wrIntentChips').innerHTML=WR_CHIPS.map(c=>`<button class="wr-chip${saved.chips&&saved.chips.includes(c)?' selected':''}" onclick="this.classList.toggle('selected')" type="button">${c}</button>`).join('');
-  document.getElementById('wrSheet').scrollTop=0;
-}
+// Hook do switchView
+const _origSwitchView2 = window.switchView;
+window.switchView = function(name, el) {
+  if (_origSwitchView2) _origSwitchView2(name, el);
+  if (name === 'stats') {
+    setTimeout(() => {
+      injectDepthSections();
+      renderFrictionStats();
+      renderReflexLog();
+    }, 60);
+  }
+};
 
-function closeWeeklyReview(){document.getElementById('weeklyReviewOverlay').classList.remove('show')}
-function wrBackdropClose(e){if(e.target.id==='weeklyReviewOverlay')closeWeeklyReview()}
-function saveWeeklyReview(){
-  const intent=document.getElementById('wrIntentInput').value.trim();
-  const chips=[...document.querySelectorAll('.wr-chip.selected')].map(c=>c.textContent);
-  localStorage.setItem(WR_STORAGE_KEY,JSON.stringify({intent,chips,savedAt:Date.now()}));
-  closeWeeklyReview();
-  typeof showToast!=='undefined'&&showToast('✅ Zámer uložený!');
-  intent&&typeof addXP!=='undefined'&&addXP(50,'Weekly Review');
-}
-
-/* ═══════════════════════════════════════════════════════
-   PWA
-   ═══════════════════════════════════════════════════════ */
-if('serviceWorker'in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{})})}
-
-let _pwaPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_pwaPrompt=e;const d=localStorage.getItem('pwaDismissed');if(d&&Date.now()-+d<30*24*36e5)return;setTimeout(()=>document.getElementById('pwaInstallBanner').classList.add('show'),3000)});
-window.addEventListener('appinstalled',()=>{_pwaPrompt=null;document.getElementById('pwaInstallBanner').classList.remove('show');typeof showToast!=='undefined'&&showToast('✅ Appka nainštalovaná!')});
-function pwaDoInstall(){if(!_pwaPrompt)return;_pwaPrompt.prompt();_pwaPrompt.userChoice.then(()=>{_pwaPrompt=null;document.getElementById('pwaInstallBanner').classList.remove('show')})}
-function pwaDismiss(){localStorage.setItem('pwaDismissed',Date.now());document.getElementById('pwaInstallBanner').classList.remove('show')}
-
-if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!window.navigator.standalone&&!localStorage.getItem('iosDismissed')){setTimeout(()=>{const b=document.getElementById('pwaInstallBanner');b.querySelector('.pwa-banner-text strong').textContent='Pridaj na plochu (iOS)';b.querySelector('.pwa-banner-text span').textContent='Zdieľať → Pridať na plochu';b.querySelector('.pwa-install-btn').textContent='OK';b.querySelector('.pwa-install-btn').onclick=()=>{localStorage.setItem('iosDismissed','1');b.classList.remove('show')};b.classList.add('show')},3000)}
-
-async function requestNotifPermission(){document.getElementById('notifBanner').classList.remove('show');if(!('Notification'in window))return;if(await Notification.requestPermission()==='granted'){typeof showToast!=='undefined'&&showToast('🔔 Notifikácie zapnuté!');setTimeout(()=>new Notification('🔥 Habits',{body:'Funguje! Budeš dostávať denné pripomienky.',tag:'test'}),800)}}
-function notifDismiss(){const s=JSON.parse(localStorage.getItem('habitsNotif')||'{}');s.dismissed=true;localStorage.setItem('habitsNotif',JSON.stringify(s));document.getElementById('notifBanner').classList.remove('show')}
-function maybeShowNotif(){if(!('Notification'in window)||Notification.permission!=='default')return;const s=JSON.parse(localStorage.getItem('habitsNotif')||'{}');if(s.dismissed)return;setTimeout(()=>{const pwa=document.getElementById('pwaInstallBanner');setTimeout(()=>document.getElementById('notifBanner').classList.add('show'),pwa.classList.contains('show')?6000:0)},5000)}
-
-// ── Init ─────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded',()=>{
-  maybeShowNotif();
-  setTimeout(patchSwitchView, 2600); // po splash
+// Spusti po inicializácii appky
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    maybeShowFrictionLog();
+    maybeShowReflexPrompt();
+  }, 3000); // po splashi
 });
 </script>
-
-<!-- ══ WEEKLY REVIEW OVERLAY ══ -->
-<div id="weeklyReviewOverlay" onclick="wrBackdropClose(event)">
-  <div class="wr-sheet" id="wrSheet">
-    <div class="wr-handle"></div>
-    <div class="wr-header">
-      <div class="wr-eyebrow">Týždenné hodnotenie</div>
-      <div class="wr-title">WEEKLY<br>REVIEW</div>
-      <div class="wr-subtitle" id="wrSubtitle">Pozri sa späť. Urob záver. Nastav zámer.</div>
-      <button class="wr-close" onclick="closeWeeklyReview()" type="button">✕</button>
-    </div>
-    <div class="wr-score-hero">
-      <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="wrGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f7d67a"/><stop offset="100%" stop-color="#c08a18"/></linearGradient></defs></svg>
-      <div class="wr-ring-wrap"><svg viewBox="0 0 80 80"><circle class="wr-ring-bg" cx="40" cy="40" r="33"/><circle id="wrRingFill" class="wr-ring-fill" cx="40" cy="40" r="33" stroke-dasharray="207.3" stroke-dashoffset="207.3"/></svg><div class="wr-ring-pct" id="wrRingPct">0%</div></div>
-      <div><div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-weight:700">Celkové skóre</div><div class="wr-score-grade" id="wrGrade">—</div><div class="wr-score-sub" id="wrGradeSub"></div></div>
-    </div>
-    <div class="wr-days-section"><div class="wr-section-label">7 dní spätne</div><div class="wr-day-bars" id="wrDayBars"></div></div>
-    <div class="wr-stats-row" id="wrStatsRow"></div>
-    <div class="wr-habits-section"><div class="wr-section-label">Výkon podľa návyku</div><div id="wrHabitRows"></div></div>
-    <div class="wr-insight"><div class="wr-insight-label">💡 Insight</div><div class="wr-insight-text" id="wrInsightText"></div></div>
-    <div class="wr-intent-section"><div class="wr-section-label">Zámer na ďalší týždeň</div><textarea class="wr-intent-input" id="wrIntentInput" placeholder="Čo chceš budúci týždeň zlepšiť?"></textarea><div class="wr-chips" id="wrIntentChips"></div></div>
-    <button class="wr-cta" onclick="saveWeeklyReview()" type="button">Uložiť zámer & zavrieť</button>
-  </div>
-</div>
-
-<!-- ══ PWA BANNER ══ -->
-<div id="pwaInstallBanner">
-  <div class="pwa-banner-icon">📲</div>
-  <div class="pwa-banner-text"><strong>Pridaj na plochu</strong><span>Používaj Habits ako natívnu appku</span></div>
-  <div class="pwa-banner-actions"><button class="pwa-install-btn" onclick="pwaDoInstall()">Inštalovať</button><button class="pwa-dismiss-btn" onclick="pwaDismiss()">✕</button></div>
-</div>
-
-<!-- ══ NOTIF BANNER ══ -->
-<div id="notifBanner">
-  <div class="notif-banner-icon">🔔</div>
-  <div class="pwa-banner-text"><strong>Denné pripomienky</strong><span>Zapni notifikácie, aby si nezabudol</span></div>
-  <div class="pwa-banner-actions"><button class="notif-enable-btn" onclick="requestNotifPermission()">Zapnúť</button><button class="pwa-dismiss-btn" onclick="notifDismiss()">✕</button></div>
-</div>
-
 </html>
