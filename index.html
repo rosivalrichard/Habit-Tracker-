@@ -214,6 +214,68 @@ body.light-mode .daily-challenge{background:rgba(139,92,246,.07)!important;borde
 body.light-mode .daily-challenge.completed{background:rgba(34,197,94,.07)!important;border-color:rgba(34,197,94,.2)!important}
 body.light-mode .dc-text{color:var(--text)!important}
 /* PR banner */
+
+/* ══ WEEKLY FOCUS ══ */
+.wf-card{
+  border-radius:var(--r-lg);
+  background:#0d0d10;
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;position:relative;
+}
+.wf-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(247,214,122,.35),transparent);
+}
+.wf-header{padding:14px 16px 0;display:flex;align-items:center;justify-content:space-between}
+.wf-eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:var(--gold);font-weight:700}
+.wf-week-label{font-size:10px;color:var(--muted2);font-weight:600}
+.wf-body{padding:12px 16px 16px}
+.wf-focus-tag{
+  display:inline-block;margin-bottom:8px;
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(247,214,122,.6);font-weight:700;
+}
+.wf-text{font-size:14px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:12px}
+.wf-progress-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.wf-days{display:flex;gap:5px;flex:1}
+.wf-day{
+  flex:1;height:28px;border-radius:7px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  cursor:pointer;transition:all .2s cubic-bezier(.34,1.56,.64,1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;color:var(--muted2);font-weight:700;text-transform:uppercase;
+}
+.wf-day.done{
+  background:linear-gradient(135deg,rgba(247,214,122,.25),rgba(192,138,24,.15));
+  border-color:rgba(247,214,122,.4);
+  color:var(--gold);
+}
+.wf-day.today{border-color:rgba(247,214,122,.3);color:var(--muted)}
+.wf-day:active{transform:scale(.92)}
+.wf-count{
+  font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);
+  line-height:1;flex-shrink:0;min-width:36px;text-align:right;
+}
+.wf-complete-btn{
+  width:100%;min-height:44px;border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#111;font-weight:900;font-size:12px;letter-spacing:2px;text-transform:uppercase;
+  transition:.2s ease;
+}
+.wf-complete-btn:active{transform:scale(.97)}
+.wf-complete-btn:disabled{
+  background:rgba(255,255,255,.08);color:var(--muted2);
+  box-shadow:none;cursor:default;transform:none;
+}
+.wf-done-state{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 14px;border-radius:14px;
+  background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);
+  font-size:12px;font-weight:700;color:#22c55e;
+}
+body.light-mode .wf-card{background:#fff!important;border-color:rgba(0,0,0,.09)!important}
+body.light-mode .wf-day{background:rgba(0,0,0,.04)!important;border-color:rgba(0,0,0,.09)!important}
+body.light-mode .wf-day.done{background:rgba(122,85,0,.12)!important;border-color:rgba(122,85,0,.25)!important}
 body.light-mode .pr-banner{background:rgba(122,85,0,.07)!important;border-color:rgba(122,85,0,.18)!important}
 body.light-mode .pr-text strong{color:var(--gold)!important}
 body.light-mode .pr-text span{color:var(--muted)!important}
@@ -643,7 +705,7 @@ body::after{
 #splash{background:var(--bg);overflow:hidden}#splashCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.5}.splash-inner{position:relative;z-index:2;text-align:center;max-width:320px}.splash-logo-wrap{position:relative;display:inline-block;margin-bottom:4px}.splash-logo-ring{display:none}.splash-logo{font-family:"Bebas Neue",sans-serif;font-size:88px;letter-spacing:8px;line-height:1;background:linear-gradient(135deg,#f3d580,#fff8e0 40%,#d89d28);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoIn .9s cubic-bezier(.16,1,.3,1) both;}.splash-tagline{font-size:11px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-top:2px;animation:fadeUp .7s .3s both;}.splash-sub{font-size:10px;letter-spacing:4px;color:var(--muted2);text-transform:uppercase;margin-top:6px;animation:fadeUp .7s .45s both;}.splash-quote-wrap{margin-top:40px;padding:0 16px;animation:fadeUp .7s .65s both;}.splash-quote-line{width:32px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 14px;}.splash-quote-text{font-size:14px;font-weight:400;line-height:1.7;font-style:normal;color:var(--text);}.splash-quote-author{font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-top:10px;font-weight:700;}.splash-dots{display:flex;justify-content:center;gap:8px;margin-top:44px;animation:fadeUp .7s .85s both}.splash-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.12)}.splash-dot:nth-child(1){animation:dotPulse 1.2s 0s infinite}.splash-dot:nth-child(2){animation:dotPulse 1.2s .22s infinite}.splash-dot:nth-child(3){animation:dotPulse 1.2s .44s infinite}
 
 /* ══ PREMIUM ONBOARD ══ */
-#onboardOverlay{padding:0;align-items:center;justify-content:center}.onboard-shell{width:100%;max-width:480px;margin:auto;display:flex;flex-direction:column;padding:env(safe-area-inset-top,44px) 20px env(safe-area-inset-bottom,20px);min-height:100dvh;position:relative;justify-content:center;align-items:center;text-align:center;gap:0;}.onboard-bg-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(247,214,122,.12),transparent 65%);pointer-events:none;}.onboard-steps-bar{display:flex;align-items:center;justify-content:center;width:100%;padding:20px 28px 0;animation:fadeUp .5s ease both;}.onboard-step-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}.osi-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid rgba(255,255,255,.12);color:var(--muted2);transition:all .35s cubic-bezier(.34,1.56,.64,1);}.osi-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted2);font-weight:700;transition:.3s}.onboard-step-item.active .osi-num{background:linear-gradient(135deg,var(--gold),var(--gold2));border-color:transparent;color:#111;box-shadow:0 0 16px rgba(247,214,122,.35);}.onboard-step-item.active .osi-label{color:var(--gold)}.onboard-step-item.done .osi-num{background:rgba(247,214,122,.15);border-color:rgba(247,214,122,.3);color:var(--gold);}.onboard-step-item.done .osi-label{color:var(--gold)}.osi-connector{flex:1;height:2px;background:rgba(255,255,255,.07);margin:0 6px;margin-bottom:18px;border-radius:99px;overflow:hidden}.osi-connector-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}.osi-connector-fill.done{width:100%}.onboard-card-wrap{flex:1;overflow:hidden;position:relative;padding:0 24px;display:flex;justify-content:center;align-items:center;margin:0 auto;width:100%}.onboard-card{padding-top:0;animation:ocardIn .4s cubic-bezier(.16,1,.3,1) both;max-width:100%;width:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:0}.onboard-card.hidden{display:none}.onboard-card.slide-out{animation:ocardOut .25s ease both}.onboard-card.slide-in{animation:ocardIn .4s cubic-bezier(.16,1,.3,1) both}.ocard-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:12px;}.ocard-title{font-family:'Outfit',sans-serif;font-size:38px;line-height:1.18;font-weight:900;letter-spacing:-.3px;margin-bottom:12px;text-align:center;background:linear-gradient(135deg,var(--text),rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding:6px 0 10px;}.ocard-copy{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px;text-align:center;max-width:420px}.ocard-input-wrap{position:relative}.ocard-input-line{position:absolute;bottom:0;left:18px;right:18px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;border-radius:99px;}.name-input:focus ~ .ocard-input-line{opacity:1}.count-advice{margin-top:14px;padding:12px 16px;border-radius:14px;background:rgba(247,214,122,.06);border:1px solid rgba(247,214,122,.12);font-size:12px;color:var(--muted);line-height:1.5;text-align:center;}.onboard-action-bar{display:flex;flex-direction:column;align-items:center;padding:16px 24px 28px;width:100%;gap:12px;}.oback-btn{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;padding:6px 16px;transition:color .2s;order:2;}.oback-btn:active{color:var(--text)}.onboard-next-btn{flex:none;margin-top:0;width:220px;display:block;margin:0;order:1;}@keyframes ocardIn{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:none}}@keyframes ocardOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-32px)}}
+#onboardOverlay{padding:0;align-items:center;justify-content:center}.onboard-shell{width:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;min-height:100dvh;position:relative;align-items:stretch;text-align:center;}.onboard-bg-glow{position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(247,214,122,.12),transparent 65%);pointer-events:none;}.onboard-steps-bar{display:flex;align-items:center;justify-content:center;width:100%;padding:env(safe-area-inset-top,44px) 28px 20px;animation:fadeUp .5s ease both;}.onboard-step-item{display:flex;flex-direction:column;align-items:center;gap:4px;flex-shrink:0;}.osi-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;border:2px solid rgba(255,255,255,.12);color:var(--muted2);transition:all .35s cubic-bezier(.34,1.56,.64,1);}.osi-label{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted2);font-weight:700;transition:.3s}.onboard-step-item.active .osi-num{background:linear-gradient(135deg,var(--gold),var(--gold2));border-color:transparent;color:#111;box-shadow:0 0 16px rgba(247,214,122,.35);}.onboard-step-item.active .osi-label{color:var(--gold)}.onboard-step-item.done .osi-num{background:rgba(247,214,122,.15);border-color:rgba(247,214,122,.3);color:var(--gold);}.onboard-step-item.done .osi-label{color:var(--gold)}.osi-connector{flex:1;height:2px;background:rgba(255,255,255,.07);margin:0 6px;margin-bottom:18px;border-radius:99px;overflow:hidden}.osi-connector-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}.osi-connector-fill.done{width:100%}.onboard-card-wrap{flex:1;padding:0 24px;display:flex;flex-direction:column;align-items:center;width:100%;}.onboard-card{padding-top:0;animation:ocardIn .4s cubic-bezier(.16,1,.3,1) both;max-width:100%;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;padding-bottom:20px}.onboard-card.hidden{display:none}.onboard-card.slide-out{animation:ocardOut .25s ease both}.onboard-card.slide-in{animation:ocardIn .4s cubic-bezier(.16,1,.3,1) both}.ocard-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:3px;color:var(--gold);font-weight:700;margin-bottom:12px;}.ocard-title{font-family:'Outfit',sans-serif;font-size:34px;line-height:1.15;font-weight:900;letter-spacing:-.3px;margin-bottom:8px;text-align:center;background:linear-gradient(135deg,var(--text),rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;padding:4px 0 6px;}.ocard-copy{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px;text-align:center;max-width:420px}.ocard-input-wrap{position:relative}.ocard-input-line{position:absolute;bottom:0;left:18px;right:18px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;border-radius:99px;}.name-input:focus ~ .ocard-input-line{opacity:1}.count-advice{margin-top:8px;padding:12px 16px;border-radius:14px;background:rgba(247,214,122,.06);border:1px solid rgba(247,214,122,.12);font-size:12px;color:var(--muted);line-height:1.5;text-align:center;}.onboard-action-bar{display:flex;flex-direction:column;align-items:center;padding:16px 24px max(32px,env(safe-area-inset-bottom,32px));width:100%;gap:12px;}.oback-btn{background:transparent;border:none;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;padding:6px 16px;transition:color .2s;order:2;}.oback-btn:active{color:var(--text)}.onboard-next-btn{flex:none;margin-top:0;width:220px;display:block;margin:0;order:1;}@keyframes ocardIn{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:none}}@keyframes ocardOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-32px)}}
 
 /* ══ BUILD SCREEN ══ */
 #buildOverlay{padding:0;align-items:center;justify-content:center}.build-shell{width:100%;max-width:480px;margin:auto;padding:60px 28px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;min-height:100dvh;justify-content:center;gap:0;}.build-glow{position:absolute;top:-80px;left:50%;transform:translateX(-50%);width:320px;height:320px;background:radial-gradient(circle,rgba(247,214,122,.14),transparent 60%);pointer-events:none;}.build-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:4px;color:var(--gold);font-weight:700;margin-bottom:10px;animation:fadeUp .6s both;}.build-title{font-family:"Bebas Neue",sans-serif;font-size:40px;letter-spacing:2px;line-height:.95;margin-bottom:32px;animation:fadeUp .6s .1s both;}.build-ring-outer{position:relative;width:140px;height:140px;display:flex;align-items:center;justify-content:center;margin:18px auto 28px;animation:fadeUp .6s .2s both;}.build-ring-wrap{position:relative;width:110px;height:110px;margin:0 auto}.build-ring-wrap svg{width:110px;height:110px;transform:rotate(-90deg)}.build-ring-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:5}.build-ring-fill{fill:none;stroke:url(#buildGoldGrad);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .05s linear}.build-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Bebas Neue",sans-serif;font-size:28px;color:var(--gold)}.build-orbit{position:absolute;border-radius:50%;border:1px solid rgba(247,214,122,.15)}.build-orbit-1{width:130px;height:130px;animation:orbitSpin 4s linear infinite}.build-orbit-2{width:150px;height:150px;animation:orbitSpin 6s linear infinite reverse;border-color:rgba(247,214,122,.08)}@keyframes orbitSpin{to{transform:rotate(360deg)}}.build-steps-list{display:flex;flex-direction:column;gap:8px;width:100%;max-width:280px;margin:0 auto 24px;animation:fadeUp .6s .3s both;}.build-step-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--muted);text-align:left;transition:all .4s ease;}.build-step-item.active{background:rgba(247,214,122,.08);border-color:rgba(247,214,122,.2);color:var(--text);}.build-step-item.done{background:rgba(247,214,122,.05);border-color:rgba(247,214,122,.12);color:var(--gold);}.bs-icon{font-size:14px;flex-shrink:0;transition:.3s}
@@ -738,6 +800,185 @@ body::after{
 
 body.light-mode .daily-challenge{background:rgba(168,85,247,.07)!important;border-color:rgba(168,85,247,.2)!important}
 body.light-mode .daily-challenge.completed{background:rgba(34,197,94,.07)!important;border-color:rgba(34,197,94,.2)!important}
+
+/* ══ AI INSIGHT CARD ══ */
+.ai-insight-card{
+  margin-bottom:14px;
+  border-radius:var(--r-lg);
+  background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(168,85,247,.08),rgba(9,9,11,.9));
+  border:1px solid rgba(99,102,241,.25);
+  overflow:hidden;position:relative;
+  animation:fadeUp .4s ease both;
+}
+.ai-insight-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(99,102,241,.5),rgba(168,85,247,.5),transparent);
+}
+.ai-insight-header{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px 0;
+}
+.ai-insight-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,#6366f1,#a855f7);
+  box-shadow:0 0 8px rgba(99,102,241,.6);
+  flex-shrink:0;
+  animation:aiPulse 2s ease infinite;
+}
+@keyframes aiPulse{0%,100%{box-shadow:0 0 6px rgba(99,102,241,.5)}50%{box-shadow:0 0 14px rgba(168,85,247,.8)}}
+.ai-insight-eyebrow{
+  font-size:9px;text-transform:uppercase;letter-spacing:3px;
+  color:#a855f7;font-weight:700;
+}
+.ai-insight-body{padding:10px 16px 14px}
+.ai-insight-text{
+  font-size:13px;color:var(--text);line-height:1.65;font-weight:500;
+}
+.ai-insight-text.loading{
+  color:var(--muted);font-style:italic;
+}
+.ai-insight-meta{
+  margin-top:8px;font-size:10px;color:var(--muted2);
+  display:flex;align-items:center;gap:6px;
+}
+.ai-insight-meta::before{content:'';display:inline-block;width:14px;height:1px;background:var(--muted2)}
+.ai-insight-refresh{
+  margin-left:auto;background:transparent;border:none;
+  color:rgba(99,102,241,.7);font-size:10px;font-weight:700;
+  cursor:pointer;letter-spacing:.5px;text-transform:uppercase;padding:0;
+  font-family:'Outfit',sans-serif;
+  transition:color .2s;
+}
+.ai-insight-refresh:hover{color:#a855f7}
+.ai-insight-refresh:disabled{opacity:.4;cursor:default}
+
+/* ══ MOMENTUM SCORE ══ */
+.momentum-card{
+  margin-bottom:14px;
+  border-radius:var(--r-lg);
+  background:#0d0d10;
+  border:1px solid rgba(255,255,255,.08);
+  padding:0 18px;
+  min-height:220px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+  text-align:center;
+}
+.momentum-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--momentum-color,var(--gold)),transparent);
+}
+.momentum-ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.momentum-ring-wrap svg{width:80px;height:80px;transform:rotate(-90deg)}
+.momentum-ring-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:5}
+.momentum-ring-fill{fill:none;stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)}
+.momentum-pct{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:18px;
+}
+.momentum-info{display:flex;flex-direction:column;align-items:center}
+.momentum-score-val{
+  font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;
+  color:var(--momentum-color,var(--gold));
+}
+.momentum-score-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:2px;text-align:center}
+.momentum-desc{font-size:11px;color:var(--muted2);margin-top:5px;line-height:1.4;text-align:center}
+.momentum-trend{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  font-size:10px;font-weight:700;margin-top:5px;
+}
+
+/* ══ ENHANCED DAILY CHALLENGE ══ */
+.daily-challenge{
+  margin-bottom:14px;
+  background:linear-gradient(135deg,rgba(168,85,247,.1),rgba(99,102,241,.06));
+  border:1px solid rgba(168,85,247,.22);
+  border-radius:var(--r-lg);
+  padding:14px 16px;
+  cursor:pointer;
+  transition:.2s ease;
+  position:relative;overflow:hidden;
+  animation:fadeUp .4s ease both;
+}
+.daily-challenge::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(168,85,247,.5),transparent);
+}
+.daily-challenge.completed{
+  background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(16,185,129,.06));
+  border-color:rgba(34,197,94,.25);cursor:default;
+}
+.dc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dc-eyebrow{font-size:9px;text-transform:uppercase;letter-spacing:3px;color:#a855f7;font-weight:700}
+.daily-challenge.completed .dc-eyebrow{color:#22c55e}
+.dc-xp{
+  background:rgba(168,85,247,.15);border:1px solid rgba(168,85,247,.2);
+  border-radius:999px;padding:3px 10px;
+  font-size:10px;font-weight:800;color:#a855f7;letter-spacing:.5px;
+}
+.daily-challenge.completed .dc-xp{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.2);color:#22c55e}
+.dc-focus-tag{
+  display:inline-block;margin-bottom:6px;
+  font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(168,85,247,.7);font-weight:700;
+}
+.dc-text{font-size:13px;font-weight:600;color:var(--text);line-height:1.55}
+.dc-done-badge{
+  margin-top:8px;font-size:11px;color:#22c55e;
+  font-weight:700;display:flex;align-items:center;gap:5px;
+}
+.dc-done-badge::before{content:'✓'}
+.dc-tap-hint{
+  margin-top:8px;font-size:10px;color:rgba(168,85,247,.5);
+  text-transform:uppercase;letter-spacing:1px;font-weight:700;
+}
+
+body.light-mode .ai-insight-card{background:rgba(99,102,241,.06)!important;border-color:rgba(99,102,241,.2)!important}
+body.light-mode .momentum-card{background:rgba(0,0,0,.03)!important;border-color:rgba(0,0,0,.09)!important}
+
+/* ══ WELLNESS CORRELATION ══ */
+.wcorr-card{
+  margin-top:12px;
+  border-radius:var(--r-lg);
+  background:#0d0d10;
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;position:relative;
+  animation:fadeUp .4s ease both;
+}
+.wcorr-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(20,184,166,.4),transparent);
+}
+.wcorr-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 0;
+}
+.wcorr-eyebrow{
+  font-size:9px;text-transform:uppercase;letter-spacing:3px;
+  color:#14b8a6;font-weight:700;
+}
+.wcorr-body{padding:10px 16px 14px;display:grid;gap:10px}
+.wcorr-insight{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:11px 13px;border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+}
+.wcorr-insight-icon{font-size:20px;flex-shrink:0;line-height:1;margin-top:1px}
+.wcorr-insight-text{flex:1;min-width:0}
+.wcorr-insight-title{font-size:12px;font-weight:700;color:var(--text);line-height:1.3}
+.wcorr-insight-sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+.wcorr-insight-val{
+  font-family:'Bebas Neue',sans-serif;font-size:22px;flex-shrink:0;line-height:1;
+}
+.wcorr-no-data{
+  padding:16px;text-align:center;
+  font-size:12px;color:var(--muted2);line-height:1.6;
+}
+body.light-mode .wcorr-card{background:rgba(0,0,0,.02)!important;border-color:rgba(0,0,0,.08)!important}
+body.light-mode .wcorr-insight{background:rgba(0,0,0,.03)!important}
+
 body.light-mode .pr-banner{background:rgba(234,179,8,.07)!important;border-color:rgba(234,179,8,.2)!important}
 body.light-mode .monthly-summary{background:rgba(138,98,0,.06)!important;border-color:rgba(138,98,0,.15)!important}
 body.light-mode .note-popup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!important}
@@ -998,7 +1239,7 @@ body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!im
         <p class="ocard-copy">Vyberieme návyky prispôsobené tvojmu cieľu.</p>
         <div class="choices" id="focusChoices"></div>
         <div style="margin-top:16px;width:100%;max-width:420px">
-          <div class="step-label" style="margin-bottom:8px;text-align:left">Počet návykov</div>
+          <div class="step-label" style="margin-bottom:8px;text-align:center">Počet návykov</div>
           <div class="count-grid" id="countGrid"></div>
           <div class="count-advice"><span id="countAdviceText">4 návyky — ideálny štart. Ľahšie udržateľné.</span></div>
         </div>
@@ -1011,8 +1252,8 @@ body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!im
       </div>
     </div>
     <div class="onboard-action-bar">
-      <button class="oback-btn" id="onboardBackBtn" type="button" style="visibility:hidden">← Späť</button>
       <button class="btn-primary onboard-next-btn" id="onboardNextBtn" type="button">Pokračovať →</button>
+      <button class="oback-btn" id="onboardBackBtn" type="button" style="visibility:hidden">← Späť</button>
     </div>
   </div>
 </div>
@@ -1106,8 +1347,35 @@ body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!im
       </div>
     </div>
 
-    <div class="daily-quote-block" id="dailyQuoteBlock"></div>
     <div id="monthlySummaryBanner"></div>
+
+    <!-- MOMENTUM SCORE -->
+    <div class="momentum-card" id="momentumCard">
+      <div class="momentum-ring-wrap">
+        <svg viewBox="0 0 80 80"><circle class="momentum-ring-bg" cx="40" cy="40" r="34"/><circle id="momentumRingFill" class="momentum-ring-fill" cx="40" cy="40" r="34" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
+        <div class="momentum-pct" id="momentumPct" style="color:var(--gold)">0</div>
+      </div>
+      <div class="momentum-info">
+        <div class="momentum-score-val" id="momentumVal">0</div>
+        <div class="momentum-score-label">Momentum</div>
+        <div class="momentum-desc" id="momentumDesc">Začni dnes.</div>
+        <div class="momentum-trend" id="momentumTrend"></div>
+      </div>
+    </div>
+
+    <!-- AI DAILY INSIGHT -->
+    <div class="ai-insight-card" id="aiInsightCard" style="display:none">
+      <div class="ai-insight-header">
+        <div class="ai-insight-dot"></div>
+        <div class="ai-insight-eyebrow">AI Analýza · Dnes</div>
+        <button class="ai-insight-refresh" id="aiRefreshBtn" onclick="refreshAiInsight()" title="Obnoviť insight">↻ obnoviť</button>
+      </div>
+      <div class="ai-insight-body">
+        <div class="ai-insight-text loading" id="aiInsightText">Analyzujem tvoje dáta...</div>
+        <div class="ai-insight-meta" id="aiInsightMeta">claude AI</div>
+      </div>
+    </div>
+
     <div id="dailyChallengeBlock"></div>
     <div id="prBanner"></div>
 
@@ -1141,12 +1409,6 @@ body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!im
   <div id="view-trend" class="view">
     <div class="page-head"><h2>TREND</h2><p>Konzistencia a vývoj tempa za posledné týždne.</p></div>
     <div id="trendViewContent"></div>
-    <div class="section-title" style="margin-top:16px"><h3>28-dňový heatmap</h3><span id="heatmapMeta">aktivita</span></div>
-    <div id="heatmapGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px"></div>
-    <div style="display:flex;justify-content:space-between;margin-top:4px;padding:0 2px">
-      <span style="font-size:9px;color:var(--muted2);letter-spacing:1px">4 týždne späť</span>
-      <span style="font-size:9px;color:var(--muted2);letter-spacing:1px">Dnes</span>
-    </div>
     <div class="section-title" style="margin-top:16px"><h3>Séria podľa návyku</h3><span>streak</span></div>
     <div id="habitStreaksList" style="display:grid;gap:8px"></div>
     <div class="footer"><div class="footer-credit">created by <strong>RICHARD ROSIVAL</strong> · 2026</div></div>
@@ -1162,6 +1424,7 @@ body.light-mode .levelup-card{background:linear-gradient(180deg,#fff,#f5f0e8)!im
     <canvas id="shareCanvas" width="1080" height="1080"></canvas>
     <div class="section-title" style="margin-top:16px"><h3>Spánok &amp; Energia</h3><span>wellness</span></div>
     <div id="wellnessStats"></div>
+    <div id="wellnessCorrelation"></div>
     <div class="section-title" style="margin-top:16px"><h3>Rozpad podľa návyku</h3><span>% splnenia</span></div>
     <div class="habit-stats" id="habitStats"></div>
     <div class="section-title" style="margin-top:16px"><h3>Achievementy</h3><span id="achievementsMeta">0/11 odomknutých</span></div>
@@ -1557,11 +1820,14 @@ function renderToday(){
   updateStreakFreeze();
   renderWeeklySummary();
   const list=$('#habitsList');list.innerHTML='';
-  const qb=$('#dailyQuoteBlock');
-  if(qb)qb.innerHTML=`<div class="daily-quote">${getDailyQuote()}</div>`;
   renderLevelBar();
   renderDailyChallenge();
   renderMonthlySummary();
+  renderMomentum();
+  // Load AI insight if we have enough data (lazy, won't block render)
+  if(Object.keys(state.checked).length>=2){
+    setTimeout(()=>loadAiInsight(),300);
+  }
   const newPR=updatePersonalRecords();
   renderPRBanner();
   if(newPR)showToast(`🏆 Nový rekord! ${newPR.val} dní série!`);
@@ -1828,9 +2094,9 @@ function renderTrendView(){const w=$('#trendViewContent');if(!w)return;const tot
 const allDays=Object.keys(state.checked).length||1;
 const habitScores=state.habits.map((h,i)=>{const d=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;return{name:h.name,icon:h.icon,color:h.color,pct:Math.round(d/allDays*100)};}).sort((a,b)=>b.pct-a.pct);
 const bestHtml=habitScores.slice(0,3).map(h=>`<div class="trend-insight" style="display:flex;align-items:center;gap:10px;padding:10px 14px"><span style="font-size:18px">${h.icon}</span><div style="flex:1"><strong>${h.name}</strong><div class="bar-bg" style="margin-top:5px"><div class="bar-fill" style="width:${h.pct}%;background:${h.color}"></div></div></div><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:${h.color}">${h.pct}%</span></div>`).join('');
-const insights=[{title:'Konzistencia > Perfektnosť',desc:'Lepší je 70 % každý deň ako 100 % raz za týždeň.'},{title:'Trend neklamie',desc:'Čísla ukazujú realitu bez emócií — počúvaj ich.'},{title:'Systém, nie vôľa',desc:'Ak klesá tempo, problém je v systéme, nie v tebe.'},{title:'Momentum sa buduje',desc:'Každý splnený deň posilňuje identitu disciplinovaného človeka.'}];
-w.innerHTML=`<div class="stats-grid">${cards}</div>${habitScores.length?`<div class="section-title" style="margin-top:16px"><h3>Top návyky</h3><span>konzistencia</span></div><div style="display:grid;gap:8px">${bestHtml}</div>`:''}<div class="section-title" style="margin-top:16px"><h3>Myšlienky</h3><span>mindset</span></div><div style="display:grid;gap:9px">${insights.map(t=>`<div class="trend-insight"><strong>${t.title}</strong><span>${t.desc}</span></div>`).join('')}</div>`;
-renderHeatmap();renderHabitStreaks();}
+w.innerHTML=`<div class="stats-grid">${cards}</div>${habitScores.length?`<div class="section-title" style="margin-top:16px"><h3>Top návyky</h3><span>konzistencia</span></div><div style="display:grid;gap:8px">${bestHtml}</div>`:''}<div class="section-title" style="margin-top:16px"><h3>Týždenná výzva</h3><span>weekly focus</span></div><div id="weeklyFocusBlock"></div>`;
+renderHabitStreaks();
+renderWeeklyFocus();}
 
 // ═══════════════════════════════════════════════════════
 // STATS VIEW
@@ -1852,7 +2118,245 @@ function renderStats(){
   if(ws2){const wkeys=Object.keys(state.wellness||{});const sleepVals=wkeys.map(k=>state.wellness[k].sleep).filter(v=>v>0);const energyVals=wkeys.map(k=>state.wellness[k].energy).filter(v=>v);const avgSleep=sleepVals.length?+(sleepVals.reduce((a,b)=>a+b,0)/sleepVals.length).toFixed(1):null;const avgEnergy=energyVals.length?+(energyVals.reduce((a,b)=>a+b,0)/energyVals.length).toFixed(1):null;const sleepCfg=avgSleep?getSleepConfig(avgSleep):{color:'var(--muted)',label:'Žiadne dáta',emoji:'—'};const energyCfg=avgEnergy?ENERGY_CONFIG[Math.round(avgEnergy)]||ENERGY_CONFIG[3]:{icon:'—',label:'Žiadne dáta',color:'var(--muted)'};const highEnergyDays=Object.keys(state.wellness||{}).filter(k=>state.wellness[k].energy>=4);const lowEnergyDays=Object.keys(state.wellness||{}).filter(k=>state.wellness[k].energy<=2);const avgHabitsHigh=highEnergyDays.length?Math.round(highEnergyDays.reduce((a,k)=>a+getDoneCount(k),0)/(highEnergyDays.length*Math.max(state.habits.length,1))*100):null;const avgHabitsLow=lowEnergyDays.length?Math.round(lowEnergyDays.reduce((a,k)=>a+getDoneCount(k),0)/(lowEnergyDays.length*Math.max(state.habits.length,1))*100):null;ws2.innerHTML=`<div class="stats-grid" style="margin-bottom:10px"><div class="stat-card"><div class="stat-val" style="font-size:32px;color:${sleepCfg.color}">${avgSleep||'—'}${avgSleep?'h':''}</div><div class="stat-label">Priem. spánok</div><div style="margin-top:6px;font-size:10px;color:${sleepCfg.color}">${sleepCfg.emoji} ${sleepCfg.label}</div></div><div class="stat-card"><div class="stat-val" style="font-size:32px;color:${energyCfg.color}">${energyCfg.icon}</div><div class="stat-label">Priem. energia</div><div style="margin-top:6px;font-size:10px;color:${energyCfg.color}">${energyCfg.label}</div></div></div>${avgHabitsHigh!==null&&avgHabitsLow!==null?`<div class="history-item" style="margin-bottom:0"><div class="history-item-main"><strong>⚡ Vysoká energia (4–5)</strong><span>Splnených návykov v priemere</span></div><div class="history-pct" style="color:#22C55E">${avgHabitsHigh}%</div></div><div class="history-item" style="margin-top:8px"><div class="history-item-main"><strong>😓 Nízka energia (1–2)</strong><span>Splnených návykov v priemere</span></div><div class="history-pct" style="color:#E74C3C">${avgHabitsLow}%</div></div>`:'<div class="history-item"><div class="history-item-main"><strong>Korelačná analýza</strong><span>Zaznamenaj aspoň 2 dni pre zobrazenie.</span></div><div class="history-pct">—</div></div>'}`;
   }
   renderAchievements();
+  renderWellnessCorrelation();
   const ins=$('#statsInsights');if(ins)ins.innerHTML=state.habits.map((h,i)=>{const days=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;const rate=Object.keys(state.checked).length?Math.round(days/Object.keys(state.checked).length*100):0;return `<div class="history-item"><div class="history-item-main"><strong>${escHtml(h.name)}</strong><span>${days} dní označené</span></div><div class="history-pct">${rate}%</div></div>`}).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// WEEKLY FOCUS
+// ═══════════════════════════════════════════════════════
+const WEEKLY_FOCUS_BY_FOCUS={
+  discipline:[
+    {text:'Celý týždeň vstávaj v rovnaký čas — aj cez víkend.',xp:120},
+    {text:'Žiadny telefón prvých 30 minút každého rána celý týždeň.',xp:100},
+    {text:'Každý deň plánuj nasledujúci deň pred spaním.',xp:90},
+    {text:'Tento týždeň žiadny snooze — prvý alarm = vstávanie.',xp:110},
+    {text:'Deep work blok každý deň — min. 60 minút bez vyrušení.',xp:130},
+    {text:'Choď spať pred 23:00 každý deň tohto týždňa.',xp:100},
+    {text:'Dokonči každú úlohu, ktorú začneš — žiadne odkladanie.',xp:120},
+    {text:'Nečítaj správy ani sociálne siete pred 12:00.',xp:90},
+  ],
+  health:[
+    {text:'Celý týždeň 8 000 krokov každý deň — bez výnimky.',xp:120},
+    {text:'Žiadny cukor ani spracované jedlo celý týždeň.',xp:140},
+    {text:'Vypi aspoň 2,5 litra vody každý deň.',xp:90},
+    {text:'Zeleninaá pri každom jedle celý týždeň.',xp:100},
+    {text:'Choď spať pred 22:30 každý deň tohto týždňa.',xp:110},
+    {text:'Cvič aspoň 30 minút každý deň — akákoľvek aktivita.',xp:130},
+    {text:'Žiadne jedlo po 19:00 celý týždeň.',xp:120},
+    {text:'Ranný strečing 10 minút každé ráno.',xp:90},
+  ],
+  wealth:[
+    {text:'Každý deň 60 minút učenia sa — kurz, kniha, podcast.',xp:110},
+    {text:'Zaznamenaj každý výdavok tento týždeň.',xp:90},
+    {text:'Každý deň urob 1 krok na svojom projekte alebo cieli.',xp:130},
+    {text:'Nečítaj správy — ten čas daj do práce na cieli.',xp:100},
+    {text:'Každý deň odlož aspoň 1% denného príjmu.',xp:120},
+    {text:'Prečítaj 20 strán knihy každý deň.',xp:100},
+    {text:'Identifikuj a eliminuj 1 zbytočný výdavok každý deň.',xp:110},
+    {text:'Oslovuj každý deň 1 človeka, od ktorého sa môžeš učiť.',xp:130},
+  ],
+  mind:[
+    {text:'10 minút meditácie každé ráno celý týždeň.',xp:110},
+    {text:'Každý deň napíš do denníka — aspoň 3 vety.',xp:90},
+    {text:'Žiadne sociálne siete po 20:00 celý týždeň.',xp:100},
+    {text:'Každý deň vyjdi von na 20 minút bez slúchadiel.',xp:90},
+    {text:'Napíš každý deň 3 konkrétne veci, za ktoré si vďačný.',xp:90},
+    {text:'Čítaj fyzickú knihu každý deň — aspoň 10 strán.',xp:100},
+    {text:'Každý deň urob niečo výlučne pre seba — bez produktivity.',xp:110},
+    {text:'Jeden deň v týždni kompletný digitálny detox.',xp:140},
+  ]
+};
+
+function getWeeklyFocus(){
+  const now=new Date();
+  // Week number in year
+  const start=new Date(now.getFullYear(),0,1);
+  const week=Math.floor((now-start)/(7*24*60*60*1000));
+  const focus=state.profile?.focus||'discipline';
+  const pool=WEEKLY_FOCUS_BY_FOCUS[focus]||WEEKLY_FOCUS_BY_FOCUS.discipline;
+  return pool[week%pool.length];
+}
+
+function getWeeklyFocusKey(){
+  const now=new Date();
+  const start=new Date(now.getFullYear(),0,1);
+  const week=Math.floor((now-start)/(7*24*60*60*1000));
+  return 'wf_'+now.getFullYear()+'_'+week;
+}
+
+function getWeeklyFocusState(){
+  const key=getWeeklyFocusKey();
+  if(!state.weeklyFocus)state.weeklyFocus={};
+  if(!state.weeklyFocus[key])state.weeklyFocus[key]={days:[],xpGiven:false};
+  return state.weeklyFocus[key];
+}
+
+function toggleWeeklyFocusDay(dow){
+  const wfs=getWeeklyFocusState();
+  const key=getWeeklyFocusKey();
+  const idx=wfs.days.indexOf(dow);
+  if(idx>=0)wfs.days.splice(idx,1);
+  else wfs.days.push(dow);
+  saveState();
+  // Award XP if newly completed (7 days)
+  if(wfs.days.length===7&&!wfs.xpGiven){
+    wfs.xpGiven=true;
+    saveState();
+    const focus=getWeeklyFocus();
+    addXP(focus.xp,'Týždenná výzva');
+    showToast(`🏆 Týždenná výzva splnená! +${focus.xp} XP`);
+  }
+  renderWeeklyFocus();
+}
+
+function renderWeeklyFocus(){
+  const block=document.getElementById('weeklyFocusBlock');
+  if(!block)return;
+  const focus=getWeeklyFocus();
+  const wfs=getWeeklyFocusState();
+  const focusLabel=PRESETTRACKS[state.profile?.focus||'discipline']?.label||'Disciplína';
+  const DAY_LABELS=['Po','Ut','St','Št','Pi','So','Ne'];
+  // Map to Mon=0..Sun=6
+  const now=new Date();
+  const todayDow=(now.getDay()+6)%7; // 0=Mon
+
+  const daysHtml=DAY_LABELS.map((label,i)=>{
+    const done=wfs.days.includes(i);
+    const isToday=i===todayDow;
+    return `<div class="wf-day${done?' done':''}${isToday&&!done?' today':''}" onclick="toggleWeeklyFocusDay(${i})">${label}</div>`;
+  }).join('');
+
+  const count=wfs.days.length;
+  const allDone=count===7;
+
+  block.innerHTML=`<div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-eyebrow">Týždenná výzva</div>
+      <div class="wf-week-label">+${focus.xp} XP za týždeň</div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-focus-tag">${focusLabel}</div>
+      <div class="wf-text">${focus.text}</div>
+      <div class="wf-progress-row">
+        <div class="wf-days">${daysHtml}</div>
+        <div class="wf-count">${count}/7</div>
+      </div>
+      ${allDone
+        ?`<div class="wf-done-badge">✓ Tento týždeň splnený — ${focus.xp} XP pripísané!</div>`
+        :`<div style="font-size:11px;color:var(--muted2)">Ťukni na deň keď si výzvu splnil.</div>`
+      }
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+// WELLNESS CORRELATION ANALYSIS
+// ═══════════════════════════════════════════════════════
+function computeWellnessCorrelation(){
+  const wkeys=Object.keys(state.wellness||{});
+  const total=state.habits.length;
+  if(!total||wkeys.length<3)return null; // need at least 3 days
+
+  // Split by sleep quality
+  const goodSleepDays=wkeys.filter(k=>state.wellness[k].sleep>=7);
+  const badSleepDays=wkeys.filter(k=>state.wellness[k].sleep>0&&state.wellness[k].sleep<6);
+  // Split by energy
+  const highEnergyDays=wkeys.filter(k=>state.wellness[k].energy>=4);
+  const lowEnergyDays=wkeys.filter(k=>state.wellness[k].energy>0&&state.wellness[k].energy<=2);
+  // Day-of-week analysis
+  const dayNames=['Ned','Pon','Uto','Str','Štv','Pia','Sob'];
+  const byDow=Array(7).fill(null).map(()=>({sum:0,count:0}));
+  Object.keys(state.checked).forEach(k=>{
+    const[y,m,d]=k.split('-').map(Number);
+    const dow=new Date(y,m,d).getDay();
+    byDow[dow].sum+=getDoneCount(k);
+    byDow[dow].count++;
+  });
+  const dowAvg=byDow.map((b,i)=>({day:dayNames[i],avg:b.count?Math.round(b.sum/b.count/Math.max(total,1)*100):null,count:b.count}));
+  const validDow=dowAvg.filter(d=>d.avg!==null&&d.count>=1);
+  const worstDay=validDow.length?validDow.reduce((a,b)=>a.avg<b.avg?a:b):null;
+  const bestDay=validDow.length?validDow.reduce((a,b)=>a.avg>b.avg?a:b):null;
+
+  const insights=[];
+
+  // Sleep vs habits
+  if(goodSleepDays.length>=2&&badSleepDays.length>=2){
+    const goodAvg=Math.round(goodSleepDays.reduce((a,k)=>a+getDoneCount(k),0)/(goodSleepDays.length*total)*100);
+    const badAvg=Math.round(badSleepDays.reduce((a,k)=>a+getDoneCount(k),0)/(badSleepDays.length*total)*100);
+    const diff=goodAvg-badAvg;
+    if(Math.abs(diff)>=10){
+      insights.push({
+        icon:'😴',
+        title:`Spánok 7h+ = o ${Math.abs(diff)}% viac splnených návykov`,
+        sub:`Pri nedostatku spánku (<6h) splníš v priemere ${badAvg}% návykov. So 7h+ je to ${goodAvg}%.`,
+        val:diff>0?`+${diff}%`:`${diff}%`,
+        color:diff>0?'#22c55e':'#ef4444'
+      });
+    }
+  }
+
+  // Energy vs habits
+  if(highEnergyDays.length>=2&&lowEnergyDays.length>=2){
+    const highAvg=Math.round(highEnergyDays.reduce((a,k)=>a+getDoneCount(k),0)/(highEnergyDays.length*total)*100);
+    const lowAvg=Math.round(lowEnergyDays.reduce((a,k)=>a+getDoneCount(k),0)/(lowEnergyDays.length*total)*100);
+    const diff=highAvg-lowAvg;
+    if(Math.abs(diff)>=10){
+      insights.push({
+        icon:'⚡',
+        title:`Vysoká energia = o ${Math.abs(diff)}% viac návykov`,
+        sub:`V dni s nízkou energiou (1–2) splníš ${lowAvg}%, s vysokou (4–5) je to ${highAvg}%.`,
+        val:diff>0?`+${diff}%`:`${diff}%`,
+        color:diff>0?'#f97316':'#ef4444'
+      });
+    }
+  }
+
+  // Worst day of week
+  if(worstDay&&bestDay&&worstDay.day!==bestDay.day&&(bestDay.avg-worstDay.avg)>=15){
+    insights.push({
+      icon:'📅',
+      title:`${worstDay.day} je tvoj najslabší deň (${worstDay.avg}%)`,
+      sub:`${bestDay.day} si naopak najlepší — ${bestDay.avg}%. Zvýš si nároky práve na ${worstDay.day}.`,
+      val:`${worstDay.avg}%`,
+      color:'#eab308'
+    });
+  }
+
+  return insights.length?insights:null;
+}
+
+function renderWellnessCorrelation(){
+  const wrap=document.getElementById('wellnessCorrelation');
+  if(!wrap)return;
+  const insights=computeWellnessCorrelation();
+  if(!insights){
+    // Show minimal placeholder only if some wellness data exists
+    const wkeys=Object.keys(state.wellness||{});
+    if(wkeys.length>0&&wkeys.length<3){
+      wrap.innerHTML=`<div class="wcorr-card"><div class="wcorr-body"><div class="wcorr-no-data">Zaznamenaj aspoň 3 dni spánku a energie pre korelačnú analýzu.</div></div></div>`;
+    }else{
+      wrap.innerHTML='';
+    }
+    return;
+  }
+  wrap.innerHTML=`<div class="wcorr-card">
+    <div class="wcorr-header">
+      <div class="wcorr-eyebrow">Korelačná analýza · tvoje dáta</div>
+    </div>
+    <div class="wcorr-body">
+      ${insights.map(i=>`
+        <div class="wcorr-insight">
+          <div class="wcorr-insight-icon">${i.icon}</div>
+          <div class="wcorr-insight-text">
+            <div class="wcorr-insight-title">${i.title}</div>
+            <div class="wcorr-insight-sub">${i.sub}</div>
+          </div>
+          <div class="wcorr-insight-val" style="color:${i.color}">${i.val}</div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2015,28 +2519,238 @@ function startBuildAnimation(done){const overlay=$('#buildOverlay');overlay.clas
 // INIT
 // ═══════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════
-// 1. DAILY CHALLENGE
+// 1. MOMENTUM SCORE
 // ═══════════════════════════════════════════════════════
-const DAILY_CHALLENGES=[
-  {text:'Nepozri na telefón prvých 30 minút po prebudení.',xp:50},
-  {text:'Vypi 3 litre vody dnes.',xp:40},
-  {text:'Sprav 10 minút stretchingu pred spaním.',xp:40},
-  {text:'Napíš 3 veci za čo si vďačný.',xp:35},
-  {text:'Choď spať pred 22:30.',xp:50},
-  {text:'Nečítaj správy celý deň.',xp:45},
-  {text:'Urob 20 minút bez prerušenia deep work.',xp:50},
-  {text:'Zavolaj niekomu koho si dlho nevidel.',xp:35},
-  {text:'Prečítaj 10 strán knihy.',xp:40},
-  {text:'Choď von na aspoň 20 minút.',xp:35},
-  {text:'Nejedz cukor celý deň.',xp:55},
-  {text:'Vstup von do prírody na aspoň 15 minút.',xp:40},
-  {text:'Napíš si plán zajtrajšieho dňa večer.',xp:35},
-  {text:'Urob 50 drepov kedykoľvek počas dňa.',xp:45},
+function computeMomentum(){
+  const total=state.habits.length;
+  if(!total)return{score:0,color:'var(--muted)',label:'Žiadne návyky',desc:'Pridaj návyky v Setup.',trend:''};
+  // Factor 1: today completion (40 pts)
+  const todayDone=Object.values(getTodayChecked()).filter(Boolean).length;
+  const todayF=total?Math.round(todayDone/total*40):0;
+  // Factor 2: 7-day consistency (35 pts)
+  let weekSum=0;
+  for(let i=1;i<=7;i++){const d=new Date();d.setDate(d.getDate()-i);weekSum+=getDoneCount(dayKey(d));}
+  const weekF=total?Math.round(weekSum/(7*total)*35):0;
+  // Factor 3: streak bonus (25 pts, capped)
+  const streak=computeStreak();
+  const streakF=Math.min(25,Math.round(streak/14*25));
+  const score=todayF+weekF+streakF;
+  // Trend: compare this week vs last week
+  let lastWeekSum=0;
+  for(let i=8;i<=14;i++){const d=new Date();d.setDate(d.getDate()-i);lastWeekSum+=getDoneCount(dayKey(d));}
+  const thisWeekAvg=weekSum/7;const lastWeekAvg=lastWeekSum/7;
+  let trend='';
+  if(lastWeekAvg>0){
+    const delta=Math.round((thisWeekAvg-lastWeekAvg)/lastWeekAvg*100);
+    if(delta>=5)trend=`<span style="color:#22c55e">▲ ${delta}%</span> vs. minulý týždeň`;
+    else if(delta<=-5)trend=`<span style="color:#ef4444">▼ ${Math.abs(delta)}%</span> vs. minulý týždeň`;
+    else trend=`<span style="color:var(--muted)">→ stabilné</span> vs. minulý týždeň`;
+  }
+  let color,label,desc;
+  if(score>=85){color='#f7d67a';label='PEAK';desc='Ideálna forma. Neuber nohu z plynu.';}
+  else if(score>=70){color='#22c55e';label='SILNÉ';desc='Nad priemerom. Drž tempo ešte 3 dni.';}
+  else if(score>=50){color='#f97316';label='DOBRÉ';desc='Základ je tu. Potrebuješ jeden silný deň.';}
+  else if(score>=30){color='#eab308';label='SLABÉ';desc='Momentum klesá. Dnes je kritický.';}
+  else{color='#ef4444';label='NÍZKE';desc='Restart. Splň aspoň 1 návyk teraz.';}
+  return{score,color,label,desc,trend};
+}
+function renderMomentum(){
+  const m=computeMomentum();
+  const card=document.getElementById('momentumCard');
+  if(!card)return;
+  card.style.setProperty('--momentum-color',m.color);
+  document.getElementById('momentumVal').textContent=m.score;
+  document.getElementById('momentumVal').style.color=m.color;
+  document.getElementById('momentumDesc').textContent=m.desc;
+  const trend=document.getElementById('momentumTrend');
+  if(trend)trend.innerHTML=m.trend;
+  const ring=document.getElementById('momentumRingFill');
+  const pctEl=document.getElementById('momentumPct');
+  if(ring){
+    const C=213.6;
+    ring.style.strokeDashoffset=C-(m.score/100)*C;
+    ring.setAttribute('stroke',m.color);
+  }
+  if(pctEl){pctEl.textContent=m.label;pctEl.style.color=m.color;pctEl.style.fontSize=m.label.length>4?'10px':'12px';}
+}
+
+// ═══════════════════════════════════════════════════════
+// 2. AI DAILY INSIGHT
+// ═══════════════════════════════════════════════════════
+let _aiInsightLoading=false;
+function buildAiContext(){
+  const total=state.habits.length;
+  if(!total)return null;
+  // Last 14 days data
+  const days=[];
+  for(let i=0;i<14;i++){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const k=dayKey(d);
+    const done=getDoneCount(k);
+    const pct=total?Math.round(done/total*100):0;
+    days.push({date:d.toLocaleDateString('sk-SK',{weekday:'short',day:'numeric'}),pct,done,total});
+  }
+  // Per-habit consistency
+  const habitStats=state.habits.map((h,i)=>{
+    const cnt=Object.keys(state.checked).filter(k=>(state.checked[k]||{})[i]).length;
+    const allDays=Math.max(Object.keys(state.checked).length,1);
+    return{name:h.name,icon:h.icon,pct:Math.round(cnt/allDays*100)};
+  }).sort((a,b)=>a.pct-b.pct);
+  const streak=computeStreak();
+  const momentum=computeMomentum();
+  const focus=PRESETTRACKS[state.profile.focus]?.label||'Disciplína';
+  const wellness=getTodayWellness();
+  return{name:getUserName(),focus,streak,momentum:momentum.score,momentumLabel:momentum.label,days:days.slice(0,7),weakest:habitStats[0],strongest:habitStats[habitStats.length-1],totalHabits:total,wellness};
+}
+async function loadAiInsight(forceRefresh=false){
+  const card=document.getElementById('aiInsightCard');
+  const textEl=document.getElementById('aiInsightText');
+  const metaEl=document.getElementById('aiInsightMeta');
+  const refreshBtn=document.getElementById('aiRefreshBtn');
+  if(!card||!textEl)return;
+  // Check if we have a cached insight for today
+  const cacheKey='aiInsight_'+dayKey();
+  if(!forceRefresh){
+    const cached=localStorage.getItem(cacheKey);
+    if(cached){
+      card.style.display='';
+      textEl.textContent=cached;
+      textEl.classList.remove('loading');
+      if(metaEl)metaEl.textContent='claude AI · dnes';
+      return;
+    }
+  }
+  const ctx=buildAiContext();
+  if(!ctx||ctx.totalHabits===0){card.style.display='none';return;}
+  // Need at least 2 days of data for meaningful insight
+  const hasData=Object.keys(state.checked).length>=2;
+  if(!hasData){card.style.display='none';return;}
+  card.style.display='';
+  textEl.textContent='Analyzujem tvoje dáta...';
+  textEl.classList.add('loading');
+  if(refreshBtn)refreshBtn.disabled=true;
+  _aiInsightLoading=true;
+  const prompt=`Si osobný kouč v habit-tracker appke. Používateľ hovorí po slovensky. Odpovedaj výhradne po SLOVENSKY.
+
+Dáta používateľa:
+- Meno: ${ctx.name||'(neznáme)'}
+- Cieľ/fokus: ${ctx.focus}
+- Aktuálna séria perfektných dní: ${ctx.streak}
+- Momentum skóre: ${ctx.momentum}/100 (${ctx.momentumLabel})
+- Najslabší návyk: ${ctx.weakest?.name} (${ctx.weakest?.pct}% splnenia)
+- Najsilnejší návyk: ${ctx.strongest?.name} (${ctx.strongest?.pct}% splnenia)
+- Posledných 7 dní (% splnenia): ${ctx.days.map(d=>d.date+': '+d.pct+'%').join(', ')}
+${ctx.wellness.sleep?`- Dnešný spánok: ${ctx.wellness.sleep}h`:''}
+${ctx.wellness.energy?`- Dnešná energia: ${ctx.wellness.energy}/5`:''}
+
+Napíš JEDEN konkrétny, osobný insight (2-3 vety max). Štýl: priamy, bez fluffu, hovoríš ako mentor nie chatbot. Nechváľ genericky. Použi konkrétne čísla z dát. Identifikuj buď vzor, slabé miesto, alebo momentum trigger. Začni priamo — bez "Ahoj" alebo "Dobrý deň".`;
+  try{
+    const response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data=await response.json();
+    const text=data.content?.map(b=>b.text||'').join('')||'';
+    if(text.trim()){
+      textEl.textContent=text.trim();
+      textEl.classList.remove('loading');
+      localStorage.setItem(cacheKey,text.trim());
+      if(metaEl)metaEl.textContent='claude AI · práve vygenerované';
+    }else{
+      card.style.display='none';
+    }
+  }catch(e){
+    card.style.display='none';
+  }finally{
+    _aiInsightLoading=false;
+    if(refreshBtn)refreshBtn.disabled=false;
+  }
+}
+function refreshAiInsight(){
+  if(_aiInsightLoading)return;
+  const cacheKey='aiInsight_'+dayKey();
+  localStorage.removeItem(cacheKey);
+  loadAiInsight(true);
+}
+
+// ═══════════════════════════════════════════════════════
+// 3. DAILY CHALLENGE (focus-personalized)
+// ═══════════════════════════════════════════════════════
+const DAILY_CHALLENGES_BY_FOCUS={
+  discipline:[
+    {text:'Nepozri na telefón prvých 30 minút po prebudení.',xp:50},
+    {text:'Naplánuj zajtrajší deň dnes večer — konkrétne úlohy, nie len nápady.',xp:40},
+    {text:'Urob najdôležitejšiu úlohu dňa ako prvú vec — pred emailmi, správami.',xp:50},
+    {text:'Choď spať pred 23:00 a neukladaj telefón vedľa postele.',xp:45},
+    {text:'Urob 90 minút neprerušeného deep work — telefón na silent, notifikácie vypnuté.',xp:55},
+    {text:'Neodkladaj žiadnu úlohu kratšiu ako 5 minút — urob ju hneď.',xp:40},
+    {text:'Vstávaj bez snooze — prvý alarm = vstávanie.',xp:50},
+    {text:'Nečítaj správy ani sociálne siete do 10:00.',xp:45},
+    {text:'Napíš 3 veci, ktoré chceš zajtra urobiť lepšie ako dnes.',xp:35},
+    {text:'Urob 25-minútový Pomodoro bez akéhokoľvek vyrušenia.',xp:45},
+    {text:'Identifikuj 1 zlozvyk, ktorý ti berie energiu, a dnes ho vynechaj.',xp:50},
+    {text:'Dokonči nedorobené — jeden task, ktorý odkladáš.',xp:45},
+  ],
+  health:[
+    {text:'Vypi 3 litre vody dnes — nastav si pripomienky každé 2 hodiny.',xp:40},
+    {text:'Sprav 10 minút stretchingu pred spaním.',xp:40},
+    {text:'Nejedz cukor ani spracované jedlo celý deň.',xp:55},
+    {text:'Choď von do prírody aspoň na 20 minút.',xp:35},
+    {text:'Urob 50 drepov kedykoľvek počas dňa — v dávkach je to v poriadku.',xp:45},
+    {text:'Zjedz zeleninu pri každom jedle dnes.',xp:40},
+    {text:'Vstávaj bez alarmu — ak môžeš, dnes si dopraj prirodzené prebudenie.',xp:35},
+    {text:'Choď spať pred 22:30.',xp:50},
+    {text:'Urob 30 minút pohybu navyše — prechádzka, schody, čokoľvek.',xp:45},
+    {text:'Nejedz po 19:00.',xp:50},
+    {text:'10-minútová meditácia alebo breathwork ráno pred telefónom.',xp:45},
+    {text:'Zjedz bielkoviny pri každom jedle dnes.',xp:40},
+  ],
+  wealth:[
+    {text:'Identifikuj 1 výdavok, ktorý robíš automaticky a nepotrebuješ ho.',xp:40},
+    {text:'Urob 60 minút učenia sa niečoho konkrétneho — nie scrollovanie.',xp:50},
+    {text:'Napíš 3 nápady, ako by si mohol zarobiť extra peniaze tento mesiac.',xp:40},
+    {text:'Prečítaj 10 strán knihy o biznise, investovaní alebo osobnom rozvoji.',xp:35},
+    {text:'Odlož dnes aspoň 5% z príjmu — aj symbolicky.',xp:45},
+    {text:'Vymaž 1 zbytočnú predplatnú službu alebo výdavok.',xp:50},
+    {text:'Porozprávaj sa s niekým, kto je tam kde ty chceš byť — pýtaj sa.',xp:40},
+    {text:'Urob 1 krok na projekte alebo vedľajšom zdroji príjmu dnes.',xp:55},
+    {text:'Analyzuj minulý mesiac výdavkov — kde išli peniaze?',xp:40},
+    {text:'Nečítaj správy a sociálne siete — daj ten čas do práce na cieli.',xp:45},
+    {text:'Napíš email alebo správu, ktorú odkladáš — biznis alebo kariérna príležitosť.',xp:45},
+    {text:'Nauč sa jednu nová vec vo svojom obore — YouTube, podcast, článok.',xp:35},
+  ],
+  mind:[
+    {text:'Napíš 3 veci, za ktoré si dnes vďačný — konkrétne, nie generické.',xp:35},
+    {text:'10 minút bez obrazovky — len ticho, nič iné.',xp:40},
+    {text:'Zavolaj niekomu, koho si dlho nevidel.',xp:35},
+    {text:'Prečítaj 10 strán fyzickej knihy dnes.',xp:35},
+    {text:'Choď von na 20-minútovú prechádzku — bez slúchadiel.',xp:40},
+    {text:'Napíš v denníku: Čo ťa dnes brzdí? Jedno konkrétne.',xp:40},
+    {text:'Odpusť si niečo, čo stále nosíš — napíš to na papier a zhoď.',xp:45},
+    {text:'Nechaj dnes konflikty byť — nereaguj na provokácie.',xp:45},
+    {text:'Urob niečo len pre seba — bez produktivity, len pre radosť.',xp:35},
+    {text:'Medituj 15 minút — riadená alebo voľná, jedno to je.',xp:45},
+    {text:'Napíš si, čo by si robil keby sa nebál. Jedno konkrétne.',xp:40},
+    {text:'Digitálny detox od 20:00 — žiadne obrazovky do spánku.',xp:50},
+  ]
+};
+const DAILY_CHALLENGES_UNIVERSAL=[
+  {text:'Dnes urob niečo, čo sa ti nechce — presne to je trening charakteru.',xp:50},
+  {text:'Povedz nie niečomu, čo ťa rozptyľuje od cieľa.',xp:45},
+  {text:'Zober si 5 minút ráno a vizualizuj ako vyzerá tvoj ideálny deň.',xp:35},
 ];
 function getDailyChallenge(){
   const d=new Date();
-  const idx=(d.getFullYear()*365+d.getMonth()*31+d.getDate())%DAILY_CHALLENGES.length;
-  return DAILY_CHALLENGES[idx];
+  const focus=state.profile?.focus||'discipline';
+  const focusChallenges=DAILY_CHALLENGES_BY_FOCUS[focus]||DAILY_CHALLENGES_BY_FOCUS.discipline;
+  const allChallenges=[...focusChallenges,...DAILY_CHALLENGES_UNIVERSAL];
+  const idx=(d.getFullYear()*365+d.getMonth()*31+d.getDate())%allChallenges.length;
+  return allChallenges[idx];
 }
 function renderDailyChallenge(){
   const block=document.getElementById('dailyChallengeBlock');
@@ -2044,19 +2758,22 @@ function renderDailyChallenge(){
   const ch=getDailyChallenge();
   const todayKey=dayKey();
   const done=state.challengesDone&&state.challengesDone[todayKey];
-  block.innerHTML=`<div class="daily-challenge${done?' completed':''}" onclick="toggleDailyChallenge()">
+  const focus=state.profile?.focus||'discipline';
+  const focusLabel=PRESETTRACKS[focus]?.label||'Disciplína';
+  block.innerHTML=`<div class="daily-challenge${done?' completed':''}" onclick="${done?'':'toggleDailyChallenge()'}">
     <div class="dc-header">
       <span class="dc-eyebrow">${done?'✓ Splnená':'⚡ Denná výzva'}</span>
       <span class="dc-xp">+${ch.xp} XP</span>
     </div>
+    <div class="dc-focus-tag">${focusLabel}</div>
     <div class="dc-text">${ch.text}</div>
-    ${done?'<div class="dc-done-badge">Výborne! XP pripísané.</div>':''}
+    ${done?'<div class="dc-done-badge">Výborne! XP pripísané.</div>':'<div class="dc-tap-hint">Ťukni po splnení →</div>'}
   </div>`;
 }
 function toggleDailyChallenge(){
   const todayKey=dayKey();
   if(!state.challengesDone)state.challengesDone={};
-  if(state.challengesDone[todayKey])return; // raz za deň
+  if(state.challengesDone[todayKey])return;
   state.challengesDone[todayKey]=true;
   saveState();
   const ch=getDailyChallenge();
@@ -2064,6 +2781,8 @@ function toggleDailyChallenge(){
   showToast(`⚡ Výzva splnená! +${ch.xp} XP`);
   renderDailyChallenge();
   checkAchievements();
+  // After completing challenge, show/refresh AI insight
+  loadAiInsight();
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2298,7 +3017,7 @@ function init(){
     state.streakFreezes=state.streakFreezes||0;
     state.freezesAwarded=state.freezesAwarded||{};
     state.xpToday=state.xpToday||{};
-    state.challengesDone=state.challengesDone||{};
+    state.challengesDone=state.challengesDone||{};state.weeklyFocus=state.weeklyFocus||{};
     state.records=state.records||{};
     state.notes=state.notes||{};
     setTimeout(()=>{
