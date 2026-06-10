@@ -1,4 +1,4 @@
-const CACHE='habits-v1';
+const CACHE='habits-v2';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['./index.html','./manifest.json']).catch(()=>{})).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);if(u.hostname==='fonts.googleapis.com'||u.hostname==='fonts.gstatic.com'){e.respondWith(caches.open(CACHE).then(c=>c.match(e.request).then(cached=>{if(cached)return cached;return fetch(e.request).then(r=>{c.put(e.request,r.clone());return r}).catch(()=>cached)})));return}if(u.pathname.endsWith('.html')||u.pathname==='/'){e.respondWith(fetch(e.request).then(r=>{caches.open(CACHE).then(c=>c.put(e.request,r.clone()));return r}).catch(()=>caches.match('./index.html')));return}e.respondWith(caches.open(CACHE).then(c=>c.match(e.request).then(cached=>{const net=fetch(e.request).then(r=>{c.put(e.request,r.clone());return r}).catch(()=>null);return cached||net})))});
